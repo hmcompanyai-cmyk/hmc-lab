@@ -12,11 +12,12 @@ interface Props {
       updatedDate?: Date;
       tags: string[];
       affiliate: boolean;
+      heroImage?: string;
     };
   };
 }
 const { post } = Astro.props;
-const { title, description, pubDate, updatedDate, tags, affiliate } = post.data;
+const { title, description, pubDate, updatedDate, tags, affiliate, heroImage } = post.data;
 const fmt = (d: Date) =>
   `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 
@@ -33,7 +34,7 @@ const jsonLd = {
 };
 ---
 
-<Base title={title} description={description} ogType="article" jsonLd={jsonLd}>
+<Base title={title} description={description} ogType="article" jsonLd={jsonLd} ogImage={heroImage ?? null}>
   <article>
     <h1>{title}</h1>
     <div class="meta">
@@ -41,6 +42,7 @@ const jsonLd = {
       {updatedDate && <time datetime={updatedDate.toISOString()}>更新: {fmt(updatedDate)}</time>}
       {tags.map((t) => <span class="tag">{t}</span>)}
     </div>
+    {heroImage && <p style="margin: 1rem 0 0;"><img src={heroImage} alt={title} /></p>}
     {affiliate && (
       <p class="pr-note">
         【PR】本記事にはアフィリエイトリンクが含まれる場合があります。紹介内容は実際に業務で使用した経験に基づいています。

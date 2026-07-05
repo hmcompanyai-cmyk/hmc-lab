@@ -5,6 +5,7 @@ pubDate: 2026-07-05
 updatedDate: 2026-07-06
 tags: [Claude, 料金プラン, AIツール比較]
 affiliate: true
+heroImage: /img/hero-claude-plan.jpg
 ---
 
 「Claudeに課金しようか迷っているが、<mark>月3,000円の価値が本当にあるのか</mark>分からない」。検索すると「神ツール」と「課金はやめとけ」が同時に出てきて、余計に迷った人も多いはずです。

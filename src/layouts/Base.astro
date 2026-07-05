@@ -7,8 +7,9 @@ interface Props {
   description?: string;
   ogType?: string;
   jsonLd?: object | null;
+  ogImage?: string | null;
 }
-const { title, description = SITE.description, ogType = 'website', jsonLd = null } = Astro.props;
+const { title, description = SITE.description, ogType = 'website', jsonLd = null, ogImage = null } = Astro.props;
 const pageTitle = title ? `${title} | ${SITE.title}` : `${SITE.title} | ${SITE.tagline}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
@@ -30,6 +31,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:site_name" content={SITE.title} />
     <meta property="og:locale" content={SITE.locale} />
     <meta name="twitter:card" content="summary_large_image" />
+    {ogImage && <meta property="og:image" content={new URL(ogImage, Astro.site)} />}
+    {ogImage && <meta name="twitter:image" content={new URL(ogImage, Astro.site)} />}
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
   </head>
   <body>

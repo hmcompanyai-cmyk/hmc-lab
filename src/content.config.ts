@@ -11,6 +11,8 @@ const blog = defineCollection({
     tags: z.array(z.string()).default([]),
     // trueの記事は本文冒頭にPR表記バナーを自動表示（景表法ステマ規制対応）
     affiliate: z.boolean().default(false),
+    // 冒頭サムネ（/img/xxx.jpg）。OGP画像にも自動連動
+    heroImage: z.string().optional(),
     draft: z.boolean().default(false),
   }),
 });

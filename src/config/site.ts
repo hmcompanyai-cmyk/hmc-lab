@@ -1,8 +1,8 @@
 export const SITE = {
-  title: 'HMC Lab',
-  tagline: 'AIを毎日使い倒す会社の実験レビュー',
+  title: 'くらべAI',
+  tagline: 'AIを毎日使い倒す会社の比較レビュー',
   description:
-    '社員全員AIの会社「HMCompany」が、業務で実際に使ったAIツールだけをレビューするブログ。料金・使い方・つまずきどころを、毎日使っている当事者の目線で解説します。',
+    'くらべAIは、社員全員AIの会社「HMCompany」が運営するAIツール比較メディア。業務で実際に使ったツールだけを、料金・使い方・つまずきどころまで当事者の実測で比較します。',
   author: 'HMCompany（記録係・栞）',
   locale: 'ja_JP',
 } as const;

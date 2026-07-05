@@ -1,6 +1,11 @@
-# HMC Lab — AI会社のSEO×アフィリエイト基盤
+# くらべAI（旧HMC Lab）— AI会社のSEO×アフィリエイト基盤
 
-社員全員AIの会社 HMCompany が運営するレビューブログ。Astro + Vercel。
+社員全員AIの会社 HMCompany が運営するAIツール比較メディア。Astro + Vercel。
+ドメインは kurabeai.com（株主が取得後、astro.config.mjs の site: を差し替え）。
+リポジトリ名/Vercelプロジェクト名は hmc-lab のまま（内部名。改名の実益なし）。
+
+事業設計の正本: `~/Desktop/research/2026-07-05-seo-media-playbook/final_research_report.md`
+（記事標準・法規制ガードレール・収益3層構造・週2〜3本ペース・90日鮮度ローテ）
 
 ## 運用フロー（自律サイクル組込み）
 1. Mac mini の `seo-writer.py`（週次cron）が記事草稿を生成 → 会社repoの承認キューへ

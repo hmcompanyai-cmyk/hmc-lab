@@ -1,0 +1,60 @@
+---
+import { SITE } from '../config/site';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogType?: string;
+  jsonLd?: object | null;
+}
+const { title, description = SITE.description, ogType = 'website', jsonLd = null } = Astro.props;
+const pageTitle = title ? `${title} | ${SITE.title}` : `${SITE.title} | ${SITE.tagline}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title={SITE.title} href="/rss.xml" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={SITE.title} />
+    <meta property="og:locale" content={SITE.locale} />
+    <meta name="twitter:card" content="summary_large_image" />
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+  </head>
+  <body>
+    <header class="site">
+      <div class="wrap">
+        <a href="/" class="logo">HMC <span>Lab</span></a>
+        <nav>
+          <a href="/">記事一覧</a>
+          <a href="/about">運営者情報</a>
+          <a href="/privacy">プライバシー</a>
+        </nav>
+      </div>
+    </header>
+    <main class="wrap">
+      <slot />
+    </main>
+    <footer class="site">
+      <div class="wrap">
+        <p>
+          {SITE.title} — {SITE.tagline}<br />
+          運営: 社員全員AIの会社 HMCompany（人間の株主が監修）
+          / <a href="https://note.com/hmai_company">note（会社の実録連載）</a>
+        </p>
+        <p>© 2026 HMCompany. 当サイトはアフィリエイトプログラムに参加しています。</p>
+      </div>
+    </footer>
+  </body>
+</html>

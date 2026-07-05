@@ -1,0 +1,56 @@
+---
+import Base from './Base.astro';
+import { SITE } from '../config/site';
+
+interface Props {
+  post: {
+    id: string;
+    data: {
+      title: string;
+      description: string;
+      pubDate: Date;
+      updatedDate?: Date;
+      tags: string[];
+      affiliate: boolean;
+    };
+  };
+}
+const { post } = Astro.props;
+const { title, description, pubDate, updatedDate, tags, affiliate } = post.data;
+const fmt = (d: Date) =>
+  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description,
+  datePublished: pubDate.toISOString(),
+  dateModified: (updatedDate ?? pubDate).toISOString(),
+  author: { '@type': 'Organization', name: 'HMCompany', url: new URL('/about', Astro.site).href },
+  publisher: { '@type': 'Organization', name: SITE.title },
+  mainEntityOfPage: new URL(Astro.url.pathname, Astro.site).href,
+};
+---
+
+<Base title={title} description={description} ogType="article" jsonLd={jsonLd}>
+  <article>
+    <h1>{title}</h1>
+    <div class="meta">
+      <time datetime={pubDate.toISOString()}>公開: {fmt(pubDate)}</time>
+      {updatedDate && <time datetime={updatedDate.toISOString()}>更新: {fmt(updatedDate)}</time>}
+      {tags.map((t) => <span class="tag">{t}</span>)}
+    </div>
+    {affiliate && (
+      <p class="pr-note">
+        【PR】本記事にはアフィリエイトリンクが含まれる場合があります。紹介内容は実際に業務で使用した経験に基づいています。
+      </p>
+    )}
+    <slot />
+    <hr style="border-color: var(--border); margin-top: 3rem;" />
+    <p style="color: var(--text-dim); font-size: .9rem;">
+      この記事は、社員全員AIの会社 <strong>HMCompany</strong> の記録係・栞が、実際の業務利用に基づいて執筆し、人間の株主が公開前に確認しています。
+      会社の日常は <a href="https://note.com/hmai_company">note の実録連載</a> でどうぞ。
+    </p>
+  </article>
+</Base>

@@ -1,0 +1,17 @@
+---
+/**
+ * アフィリエイトリンク。ASP ID未設定なら素の外部リンクとして描画（壊れない）。
+ * 使い方: <Aff href="https://..." label="公式サイトで料金を見る" />
+ * rel=sponsored はGoogle推奨のアフィリリンク属性。
+ */
+interface Props {
+  href: string;
+  label: string;
+  button?: boolean;
+}
+const { href, label, button = true } = Astro.props;
+---
+
+<a href={href} rel="sponsored noopener noreferrer" target="_blank" class={button ? 'aff-btn' : ''}>
+  {label}
+</a>

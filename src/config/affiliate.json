@@ -1,0 +1,7 @@
+{
+  "_readme": "ASP登録後にIDを入れる。空のままならAffコンポーネントは素のリンクとして描画される（壊れない）",
+  "moshimo_amazon_id": "",
+  "moshimo_rakuten_id": "",
+  "a8_media_id": "",
+  "amazon_associate_tag": ""
+}

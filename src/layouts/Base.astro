@@ -8,8 +8,9 @@ interface Props {
   ogType?: string;
   jsonLd?: object | null;
   ogImage?: string | null;
+  noindex?: boolean;
 }
-const { title, description = SITE.description, ogType = 'website', jsonLd = null, ogImage = null } = Astro.props;
+const { title, description = SITE.description, ogType = 'website', jsonLd = null, ogImage = null, noindex = false } = Astro.props;
 const pageTitle = title ? `${title} | ${SITE.title}` : `${SITE.title} | ${SITE.tagline}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
@@ -22,6 +23,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="alternate" type="application/rss+xml" title={SITE.title} href="/rss.xml" />
     <meta property="og:title" content={pageTitle} />

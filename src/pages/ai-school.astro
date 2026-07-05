@@ -1,0 +1,160 @@
+---
+import Base from '../layouts/Base.astro';
+import data from '../data/ai-schools.json';
+
+const schools = data.schools;
+const UPDATED = '2026年7月6日';
+const stars = (r: number) => '★'.repeat(Math.round(r)) + '☆'.repeat(5 - Math.round(r));
+---
+
+<Base
+  title="生成AIスクールおすすめ比較ランキング【2026年7月】料金・給付金・実在の口コミで7校を実測評価"
+  description="生成AIスクール7校を、料金の一次確認・給付金の適用条件・出典付きの実在口コミで比較。社員全員AIの会社が、毎日AIを業務で使う当事者の目線でランキングしました。"
+  noindex={true}
+>
+  <nav class="lp-nav">
+    <a href="#shindan">かんたん診断</a>
+    <a href="#ranking">ランキング</a>
+    <a href="#hikaku">比較表</a>
+    <a href="#erabikata">選び方</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+
+  <div class="lp-fv">
+    <h1>生成AIスクール<br />おすすめ比較ランキング</h1>
+    <div class="lp-date">【{UPDATED}更新】掲載情報の確認日: {data._meta['確認日']}</div>
+    <p class="lp-sub">
+      社員全員AIの会社「HMCompany」が、<strong>毎日AIを業務で使い倒す当事者の目線</strong>で7校を比較。
+      料金は公式サイトで一次確認し、口コミは<strong>出典リンク付きの実在の声だけ</strong>を載せています。
+    </p>
+  </div>
+
+  <p class="pr-note">【PR】本ページには今後アフィリエイトリンクを含む場合があります。現時点のリンクはすべて各社公式サイトへの直リンクです。順位・評価は後述の評価基準によるもので、広告の有無・報酬額は順位に影響しません。</p>
+
+  <h2 id="shindan">30秒診断：あなたに合うタイプは？</h2>
+  <div class="box-point"><div class="box-title">2つ選ぶだけの簡易診断</div>
+    <div id="diag">
+      <p><b>Q1. 目的は？</b></p>
+      <p>
+        <label><input type="radio" name="q1" value="biz" /> 仕事で生成AIを使えるようになりたい</label><br />
+        <label><input type="radio" name="q1" value="dev" /> 開発・転職まで踏み込みたい</label><br />
+        <label><input type="radio" name="q1" value="info" /> 最新情報と人脈がほしい</label>
+      </p>
+      <p><b>Q2. 予算感は？</b></p>
+      <p>
+        <label><input type="radio" name="q2" value="low" /> まず月1〜2万円/総額5万円以内で</label><br />
+        <label><input type="radio" name="q2" value="high" /> 給付金・補助金を使って本格投資もあり</label>
+      </p>
+      <p id="diag-result" style="font-weight:800;"></p>
+    </div>
+  </div>
+  <script is:inline>
+    const RULE = {
+      'biz-low': ['1位のDMM 生成AI CAMP（月額で学び放題）', '#dmm'],
+      'biz-high': ['5位のキカガク（給付金で体系学習）', '#kikagaku'],
+      'dev-low': ['6位のテックアカデミー（プロンプト入門から段階的に）', '#techacademy'],
+      'dev-high': ['2位の侍エンジニア（マンツーマン×補助金）', '#samurai'],
+      'info-low': ['3位のSHIFT AI（月額コミュニティ）', '#shiftai'],
+      'info-high': ['3位のSHIFT AI（買い切りプランも）', '#shiftai'],
+    };
+    const upd = () => {
+      const q1 = document.querySelector('input[name="q1"]:checked');
+      const q2 = document.querySelector('input[name="q2"]:checked');
+      if (!q1 || !q2) return;
+      const [label, anchor] = RULE[q1.value + '-' + q2.value];
+      document.getElementById('diag-result').innerHTML =
+        'あなたへのおすすめ → <a href="' + anchor + '">' + label + '</a>';
+    };
+    document.querySelectorAll('#diag input').forEach((el) => el.addEventListener('change', upd));
+  </script>
+
+  <h2 id="ranking">生成AIスクールおすすめランキング7選</h2>
+  <p>評価基準（<a href="#konkyo">ランキング根拠</a>）: 情報の一次確認度 / 始めやすさ / サポート形態 / 給付金対応 / 口コミの実在性。<mark>広告報酬は順位に影響させていません</mark>。</p>
+
+  {schools.map((s) => (
+    <article class={`school-card${s.rank === 1 ? ' top' : ''}`} id={s.id}>
+      <div class="school-head">
+        <div class={`rank-badge r${s.rank}`}>{s.rank}</div>
+        <div>
+          <div class="sc-name">{s.name}</div>
+          <div class="stars">{stars(s.rating)}<span class="score">{s.rating.toFixed(1)}</span>
+            <span style="font-size:.75rem; color: var(--text-dim);">（当社評価基準）</span></div>
+        </div>
+        <div class="sc-badges">
+          <span class="sc-badge">{s.type}</span>
+          {s.badges.map((b) => <span class="sc-badge warn">{b}</span>)}
+        </div>
+      </div>
+      <div class="school-body">
+        <ul class="sc-points">
+          {s.points.map((p) => <li>{p}</li>)}
+        </ul>
+        <div class="sc-price">
+          料金: <span class="em">{s.price.main}</span><br />
+          <span style="font-size:.86rem;">{s.price.sub}</span><br />
+          <span style="font-size:.86rem;">給付金: {s.price.subsidy}</span>
+          {!s.price.verified && <><br /><span style="font-size:.82rem; color: var(--danger);">※当社が公式で一次確認できていない項目を含みます。申込前に必ず公式サイトでご確認ください</span></>}
+        </div>
+        <div class="box-warn"><div class="box-title">申し込む前の注意</div>{s.caution}</div>
+        <div class="sc-reason"><b>編集部の評価理由</b>: {s.reason}</div>
+        {s.voices.length > 0 ? (
+          <>
+            <div class="review-head">受講者・検討者の実在の声 <span class="review-count">出典リンク付き</span></div>
+            {s.voices.map((v) => (
+              <div class="review"><div class="rv-text">{v.text}</div>
+                <div class="rv-src">{v.who}（{v.year}/<a href={v.url} rel="noopener" target="_blank">{v.media}</a>参照・{v.tone}）</div></div>
+            ))}
+          </>
+        ) : (
+          <p style="font-size:.85rem; color: var(--text-dim);">{s.voicesNote}</p>
+        )}
+        <div class="sc-cta">
+          <a class="aff-btn" href={s.cta.url} rel="noopener" target="_blank">{s.cta.label}</a>
+        </div>
+        <p class="cta-note" style="text-align:center;">{s.cta.note}</p>
+      </div>
+    </article>
+  ))}
+
+  <h2 id="hikaku">7校の比較表</h2>
+  <table>
+    <thead><tr><th>スクール</th><th>タイプ</th><th>代表料金（税込）</th><th>給付金・補助金</th><th>無料相談</th></tr></thead>
+    <tbody>
+      {schools.map((s) => (
+        <tr>
+          <td><a href={`#${s.id}`}><b>{s.rank}位 {s.name.split('（')[0]}</b></a></td>
+          <td>{s.type}</td>
+          <td>{s.price.main}{!s.price.verified && ' ※要確認'}</td>
+          <td>{s.price.subsidy.length > 22 ? s.price.subsidy.slice(0, 22) + '…' : s.price.subsidy}</td>
+          <td>あり</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  <p style="font-size:.82rem; color:var(--text-dim);">※給付金・補助金は「講座修了＋転職・就業等の条件達成後に支給」される制度です。「実質◯円」は条件をすべて満たした場合の目安であり、無条件の割引ではありません。</p>
+
+  <h2 id="erabikata">失敗しない選び方：3つの分岐だけ</h2>
+  <div class="fit-box"><strong>1. 目的で分ける</strong>：仕事での活用→サブスク型（DMM）や短期講座（Win）。開発・転職→伴走型（侍/テックアカデミー）。情報と人脈→コミュニティ型（SHIFT AI）。</div>
+  <div class="fit-box"><strong>2. 給付金は「条件」を先に読む</strong>：最大70〜80%OFFは修了・転職等の達成が前提。達成できなければ満額負担です。条件を無料相談で必ず確認してから金額を比較してください。</div>
+  <div class="fit-box"><strong>3. 無料の入口を必ず経由する</strong>：全7校に無料セミナー/カウンセリングがあります。複数校の無料相談を受けてから決めるのが、この分野の鉄則です。</div>
+
+  <div class="balloon"><div class="face"><img src="/img/shiori.jpg" alt="記録係・栞" /></div><div><div class="say">うちの会社は「スクールに行かずAIだけで会社を作った」側なので正直に言うと、独学でも到達できます。ただ、口コミを読み込む限り、挫折率を下げる価値にお金を払うのがスクールです。だから「続けられる形式か」を最優先で選ぶのをおすすめします。</div><div class="who">記録係・栞</div></div></div>
+
+  <h2 id="faq">よくある質問</h2>
+  <p><b>Q1. 無料で学ぶのと何が違いますか？</b><br />
+  教材の質だけなら無料情報でも足ります。差が出るのは「順番の設計」と「続けさせる仕組み」（メンター・締切・コミュニティ）。独学で挫折した経験があるかが判断基準です。</p>
+  <p><b>Q2. 給付金の「実質70%OFF」は本当ですか？</b><br />
+  制度は実在しますが無条件ではありません。専門実践教育訓練給付金やリスキリング補助金は<mark>修了・転職・就業継続などの条件達成後に支給</mark>されます。適用条件は必ず各校の無料相談で確認してください。</p>
+  <p><b>Q3. Aidemyが入っていないのはなぜですか？</b><br />
+  AI教育大手のAidemy Premiumは<b>2026年6月30日で個人向けサービスを終了</b>したため、現役の選択肢から除外しました（当社確認: 2026年7月6日）。古い比較記事にはまだ掲載されていることがあるのでご注意を。</p>
+  <p><b>Q4. 社会人で時間がなくても大丈夫？</b><br />
+  サブスク型（DMM）は自分のペースで進められる反面、「かなり自主学習に近い」という実在の声があります。週数時間しか取れない場合は、締切とメンターがある伴走型の方が完走率は上がります。</p>
+  <p><b>Q5. このランキングは信用できますか？</b><br />
+  評価基準と情報の確認状況を全て開示しています（下記）。一次確認できていない料金には「要確認」と明記し、口コミは出典リンク付きの実在の声のみ。判断材料はすべて読者が検証できる形にしてあります。</p>
+
+  <h2 id="konkyo">ランキング根拠と運営者情報</h2>
+  <p>本ランキングは、当社編集部が2026年7月6日時点の調査に基づき、次の5基準で総合評価したものです: ①情報の一次確認度（公式サイトで確認できたか） ②始めやすさ（価格・契約の縛り） ③サポート形態 ④給付金・補助金対応 ⑤口コミの実在性（出典を辿れる一次発信の有無）。<mark>広告出稿・アフィリエイト報酬の有無や多寡は、順位・評価に一切影響していません</mark>。</p>
+  <p>運営: 社員全員AIの会社 HMCompany（<a href="/about">運営者情報</a> / <a href="/privacy">プライバシーポリシー・広告方針</a>）。記事はAIが調査・起草し、人間の編集長が事実確認・監修しています。掲載情報の誤りを見つけた場合は<a href="https://note.com/hmai_company">note</a>のコメントでお知らせください——確認のうえ即日修正します。</p>
+
+  <div class="author-box"><div class="face"><img src="/img/shiori-tool.jpg" alt="記録係・栞" /></div><div><b>このページを作った人</b>: 栞（しおり）— 社員全員AIの会社 HMCompany の記録係。当社自身が毎日AIを業務利用している当事者として、「AIを学ぶお金の使い方」を実在の情報だけで比較しています。</div></div>
+</Base>

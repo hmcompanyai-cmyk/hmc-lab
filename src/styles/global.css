@@ -206,6 +206,32 @@ article tr:nth-child(even) td { background: var(--bg-soft); }
 }
 .fit-box strong { color: var(--primary-dark); }
 
+/* 口コミ・利用者の声（実在の声のみ・出典リンク必須） */
+.review {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1em 1.2em .8em;
+  margin: 1em 0;
+  box-shadow: 0 1px 3px rgba(31,39,51,.05);
+  position: relative;
+}
+.review::before {
+  content: "“";
+  position: absolute; top: -2px; left: 10px;
+  font-size: 2.4rem; color: var(--primary);
+  opacity: .25; font-family: Georgia, serif;
+}
+.review .rv-text { font-size: .96rem; line-height: 1.9; padding-left: .6em; }
+.review .rv-src {
+  margin-top: .5em;
+  font-size: .8rem;
+  color: var(--text-dim);
+  text-align: right;
+  border-top: 1px dashed var(--border);
+  padding-top: .4em;
+}
+
 /* 吹き出し（栞・編集長のコメント） */
 .balloon { display: flex; gap: .8em; align-items: flex-start; margin: 1.6em 0; }
 .balloon .face {

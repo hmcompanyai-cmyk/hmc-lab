@@ -206,6 +206,36 @@ article tr:nth-child(even) td { background: var(--bg-soft); }
 }
 .fit-box strong { color: var(--primary-dark); }
 
+/* 口コミスクロールパネル（枠内で多数の声を読める・信頼性の物量装置） */
+.review-scroll {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-soft);
+  padding: .4em 1em;
+  max-height: 460px;
+  overflow-y: auto;
+  margin: 1.4em 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) #e3e8ef;
+}
+.review-scroll::-webkit-scrollbar { width: 8px; }
+.review-scroll::-webkit-scrollbar-track { background: #e9edf3; border-radius: 8px; }
+.review-scroll::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 8px; }
+.review-head {
+  display: flex; align-items: center; gap: .6em;
+  font-weight: 800; font-size: .95rem;
+  margin: 1.4em 0 .4em;
+}
+.review-head::before {
+  content: "";
+  flex: 0 0 20px; width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--primary);
+  -webkit-mask: radial-gradient(circle at 35% 35%, transparent 0 3px, #000 3.5px) ;
+}
+.review-count { font-size: .78rem; color: var(--text-dim); font-weight: 400; }
+.review-scroll-note { font-size: .76rem; color: var(--text-dim); text-align: right; margin: .2em 0 1em; }
+
 /* 口コミ・利用者の声（実在の声のみ・出典リンク必須） */
 .review {
   background: #fff;

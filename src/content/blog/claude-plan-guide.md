@@ -117,17 +117,33 @@ Proの判断基準はシンプルです。
 
 Maxには2段階があります（執筆時点）。まず<mark>$100の5倍で始めて、上限に当たる頻度で$200の20倍を判断</mark>するのが安全です。最初から20倍が要る人は、自分がそれだと既に分かっているはずです。
 
-## 実際に課金した人の声（すべて出典つき）
+## 実際に課金した人の口コミ（すべて出典リンク付き）
 
-当社の実測だけでは一社の事情に偏るので、実際に課金した個人の公開レビューから率直な声を引用します。全文は各出典で読めます。
+当社の実測だけでは一社の事情に偏るので、実際に課金した個人の公開レビューから率直な声を集めました。<mark>良い声も悪い声もそのまま</mark>載せています。各カードの出典リンクから全文が読めます。
+
+<div class="review-head">利用者の口コミ <span class="review-count">8件・枠内をスクロールで全件表示</span></div>
+<div class="review-scroll">
 
 <div class="review"><div class="rv-text">最初の1週間は「高い金払ったのにProと変わらなくない？」って思った——（2週目に使い方を変えて）1日中止まらずにできた。ここで初めて「あ、これがMaxの価値か」ってわかった</div><div class="rv-src">KENさん／Max 5xを1ヶ月使用（2026年/<a href="https://note.com/ken_hakodate/n/n45f409bca249" rel="noopener" target="_blank">note</a>参照）</div></div>
 
+<div class="review"><div class="rv-text">AIを仕事の道具として毎日使う方には十分に元が取れるプランだと感じました</div><div class="rv-src">メールアドレス作成塾さん／Proを使い倒し（2026年/<a href="https://note.com/rensaba/n/n172cba04402d" rel="noopener" target="_blank">note</a>参照）</div></div>
+
 <div class="review"><div class="rv-text">Proプランだと数時間で上限に達していたのが、MAXプランではほぼ一日中使っても大丈夫。……ただ、ほとんどの人はProプランで十分</div><div class="rv-src">奥村龍晃さん／非エンジニア・MAX利用（2026年/<a href="https://note.com/redcord/n/n142ce13c7c98" rel="noopener" target="_blank">note</a>参照）</div></div>
+
+<div class="review"><div class="rv-text">気軽に質問しただけなのに、「〇〇用のプロンプトを作りましょうか？」……のように、すぐにアウトプットを作ろうとしてきます</div><div class="rv-src">Rinrinさん／Max利用・不満点として（2026年/<a href="https://zenn.dev/rin__rin/articles/31ab886e9ed54d" rel="noopener" target="_blank">Zenn</a>参照）</div></div>
 
 <div class="review"><div class="rv-text">（Proは）毎日ちゃんと使うとおそらく引っかかる。迷ってるならMaxにした方が精神衛生上いい</div><div class="rv-src">kaseroさん／Pro→Max移行組（2026年2月/<a href="https://asahane.hatenablog.com/entry/2026/02/02/203121" rel="noopener" target="_blank">はてなブログ</a>参照）</div></div>
 
-3人に共通するのは、<mark>Maxの価値は「使い方を変えた人」にだけ現れる</mark>という点です。チャットの延長で使う限りProとの差は体感できない——当社の実測結論と完全に一致します。
+<div class="review"><div class="rv-text">長い文章の構成やコードレビューの精度では、Claudeのほうが一段上</div><div class="rv-src">メールアドレス作成塾さん／ChatGPTと併用比較（2026年/<a href="https://note.com/rensaba/n/n172cba04402d" rel="noopener" target="_blank">note</a>参照）</div></div>
+
+<div class="review"><div class="rv-text">Claudeが自分の期待していない方向に推論を始めてしまい、軌道修正をするのが大変に感じることがあります</div><div class="rv-src">Rinrinさん／Max利用・不満点として（2026年/<a href="https://zenn.dev/rin__rin/articles/31ab886e9ed54d" rel="noopener" target="_blank">Zenn</a>参照）</div></div>
+
+<div class="review"><div class="rv-text">トークンを気にせず無駄遣い上等ガンガン回していけ（Maxにしてからの実感として）</div><div class="rv-src">kaseroさん／Pro→Max移行組（2026年2月/<a href="https://asahane.hatenablog.com/entry/2026/02/02/203121" rel="noopener" target="_blank">はてなブログ</a>参照）</div></div>
+
+</div>
+<div class="review-scroll-note">※個人の公開レビューからの引用です。評価は各利用者の環境・用途によります</div>
+
+口コミを横断すると、<mark>Maxの価値は「使い方を変えた人」にだけ現れる</mark>という一点で驚くほど一致しています。チャットの延長で使う限りProとの差は体感できない——当社の実測結論とも完全に一致します。一方で「提案が過剰」「推論の軌道修正が手間」といった不満はプランに関係なくClaude自体の癖なので、課金で解決する類のものではありません。
 
 ## 診断：あなたはどのプランか
 

@@ -61,11 +61,29 @@ article h2 {
 article h3 {
   font-size: 1.08rem;
   margin-top: 2.2em;
-  padding-bottom: .3em;
+  padding-bottom: .35em;
   border-bottom: 2px solid var(--border);
   font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: .5em;
 }
-article h3::before { content: "▶ "; color: var(--primary); font-size: .85em; }
+/* 自作アイコン: 円形チェブロン（絵文字の代わりのデザインパーツ） */
+article h3::before {
+  content: "›";
+  flex: 0 0 22px;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  line-height: 1;
+  padding-bottom: 2px;
+}
 article img { max-width: 100%; border-radius: 10px; border: 1px solid var(--border); }
 article code { background: var(--bg-soft); padding: .15em .45em; border-radius: 4px; font-size: .9em; }
 article pre { background: #f3f5f9; padding: 1em 1.2em; border-radius: 8px; overflow-x: auto; border: 1px solid var(--border); }
@@ -97,7 +115,8 @@ article th { background: var(--primary); color: #fff; font-weight: 700; white-sp
 article tr:nth-child(even) td { background: var(--bg-soft); }
 
 .meta { color: var(--text-dim); font-size: .86rem; display: flex; gap: 1em; flex-wrap: wrap; }
-.tag { display: inline-block; background: var(--bg-soft); border: 1px solid var(--border); border-radius: 999px; padding: .02em .8em; font-size: .78rem; color: var(--text-dim); }
+.tag { display: inline-block; font-size: .78rem; color: var(--text-dim); }
+.tag::before { content: "#"; color: var(--primary); margin-right: .1em; }
 .pr-note { background: var(--bg-soft); border: 1px solid var(--border); border-radius: 8px; padding: .55em 1em; font-size: .82rem; color: var(--text-dim); margin: 1.2rem 0 2rem; }
 
 /* 記事カード（トップ） */
@@ -139,7 +158,19 @@ article tr:nth-child(even) td { background: var(--bg-soft); }
   padding: 1em 1.3em;
   margin: 1.6em 0;
 }
-.box-data .box-title, .box-point .box-title { font-weight: 800; color: var(--primary-dark); font-size: .95rem; margin-bottom: .4em; }
+.box-data .box-title, .box-point .box-title {
+  font-weight: 800; color: var(--primary-dark); font-size: .95rem; margin-bottom: .4em;
+  display: flex; align-items: center; gap: .5em;
+}
+/* 自作アイコン: 角丸スクエアのチェック */
+.box-data .box-title::before, .box-point .box-title::before {
+  content: "✓";
+  flex: 0 0 20px; width: 20px; height: 20px;
+  border-radius: 6px;
+  background: var(--primary);
+  color: #fff; font-size: 13px; font-weight: 800;
+  display: inline-flex; align-items: center; justify-content: center;
+}
 .box-warn {
   background: #fff7ed;
   border: 1px solid #ffd6a8;
@@ -147,7 +178,18 @@ article tr:nth-child(even) td { background: var(--bg-soft); }
   padding: 1em 1.3em;
   margin: 1.6em 0;
 }
-.box-warn .box-title { font-weight: 800; color: #c2570a; font-size: .95rem; margin-bottom: .4em; }
+.box-warn .box-title {
+  font-weight: 800; color: #c2570a; font-size: .95rem; margin-bottom: .4em;
+  display: flex; align-items: center; gap: .5em;
+}
+.box-warn .box-title::before {
+  content: "!";
+  flex: 0 0 20px; width: 20px; height: 20px;
+  border-radius: 50%;
+  background: #e8862a;
+  color: #fff; font-size: 14px; font-weight: 800;
+  display: inline-flex; align-items: center; justify-content: center;
+}
 .merit, .demerit { list-style: none; padding-left: 0; }
 .merit li { padding-left: 1.6em; text-indent: -1.6em; }
 .demerit li { padding-left: 1.6em; text-indent: -1.6em; }
@@ -228,7 +270,16 @@ article tr:nth-child(even) td { background: var(--bg-soft); }
   box-shadow: 0 2px 8px rgba(31,39,51,.06);
 }
 .hero-plans .col.em { border-color: var(--primary); }
-.hero-plans .col .icon { font-size: 1.7rem; }
+/* プラン頭文字の円形バッジ（絵文字の代わり） */
+.hero-plans .col .icon {
+  width: 40px; height: 40px; margin: 0 auto .3em;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900; font-size: .95rem; color: #fff;
+  background: #9aa3b2;
+}
+.hero-plans .col.em .icon { background: var(--primary); }
+.hero-plans .col.gold .icon { background: #d99a26; }
 .hero-plans .col .name { font-weight: 900; margin: .2em 0; }
 .hero-plans .col .price { color: var(--primary-dark); font-weight: 800; font-size: .95rem; }
 .hero-plans .col .for { font-size: .8rem; color: var(--text-dim); line-height: 1.6; margin-top: .3em; }

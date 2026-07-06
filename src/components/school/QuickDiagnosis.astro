@@ -8,7 +8,9 @@ const data = SCHOOLS.map((s) => ({
   purpose: s.tags.purpose, format: s.tags.format,
   monthly: s.budget.monthly, total: s.budget.total,
   subsidy: s.subsidy.type, score: editorialScore(s, def),
-  cta: s.cta.url, path: `${GENRE.basePath}/${s.id}`,
+  cta: s.cta.url, ctaLabel: s.cta.primary,
+  rel: s.affiliate ? 'sponsored nofollow noopener' : 'noopener',
+  path: `${GENRE.basePath}/${s.id}`,
 }));
 ---
 <quick-diag class="qdiag" data-schools={JSON.stringify(data)}>
@@ -97,9 +99,16 @@ const data = SCHOOLS.map((s) => ({
         ? `${top.type}・編集部評価 ${top.score.toFixed(1)}`
         : `${top.type}・編集部評価 ${top.score.toFixed(1)}（${full.length}校が該当）`;
       sp.style.fontSize = '.78rem'; sp.style.color = 'var(--text-dim)';
+      // 診断→CTA直結（CRO監査H-2）: 主=無料相談（外部）、副=詳細レビュー（内部）
+      const row = document.createElement('div');
+      row.className = 'qd-actions';
+      const cta = document.createElement('a');
+      cta.href = top.cta; cta.rel = top.rel; cta.target = '_blank';
+      cta.className = 'aff-btn qd-cta'; cta.textContent = top.ctaLabel;
       const a = document.createElement('a'); a.href = top.path; a.textContent = '詳細をみる ›';
       a.style.fontWeight = '700'; a.style.fontSize = '.85rem';
-      div.append(b1, sp, a);
+      row.append(cta, a);
+      div.append(b1, sp, row);
       box.append(div);
     }
   }

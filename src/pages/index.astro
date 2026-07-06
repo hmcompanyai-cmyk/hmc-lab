@@ -8,13 +8,28 @@ import QuickDiagnosis from '../components/school/QuickDiagnosis.astro';
 import FreshnessNote from '../components/school/FreshnessNote.astro';
 import PrLabel from '../components/school/PrLabel.astro';
 import StickyBar from '../components/school/StickyBar.astro';
-import { segmentBySlug, rankedSchools, itemListJsonLd, GENRE } from '../lib/schools';
+import { segmentBySlug, rankedSchools, itemListJsonLd, GENRE, SCHOOLS, yen } from '../lib/schools';
+import type { SchoolT } from '../lib/schools';
+import { simulate } from '../lib/subsidy';
 import { getCollection } from 'astro:content';
 import '../styles/lp.css';
 
 const seg = segmentBySlug('default')!;
 const ranked = rankedSchools(seg);
 const top3 = ranked.slice(0, 3);
+// ヒーロー実績数字: 最安の「条件達成後の実質負担」をデータから動的算出（鮮度ローテでズレない）
+const cheapestEffective = Math.min(
+  ...SCHOOLS.filter((s) => s.subsidy.type !== 'none' && s.subsidy.baseFee)
+    .map((s) => simulate(s.subsidy.baseFee!, s.subsidy.type).effective)
+);
+const priceHint = (s: SchoolT) =>
+  s.subsidy.type !== 'none' && s.subsidy.baseFee
+    ? `給付金で実質${yen(simulate(s.subsidy.baseFee, s.subsidy.type).effective)}〜`
+    : s.budget.monthly != null
+      ? `月${yen(s.budget.monthly)}`
+      : s.budget.total != null
+        ? `総額${yen(s.budget.total)}`
+        : '';
 const jsonLd = itemListJsonLd(seg, Astro.site?.origin ?? '');
 const posts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -38,19 +53,26 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
           あなたの目的と予算に合う一校が見つかります。
         </p>
         <div class="hero-ctas">
-          <a class="aff-btn" href="#ranking">ランキングをみる</a>
-          <a class="ghost-w" href="#shindan">30秒で無料診断</a>
+          <a class="aff-btn" href="#shindan">30秒の無料診断をはじめる</a>
+          <a class="ghost-w" href="#ranking">ランキングをみる</a>
         </div>
         <div class="metrics">
-          <span><b>{GENRE.updatedDate.replace('-', '.')}</b> 更新（編集部が毎日点検しています）</span>
+          <span><b>最大80<small>%</small></b>給付金の支給率</span>
+          <span><b>{yen(cheapestEffective)}<small>〜</small></b>条件達成後の実質負担</span>
+          <span><b>{SCHOOLS.length}<small>校</small></b>毎日点検で比較</span>
         </div>
+        <p class="metrics-note">※給付金は修了・転職などの条件をすべて達成した後に支給される制度です（割引ではありません）</p>
       </div>
       <div class="hero-top3">
         <div class="ht-head">今月の総合ランキング</div>
         {top3.map((e) => (
           <a class="ht-row" href={`#${e.school.id}`} style="color:inherit;">
             <span class={`rank-badge r${e.rank}`}>{e.rank}</span>
-            <span><span class="ht-name">{e.school.shortName}</span><br /><span class="ht-type">{e.school.type}</span></span>
+            <span>
+              <span class="ht-name">{e.school.shortName}</span><br />
+              <span class="ht-type">{e.school.type}</span><br />
+              <span class="ht-price">{priceHint(e.school)}</span>
+            </span>
             <span class="ht-score">{e.score.toFixed(1)}</span>
           </a>
         ))}

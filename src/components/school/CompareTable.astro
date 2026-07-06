@@ -1,7 +1,10 @@
 ---
-/** 比較表: 横スクロール+1列目sticky+スクロールヒント。順位はスコア駆動（H-4）。 */
+/** 比較表: 横スクロール+1列目sticky+スクロールヒント。順位はスコア駆動（H-4）。
+ *  給付金列は「いくら得か」を金額で見せ、各行に無料相談CTA（CRO監査H-3）。
+ *  実質額の直後に「条件達成後」を必ず併記（優良誤認対策）。 */
 import type { SegmentT } from '../../lib/schools';
 import { rankedSchools, yen, GENRE } from '../../lib/schools';
+import { simulate } from '../../lib/subsidy';
 interface Props { segment: SegmentT }
 const { segment } = Astro.props;
 const ranked = rankedSchools(segment);
@@ -11,21 +14,33 @@ const ranked = rankedSchools(segment);
   <div class="ct-wrap" role="region" aria-label="スクール比較表" tabindex="0">
     <table class="ct">
       <thead>
-        <tr><th scope="col">スクール</th><th scope="col">タイプ</th><th scope="col">月額</th><th scope="col">総額</th><th scope="col">給付金・補助金</th><th scope="col">評価</th></tr>
+        <tr><th scope="col">スクール</th><th scope="col">タイプ</th><th scope="col">月額</th><th scope="col">総額</th><th scope="col">給付金・補助金</th><th scope="col">評価</th><th scope="col">相談</th></tr>
       </thead>
       <tbody>
-        {ranked.map((e) => (
-          <tr>
-            <th scope="row"><a href={`#${e.school.id}`}>{e.rank}位 {e.school.shortName}</a></th>
-            <td>{e.school.type}</td>
-            <td>{yen(e.school.budget.monthly)}</td>
-            <td>{yen(e.school.budget.total)}{!e.school.verified && ' ※要公式確認'}</td>
-            <td>{e.school.subsidy.type === 'none' ? '対象外' : '対象（条件達成後に支給）'}</td>
-            <td>{e.score.toFixed(1)}</td>
-          </tr>
-        ))}
+        {ranked.map((e) => {
+          const s = e.school;
+          const sim = s.subsidy.type !== 'none' && s.subsidy.baseFee ? simulate(s.subsidy.baseFee, s.subsidy.type) : null;
+          const rel = s.affiliate ? 'sponsored nofollow noopener' : 'noopener';
+          return (
+            <tr>
+              <th scope="row"><a href={`#${s.id}`}>{e.rank}位 {s.shortName}</a></th>
+              <td>{s.type}</td>
+              <td>{yen(s.budget.monthly)}</td>
+              <td>{yen(s.budget.total)}{!s.verified && ' ※要公式確認'}</td>
+              <td>
+                {s.subsidy.type === 'none'
+                  ? '対象外'
+                  : sim
+                    ? <><b class="ct-eff">実質{yen(sim.effective)}〜</b><br /><small>条件達成後に支給</small></>
+                    : <>対象講座あり<br /><small>条件達成後に支給</small></>}
+              </td>
+              <td>{e.score.toFixed(1)}</td>
+              <td><a class="aff-btn ct-cta" href={s.cta.url} rel={rel} target="_blank">無料相談</a></td>
+            </tr>
+          );
+        })}
       </tbody>
     </table>
   </div>
-  <p class="ct-hint">表は横にスクロールできます。評価の算出方法は<a href="/info#ranking-basis">こちら</a></p>
+  <p class="ct-hint">表は横にスクロールできます。評価の算出方法は<a href="/info#ranking-basis">こちら</a>。給付金の実質額は各制度の条件をすべて達成した場合の目安です。</p>
 </section>

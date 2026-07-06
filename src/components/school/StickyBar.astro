@@ -1,13 +1,21 @@
 ---
 /** スマホ追従バー（競合比較メディアが持たない差別化・UX調査P0）。
- *  アンカー先がそのページに存在しない場合はメインLPへ送る（詳細ページ・広告LP対策）。 */
+ *  ナビ4項目＋主CTA1つ（CRO監査H-1）。アンカー先がそのページに
+ *  存在しない場合はメインLPへ送る（詳細ページ・広告LP対策）。 */
 import { GENRE } from '../../lib/schools';
+
+interface Props {
+  cta?: { href: string; label: string; rel?: string };
+}
+const { cta = { href: '#shindan', label: '無料診断' } } = Astro.props;
+const external = cta.href.startsWith('http');
 ---
 <sticky-bar class="stickybar" data-base={GENRE.basePath} aria-label="ページ内ナビゲーション">
   <a href="#top">TOP</a>
   <a href="#shindan">診断</a>
   <a href="#hikaku">比較表</a>
   <a href="#ranking">ランキング</a>
+  <a class="sb-cta" href={cta.href} rel={cta.rel ?? (external ? 'noopener' : undefined)} target={external ? '_blank' : undefined}>{cta.label}</a>
 </sticky-bar>
 <script>
   class StickyBar extends HTMLElement {

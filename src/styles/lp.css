@@ -65,10 +65,29 @@
 .pr-row span { font-size: .74rem; color: var(--text-dim); }
 .pr-row b { font-size: 1.1rem; }
 .pr-note-s { font-size: .8rem; color: var(--text-dim); margin: .4em 0; }
+/* 価格インパクトパネル（CRO監査C-1: 数字は大きく、条件は必ず隣に） */
 .pr-subsidy {
-  border-top: 1px dashed var(--border);
-  margin-top: .6em; padding-top: .6em; font-size: .95rem;
+  margin-top: .7em; padding: .8em 1em;
+  background: linear-gradient(180deg, #FFF3E9, #FDE8D8);
+  border: 1.5px solid var(--cta);
+  border-radius: 12px;
+  font-size: .95rem;
 }
+.pr-subsidy .ps-label {
+  display: inline-block; font-size: .78rem; font-weight: 800; color: var(--cta-d);
+  background: #fff; border-radius: 999px; padding: .1em .8em; margin-bottom: .35em;
+}
+.pr-subsidy .ps-price { display: flex; align-items: baseline; gap: .35em; flex-wrap: wrap; }
+.pr-subsidy .ps-was { color: var(--text-dim); font-size: 1rem; }
+.pr-subsidy .ps-arrow { color: var(--cta-d); font-weight: 800; }
+.pr-subsidy .ps-eff {
+  font-family: var(--f-num); font-weight: 900; color: var(--cta-d);
+  font-size: 1.7rem; line-height: 1.1;
+}
+.pr-subsidy .ps-eff small { font-size: .55em; font-weight: 700; margin-left: .2em; }
+.pr-subsidy .ps-scheme { font-size: .8rem; color: var(--text-dim); margin-top: .3em; }
+.pr-subsidy .pr-cond { background: #fff; }
+@media (max-width: 560px) { .pr-subsidy .ps-eff { font-size: 1.45rem; } }
 .pr-cond { font-size: .8rem; color: #8a5a13; background: #fff7ea; border-radius: 6px; padding: .5em .8em; margin: .5em 0 0; }
 .pr-verify { font-size: .8rem; color: var(--danger); margin: .5em 0 0; }
 .sc-more { margin: 1em 0; }
@@ -170,3 +189,43 @@ html { scroll-behavior: smooth; }
 .vo-attr { font-size: .76rem; color: var(--text-dim); font-weight: 700; line-height: 1.5; }
 .vo-text { font-size: .88rem; line-height: 1.85; margin: 0 0 .5em; flex: 1; }
 .vo-src { font-size: .72rem; color: var(--text-dim); text-align: right; border-top: 1px dashed var(--border); padding-top: .35em; }
+
+/* 口コミカルーセル（CRO監査H-4・CSS Scroll Snap＋薄いJS） */
+.vo-viewport { overflow: hidden; }
+.vo-carousel .vo-track {
+  display: flex; gap: .8em;
+  overflow-x: auto; scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.vo-carousel .vo-track::-webkit-scrollbar { display: none; }
+.vo-carousel .vo-card {
+  flex: 0 0 88%;
+  scroll-snap-align: start;
+  max-width: 340px;
+}
+@media (min-width: 700px) { .vo-carousel .vo-card { flex-basis: 46%; } }
+.vo-ctrl { display: flex; align-items: center; justify-content: center; gap: .8em; margin-top: .6em; }
+.vo-ctrl button {
+  width: 34px; height: 34px; border-radius: 50%; cursor: pointer;
+  border: 1.5px solid var(--border); background: #fff; color: var(--primary);
+  font-size: 1.1rem; font-weight: 800; line-height: 1;
+}
+.vo-ctrl button:disabled { opacity: .35; cursor: default; }
+.vo-dots { display: flex; gap: .35em; }
+.vo-dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--border); display: block; cursor: pointer; }
+.vo-dots i.on { background: var(--primary); }
+/* JS無効時: カルーセルUIを隠しtrackを折返しグリッドで見せる */
+voice-carousel:not(:defined) .vo-ctrl { display: none; }
+voice-carousel:not(:defined) .vo-track { flex-wrap: wrap; overflow: visible; }
+
+/* 診断結果CTA・比較表行CTA・追従バーCTA（CRO監査H-1/H-2/H-3） */
+.qd-actions { display: flex; align-items: center; gap: .9em; margin-top: .5em; flex-wrap: wrap; }
+.aff-btn.qd-cta { font-size: .85rem; padding: .55em 1.2em; }
+.aff-btn.ct-cta { font-size: .8rem; padding: .4em 1em; white-space: nowrap; }
+.ct-eff { color: var(--cta-d); font-weight: 900; }
+.stickybar .sb-cta {
+  background: var(--cta); color: #fff; border-radius: 999px;
+  padding: .35em 1.1em; font-weight: 800;
+}
+.stickybar .sb-cta:hover { background: var(--cta-d); color: #fff; }

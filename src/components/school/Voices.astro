@@ -1,29 +1,108 @@
 ---
-/** 受講者の声（prodig型カードUI・2026-07-07改修）。
- *  実在の声のみ・出典1:1（H-5）。アバターは属性ベースの円形イニシャル
+/** 受講者の声（カルーセル版・CRO監査H-4）。
+ *  実在の声のみ・出典1:1（H-5）。3件以上はCSS Scroll Snapのカルーセル、
+ *  2件以下は従来グリッド。JS無効時はカルーセルも折返しグリッドに戻る
+ *  （:not(:defined)フォールバック）。アバターは属性ベースの円形イニシャル
  *  （画像スプリント後にイラストアバターへ差し替え可能な構造）。 */
 import type { SchoolT } from '../../lib/schools';
 interface Props { school: SchoolT }
 const { school: s } = Astro.props;
 const AV_COLORS = ['#1C6B54', '#C39433', '#B87C48', '#134C3B', '#8a6d3b'];
-const initial = (attr: string) => attr.replace(/[（(].*$/, '').slice(0, 1) || '声';
+/** 「40代・営業職」→「営」のように、年代数字ではなく職業・立場の頭文字を使う
+ *  （数字だと順位バッジと紛らわしい）。 */
+const initial = (attr: string) => {
+  const cleaned = attr.replace(/[（(].*$/, '');
+  const seg = cleaned.includes('・') ? cleaned.split('・').find((x) => !/^\d/.test(x)) ?? cleaned : cleaned;
+  const m = seg.match(/[぀-ヿ㐀-鿿A-Za-z]/u);
+  return m ? m[0] : '声';
+};
+const useCarousel = s.voices.length >= 3;
 ---
 {s.voices.length > 0 ? (
-  <div class="sc-voices">
-    <div class="voices-head">受講者・検討者の声<span class="voices-count">実在の{s.voices.length}件</span></div>
-    <div class="vo-grid">
-      {s.voices.map((v, i) => (
-        <div class="vo-card">
-          <div class="vo-top">
-            <span class="vo-av" style={`background:${AV_COLORS[i % AV_COLORS.length]}`}>{initial(v.attr)}</span>
-            <span class="vo-attr">{v.attr}</span>
-          </div>
-          <p class="vo-text">{v.quote}</p>
-          <div class="vo-src">{v.year}・<a href={v.url} rel="noopener" target="_blank">{v.media}</a></div>
+  useCarousel ? (
+    <voice-carousel class="sc-voices vo-carousel">
+      <div class="voices-head">受講者・検討者の声<span class="voices-count">実在の{s.voices.length}件</span></div>
+      <div class="vo-viewport">
+        <div class="vo-track" role="list">
+          {s.voices.map((v, i) => (
+            <div class="vo-card" role="listitem">
+              <div class="vo-top">
+                <span class="vo-av" style={`background:${AV_COLORS[i % AV_COLORS.length]}`}>{initial(v.attr)}</span>
+                <span class="vo-attr">{v.attr}</span>
+              </div>
+              <p class="vo-text">{v.quote}</p>
+              <div class="vo-src">{v.year}・<a href={v.url} rel="noopener" target="_blank">{v.media}</a></div>
+            </div>
+          ))}
         </div>
-      ))}
+      </div>
+      <div class="vo-ctrl">
+        <button type="button" class="vo-prev" aria-label="前の口コミ">‹</button>
+        <div class="vo-dots" aria-hidden="true"></div>
+        <button type="button" class="vo-next" aria-label="次の口コミ">›</button>
+      </div>
+    </voice-carousel>
+  ) : (
+    <div class="sc-voices">
+      <div class="voices-head">受講者・検討者の声<span class="voices-count">実在の{s.voices.length}件</span></div>
+      <div class="vo-grid">
+        {s.voices.map((v, i) => (
+          <div class="vo-card">
+            <div class="vo-top">
+              <span class="vo-av" style={`background:${AV_COLORS[i % AV_COLORS.length]}`}>{initial(v.attr)}</span>
+              <span class="vo-attr">{v.attr}</span>
+            </div>
+            <p class="vo-text">{v.quote}</p>
+            <div class="vo-src">{v.year}・<a href={v.url} rel="noopener" target="_blank">{v.media}</a></div>
+          </div>
+        ))}
+      </div>
     </div>
-  </div>
+  )
 ) : (
   s.voicesNote && <p class="voices-none">{s.voicesNote}</p>
 )}
+
+<script>
+  /** CSS Scroll Snapに乗せるだけの薄いカルーセル。DOM生成はcreateElement/textContentのみ（M-1）。 */
+  class VoiceCarousel extends HTMLElement {
+    track!: HTMLElement;
+    cards: HTMLElement[] = [];
+    prev!: HTMLButtonElement;
+    next!: HTMLButtonElement;
+    dots!: HTMLElement;
+    connectedCallback() {
+      this.track = this.querySelector('.vo-track')!;
+      this.cards = [...this.querySelectorAll<HTMLElement>('.vo-card')];
+      if (this.cards.length < 2) { this.querySelector('.vo-ctrl')?.remove(); return; }
+      this.prev = this.querySelector('.vo-prev')!;
+      this.next = this.querySelector('.vo-next')!;
+      this.dots = this.querySelector('.vo-dots')!;
+      this.cards.forEach((_, i) => {
+        const d = document.createElement('i');
+        d.addEventListener('click', () => this.go(i));
+        this.dots.appendChild(d);
+      });
+      this.prev.addEventListener('click', () => this.go(this.index() - 1));
+      this.next.addEventListener('click', () => this.go(this.index() + 1));
+      this.track.addEventListener('scroll', () => this.sync(), { passive: true });
+      this.sync();
+    }
+    index(): number {
+      const w = this.cards[0].offsetWidth + 12; // gap込み概算
+      return Math.round(this.track.scrollLeft / w);
+    }
+    go(i: number) {
+      const n = Math.max(0, Math.min(i, this.cards.length - 1));
+      const w = this.cards[0].offsetWidth + 12;
+      this.track.scrollTo({ left: n * w, behavior: 'smooth' });
+    }
+    sync() {
+      const i = this.index();
+      [...this.dots.children].forEach((d, j) => d.classList.toggle('on', j === i));
+      this.prev.disabled = i <= 0;
+      this.next.disabled = i >= this.cards.length - 1;
+    }
+  }
+  if (!customElements.get('voice-carousel')) customElements.define('voice-carousel', VoiceCarousel);
+</script>

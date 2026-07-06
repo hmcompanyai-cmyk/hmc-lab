@@ -83,7 +83,7 @@
       ],
       "cta": {
         "url": "https://genai.dmm.com/",
-        "primary": "無料セミナーをみてみる",
+        "primary": "無料セミナーに参加する",
         "note": "60分の無料セミナーあり・入会金0円"
       },
       "detail": {
@@ -203,7 +203,7 @@
       ],
       "cta": {
         "url": "https://techacademy.jp/course/first-prompt-engineering",
-        "primary": "無料相談をみてみる",
+        "primary": "無料相談を予約する",
         "note": "まずはプロンプト入門コースの検討がおすすめ"
       },
       "detail": {
@@ -316,7 +316,7 @@
       ],
       "cta": {
         "url": "https://generative-ai.sejuku.net/",
-        "primary": "無料カウンセリングをみてみる",
+        "primary": "無料カウンセリングを予約する",
         "note": "オンライン・押し売りされなかったという検討者の声あり"
       },
       "detail": {
@@ -425,7 +425,7 @@
       ],
       "cta": {
         "url": "https://www.kikagaku.ai/",
-        "primary": "無料説明会をみてみる",
+        "primary": "無料説明会に申し込む",
         "note": "給付金の適用条件は説明会で確認を"
       },
       "detail": {
@@ -521,7 +521,7 @@
       "voicesNote": "本講座の一次口コミは調査中です（出典を確認できた声のみ掲載する方針のため）",
       "cta": {
         "url": "https://www.winschool.jp/guidance/dx/generative_ai.html",
-        "primary": "無料カウンセリングをみてみる",
+        "primary": "無料カウンセリングを予約する",
         "note": "全国の教室で対面相談も可能"
       },
       "detail": {
@@ -625,7 +625,7 @@
       ],
       "cta": {
         "url": "https://shift-ai.co.jp/",
-        "primary": "無料セミナーをみてみる",
+        "primary": "無料セミナーに参加する",
         "note": "入会前に無料オリエンテーションへの参加が必要な仕組み"
       },
       "detail": {
@@ -747,7 +747,7 @@
       ],
       "cta": {
         "url": "https://www.skillupai.com/",
-        "primary": "無料説明会をみてみる",
+        "primary": "無料説明会に申し込む",
         "note": "給付金と受験資格の条件は説明会で確認を"
       },
       "detail": {

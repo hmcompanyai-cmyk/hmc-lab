@@ -1,6 +1,8 @@
 ---
-/** H-2: 実質価格を主表示にしない。「総額→条件を満たせば実質」の順で、
- *  条件注記を同等の視認性で近接表示。verified:falseの注意はスキーマ駆動で強制描画（H-6）。 */
+/** H-2: 実質価格を主表示にしない原則を守りつつ、給付金の落差を主役級に見せる
+ *  「価格インパクトパネル」（CRO監査C-1）。総額は取り消し線で併記し、
+ *  条件注記(pr-cond)は必ず同一パネル内・実質額の直下に近接表示（M-2）。
+ *  verified:falseの注意はスキーマ駆動で強制描画（H-6）。 */
 import type { SchoolT } from '../../lib/schools';
 import { yen } from '../../lib/schools';
 import { simulate, SCHEME_LABEL } from '../../lib/subsidy';
@@ -20,7 +22,19 @@ const sim = s.subsidy.type !== 'none' && s.subsidy.baseFee
   <p class="pr-note-s">{s.budget.note}</p>
   {s.subsidy.type !== 'none' ? (
     <div class="pr-subsidy">
-      {sim && <div>{SCHEME_LABEL[s.subsidy.type]}の条件をすべて満たした場合、実質 <b>{yen(sim.effective)}</b> 程度</div>}
+      {sim ? (
+        <>
+          <span class="ps-label">給付金で実質</span>
+          <div class="ps-price">
+            <s class="ps-was">{yen(sim.fee)}</s>
+            <span class="ps-arrow">→</span>
+            <b class="ps-eff">{yen(sim.effective)}<small>程度</small></b>
+          </div>
+          <div class="ps-scheme">{SCHEME_LABEL[s.subsidy.type]}・条件をすべて満たした場合</div>
+        </>
+      ) : (
+        <div class="ps-scheme"><b>{SCHEME_LABEL[s.subsidy.type]}</b>の対象講座あり（料金・対象はコースにより異なります）</div>
+      )}
       <p class="pr-cond">{s.subsidy.conditionNote}</p>
     </div>
   ) : (

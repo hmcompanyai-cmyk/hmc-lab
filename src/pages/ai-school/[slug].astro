@@ -48,8 +48,10 @@ if (kind === 'segment') {
   );
 }
 const rel = school?.affiliate ? 'sponsored nofollow noopener' : 'noopener';
+// 個別ページの追従CTAは当該校の無料相談へ直結（CRO監査H-1）
+const stickyCta = school ? { href: school.cta.url, label: '無料相談', rel } : undefined;
 ---
-<LpLayout title={title} description={description} noindex={noindex} jsonLd={jsonLd}>
+<LpLayout title={title} description={description} noindex={noindex} jsonLd={jsonLd} stickyCta={stickyCta}>
   {kind === 'segment' && seg && <SegmentSection segment={seg} />}
 
   {kind === 'school' && school && defRank && (
@@ -68,6 +70,13 @@ const rel = school?.affiliate ? 'sponsored nofollow noopener' : 'noopener';
 
       <h2>料金と給付金</h2>
       <PriceTable school={school} />
+
+      <div class="cta-wrap">
+        <a class="aff-btn" href={school.cta.url} rel={rel} target="_blank">
+          {school.subsidy.type !== 'none' ? '無料相談で給付金の対象か確認する' : school.cta.primary}
+        </a>
+        <div class="cta-note">{school.cta.note}</div>
+      </div>
 
       <h2>学べること</h2>
       <ul>{school.detail.curriculum.map((c) => <li>{c}</li>)}</ul>

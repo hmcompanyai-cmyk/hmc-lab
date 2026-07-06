@@ -1,5 +1,8 @@
 {
-  "_meta": { "rotationDays": 90, "note": "再確認のたびに追記。変更なし月も『再確認済み』を入れて鮮度を前進させる（更新規約はARCHITECTURE.md参照）" },
+  "_meta": {
+    "rotationDays": 90,
+    "note": "再確認のたびに追記。変更なし月も『再確認済み』を入れて鮮度を前進させる（更新規約はARCHITECTURE.md参照）"
+  },
   "changes": [
     {
       "date": "2026-06-30",

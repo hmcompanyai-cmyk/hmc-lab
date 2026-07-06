@@ -41,10 +41,10 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
   <section class="hero2a">
     <div class="hero2a-in">
       <div>
-        <span class="badge">【{GENRE.updatedDate}更新】生成AIスクール7校 徹底比較</span>
+        <span class="badge">【{GENRE.updatedDate}更新】生成AIスクール{SCHOOLS.length}校 徹底比較</span>
         <h1>後悔しない、<br />生成AIスクールの選び方。</h1>
         <p class="lead">
-          月1万円台のサブスクから給付金前提の本格コースまで、性格の違う7校を編集部が同じ物差しで採点。
+          月1万円台のサブスクから給付金前提の本格コースまで、性格の違う{SCHOOLS.length}校を編集部が同じ物差しで採点。
           あなたの目的と予算に合う一校が見つかります。
         </p>
         <div class="hero-ctas">
@@ -65,7 +65,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
             <span class="ht-score">{e.score.toFixed(1)}</span>
           </a>
         ))}
-        <a class="ht-all" href="/ai-school">全7校のランキングをみる ›</a>
+        <a class="ht-all" href="/ai-school">全{SCHOOLS.length}校のランキングをみる ›</a>
       </div>
     </div>
   </section>

@@ -2,8 +2,9 @@
 /** 多軸フィルタ診断（<school-filter>カスタム要素・vanilla JS）。
  *  M-1対応: 状態はURLSearchParams（enumホワイトリスト照合）・DOM操作はclassList/textContentのみ。
  *  JS無効時は全カードが見える（プログレッシブ・エンハンスメント）。 */
+import { GENRE } from '../../lib/schools';
 ---
-<school-filter id="shindan" class="diag">
+<school-filter id="shindan" class="diag" data-all={GENRE.basePath}>
   <div class="diag-head">あなたに合うスクールをしぼり込む</div>
   <form class="diag-form">
     <label>目的
@@ -128,10 +129,23 @@
         this.result.textContent = '';
       } else if (shown === 0) {
         this.result.textContent = '条件に合うスクールがありませんでした。条件を1つ減らしてみてください。';
+        // 一部カードしか載っていないページ（広告LP等）では、同じ条件のまま全校一覧へ逃がす
+        const all = this.dataset.all || '';
+        if (all && location.pathname.replace(/\/$/, '') !== all) {
+          const q = new URLSearchParams();
+          for (const [k, v] of Object.entries(st)) q.set(k, v);
+          const a = document.createElement('a');
+          a.href = q.toString() ? `${all}?${q}` : all;
+          a.textContent = 'すべてのスクールからこの条件で探す ›';
+          a.style.fontWeight = '700';
+          this.result.append(document.createElement('br'), a);
+        }
       } else {
         if (best) (best as HTMLElement).classList.add('is-reco');
         const name = best?.querySelector('.sc-name')?.textContent?.trim() ?? '';
         this.result.textContent = `${shown}校が該当。編集部評価がもっとも高いのは「${name}」です（下に絞り込み表示中）`;
+        // 明示的な「しぼり込む」押下時は結果の先頭カードまで運ぶ（結果が視界外になる離脱ポイント対策）
+        if (push && best) (best as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
       // URL同期（M-1: 値はENUM通過済みのみ）
       const q = new URLSearchParams();

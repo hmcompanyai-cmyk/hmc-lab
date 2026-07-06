@@ -63,23 +63,39 @@ const data = SCHOOLS.map((s) => ({
       const box = this.querySelector('.qd-result')!;
       box.textContent = '';
       if (!p && !b && !f) return;
-      const hit = this.schools.filter((s) => {
-        if (p && !s.purpose.includes(p)) return false;
-        if (f && !s.format.includes(f)) return false;
-        if (b === 'm2' && !(s.monthly != null && s.monthly <= 29999)) return false;
-        if (b === 't5' && !(s.total != null && s.total <= 50000)) return false;
-        if (b === 'sub' && s.subsidy === 'none') return false;
-        return true;
-      }).sort((a, c) => c.score - a.score);
-      if (hit.length === 0) {
+      const cond = (s: any) => {
+        const checks: boolean[] = [];
+        if (p) checks.push(s.purpose.includes(p));
+        if (f) checks.push(s.format.includes(f));
+        if (b === 'm2') checks.push(s.monthly != null && s.monthly <= 29999);
+        if (b === 't5') checks.push(s.total != null && s.total <= 50000);
+        if (b === 'sub') checks.push(s.subsidy !== 'none');
+        return { total: checks.length, ok: checks.filter(Boolean).length };
+      };
+      const scored = this.schools
+        .map((s) => ({ s, ...cond(s) }))
+        .sort((a, c) => c.ok - a.ok || c.s.score - a.s.score);
+      const full = scored.filter((x) => x.ok === x.total);
+      // 完全一致がなくても行き止まりにせず、最も条件に近い1校を差分つきで正直に提示
+      const top = (full[0] ?? scored[0]).s;
+      const near = full.length === 0;
+      if (near && scored[0].ok === 0) {
         box.textContent = '条件に合うスクールが見つかりませんでした。条件を1つ外してみてください。';
         return;
       }
-      const top = hit[0];
       const div = document.createElement('div');
       div.className = 'qd-hit';
+      if (near) {
+        const note = document.createElement('div');
+        note.textContent = `全条件一致はありませんでした。いちばん近いのは（${scored[0].ok}/${scored[0].total}条件に合致）`;
+        note.style.fontSize = '.78rem';
+        div.append(note);
+      }
       const b1 = document.createElement('b'); b1.textContent = top.name;
-      const sp = document.createElement('div'); sp.textContent = `${top.type}・編集部評価 ${top.score.toFixed(1)}（${hit.length}校が該当）`;
+      const sp = document.createElement('div');
+      sp.textContent = near
+        ? `${top.type}・編集部評価 ${top.score.toFixed(1)}`
+        : `${top.type}・編集部評価 ${top.score.toFixed(1)}（${full.length}校が該当）`;
       sp.style.fontSize = '.78rem'; sp.style.color = 'var(--text-dim)';
       const a = document.createElement('a'); a.href = top.path; a.textContent = '詳細をみる ›';
       a.style.fontWeight = '700'; a.style.fontSize = '.85rem';

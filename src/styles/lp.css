@@ -145,9 +145,8 @@ body:has(.stickybar.is-on) footer.site { padding-bottom: 4.5rem; }
 .lp-legal { text-align: center; font-size: .78rem; color: var(--text-dim); margin-top: 3rem; }
 .lp-links ul { padding-left: 1.2em; }
 
-/* smooth scroll + アンカー位置 */
+/* smooth scroll（アンカー位置は global.css の [id] scroll-margin が担う） */
 html { scroll-behavior: smooth; }
-#ranking, #hikaku, #shindan, #top { scroll-margin-top: 1rem; }
 
 @media (max-width: 560px) {
   .top3-cards { flex-direction: column; }

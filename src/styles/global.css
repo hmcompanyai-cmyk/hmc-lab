@@ -515,6 +515,10 @@ footer.site { background: var(--paper2); }
 .purpose-strip-in a { border: 1px solid var(--border); background: var(--bg); border-radius: 999px; padding: .3em 1.1em; font-weight: 700; color: var(--text); font-size: .84rem; }
 .purpose-strip-in a.gold { background: var(--gold-soft); border-color: var(--gold); }
 .top2a { max-width: var(--max-site); margin: 0 auto; display: grid; grid-template-columns: 1fr 320px; gap: 32px; align-items: start; padding-top: 2rem; }
+/* グリッド子のmin-width:autoがnowrapな比較表で列を押し広げるのを防ぐ（モバイル横スクロールの根治） */
+.top2a > * { min-width: 0; }
+/* sticky header(約75px)にアンカー先が隠れないための全ID共通マージン */
+[id] { scroll-margin-top: 5.75rem; }
 .side { position: sticky; top: 80px; display: flex; flex-direction: column; gap: 1.2rem; }
 .side-card { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 1.1em 1.2em; box-shadow: 0 6px 20px rgba(30,25,20,.05); }
 .side-card.diag-side { background: linear-gradient(160deg, #EDF2EC, #FBF2E6); }

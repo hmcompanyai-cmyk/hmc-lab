@@ -25,7 +25,15 @@ const top3 = ranked.slice(0, 3);
 <PrLabel />
 <LpNav current={segment.slug} />
 
-<DiagnosisForm />
+<DiagnosisForm
+  lock={
+    segment.slug === 'kyufu'
+      ? { k: 'kyufu' }
+      : ['tenshoku', 'fukugyo', 'reskilling'].includes(segment.slug)
+        ? { p: segment.slug }
+        : {}
+  }
+/>
 
 <section class="top3" aria-label="結論の先出し">
   <h2>結論: {segment.label}のおすすめ上位</h2>

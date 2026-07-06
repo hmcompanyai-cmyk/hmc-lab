@@ -1,21 +1,31 @@
 ---
 /** 多軸フィルタ診断（<school-filter>カスタム要素・vanilla JS）。
  *  M-1対応: 状態はURLSearchParams（enumホワイトリスト照合）・DOM操作はclassList/textContentのみ。
- *  JS無効時は全カードが見える（プログレッシブ・エンハンスメント）。 */
+ *  JS無効時は全カードが見える（プログレッシブ・エンハンスメント）。
+ *  lock: セグメントページで既に確定している軸はUIに出さず条件として自動適用
+ *  （例: 転職ページで「目的」を再度聞かない）。 */
 import { GENRE } from '../../lib/schools';
+
+interface Props {
+  /** 固定する軸（例: { p: 'tenshoku' } / { k: 'kyufu' }）。該当selectは描画されない */
+  lock?: Record<string, string>;
+}
+const { lock = {} } = Astro.props;
 ---
-<school-filter id="shindan" class="diag" data-all={GENRE.basePath}>
+<school-filter id="shindan" class="diag" data-all={GENRE.basePath} data-lock={JSON.stringify(lock)}>
   <div class="diag-head">あなたに合うスクールをしぼり込む</div>
   <form class="diag-form">
-    <label>目的
-      <select name="p">
-        <option value="">指定なし</option>
-        <option value="tenshoku">AI転職</option>
-        <option value="fukugyo">副業・業務活用</option>
-        <option value="dx">社内DX・スキルアップ</option>
-        <option value="reskilling">リスキリング（学び直し）</option>
-      </select>
-    </label>
+    {!lock.p && (
+      <label>目的
+        <select name="p">
+          <option value="">指定なし</option>
+          <option value="tenshoku">AI転職</option>
+          <option value="fukugyo">副業・業務活用</option>
+          <option value="dx">社内DX・スキルアップ</option>
+          <option value="reskilling">リスキリング（学び直し）</option>
+        </select>
+      </label>
+    )}
     <label>予算
       <select name="b">
         <option value="">指定なし</option>
@@ -33,14 +43,16 @@ import { GENRE } from '../../lib/schools';
         <option value="taimen">教室（対面）</option>
       </select>
     </label>
-    <label>こだわり
-      <select name="k">
-        <option value="">指定なし</option>
-        <option value="kyufu">給付金対象</option>
-        <option value="shikaku">資格をとりたい</option>
-        <option value="kaihatsu">開発まで学びたい</option>
-      </select>
-    </label>
+    {!lock.k && (
+      <label>こだわり
+        <select name="k">
+          <option value="">指定なし</option>
+          <option value="kyufu">給付金対象</option>
+          <option value="shikaku">資格をとりたい</option>
+          <option value="kaihatsu">開発まで学びたい</option>
+        </select>
+      </label>
+    )}
     <div class="diag-actions">
       <button type="submit" class="aff-btn diag-btn">この条件でしぼり込む</button>
       <button type="reset" class="diag-reset">リセット</button>
@@ -76,8 +88,9 @@ import { GENRE } from '../../lib/schools';
       let any = false;
       for (const key of Object.keys(ENUM)) {
         const v = q.get(key) ?? '';
-        if (v && ENUM[key].includes(v)) {
-          (this.form.elements.namedItem(key) as HTMLSelectElement).value = v;
+        const el = this.form.elements.namedItem(key) as HTMLSelectElement | null;
+        if (v && el && ENUM[key].includes(v)) {
+          el.value = v;
           any = true;
         }
       }
@@ -86,8 +99,17 @@ import { GENRE } from '../../lib/schools';
 
     state(): Record<string, string> {
       const st: Record<string, string> = {};
+      // セグメントページで固定された軸（UIに出さず常時適用・ENUM照合はここでも実施）
+      try {
+        const lock = JSON.parse(this.dataset.lock || '{}');
+        for (const [k, v] of Object.entries(lock)) {
+          if (ENUM[k]?.includes(v as string)) st[k] = v as string;
+        }
+      } catch { /* lockなし */ }
       for (const key of Object.keys(ENUM)) {
-        const v = (this.form.elements.namedItem(key) as HTMLSelectElement).value;
+        const el = this.form.elements.namedItem(key) as HTMLSelectElement | null;
+        if (!el) continue;
+        const v = el.value;
         if (v && ENUM[key].includes(v)) st[key] = v;
       }
       return st;

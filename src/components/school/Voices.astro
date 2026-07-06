@@ -16,22 +16,32 @@ const initial = (attr: string) => {
   const m = seg.match(/[぀-ヿ㐀-鿿A-Za-z]/u);
   return m ? m[0] : '声';
 };
-const useCarousel = s.voices.length >= 3;
+/** 鮮度優先: 新しい年の声から順に表示（ここ1年以内の声が最重要という編集方針） */
+const voices = [...s.voices].sort(
+  (a, b) => (parseInt(String(b.year), 10) || 0) - (parseInt(String(a.year), 10) || 0)
+);
+/** 出典リンクはテキストフラグメント付き＝クリックで引用該当箇所へ直ジャンプ（読者が一瞬で根拠確認できる）。
+ *  rel=nofollowで他サイトへ評価は渡さない。 */
+const jumpUrl = (v: { url: string; quote: string }) => {
+  const frag = v.quote.split(/[…〔（(「』」]/)[0].trim();
+  return frag.length >= 8 ? `${v.url}#:~:text=${encodeURIComponent(frag.slice(0, 30))}` : v.url;
+};
+const useCarousel = voices.length >= 3;
 ---
-{s.voices.length > 0 ? (
+{voices.length > 0 ? (
   useCarousel ? (
     <voice-carousel class="sc-voices vo-carousel">
-      <div class="voices-head">受講者・検討者の声<span class="voices-count">実在の{s.voices.length}件</span></div>
+      <div class="voices-head">受講者・検討者の声<span class="voices-count">実在の{voices.length}件</span></div>
       <div class="vo-viewport">
         <div class="vo-track" role="list">
-          {s.voices.map((v, i) => (
+          {voices.map((v, i) => (
             <div class="vo-card" role="listitem">
               <div class="vo-top">
                 <span class="vo-av" style={`background:${AV_COLORS[i % AV_COLORS.length]}`}>{initial(v.attr)}</span>
                 <span class="vo-attr">{v.attr}</span>
               </div>
               <p class="vo-text">{v.quote}</p>
-              <div class="vo-src">{v.year}・<a href={v.url} rel="noopener" target="_blank">{v.media}</a></div>
+              <div class="vo-src">{v.year}・<a href={jumpUrl(v)} rel="nofollow noopener" target="_blank">{v.media}</a></div>
             </div>
           ))}
         </div>
@@ -44,16 +54,16 @@ const useCarousel = s.voices.length >= 3;
     </voice-carousel>
   ) : (
     <div class="sc-voices">
-      <div class="voices-head">受講者・検討者の声<span class="voices-count">実在の{s.voices.length}件</span></div>
+      <div class="voices-head">受講者・検討者の声<span class="voices-count">実在の{voices.length}件</span></div>
       <div class="vo-grid">
-        {s.voices.map((v, i) => (
+        {voices.map((v, i) => (
           <div class="vo-card">
             <div class="vo-top">
               <span class="vo-av" style={`background:${AV_COLORS[i % AV_COLORS.length]}`}>{initial(v.attr)}</span>
               <span class="vo-attr">{v.attr}</span>
             </div>
             <p class="vo-text">{v.quote}</p>
-            <div class="vo-src">{v.year}・<a href={v.url} rel="noopener" target="_blank">{v.media}</a></div>
+            <div class="vo-src">{v.year}・<a href={jumpUrl(v)} rel="nofollow noopener" target="_blank">{v.media}</a></div>
           </div>
         ))}
       </div>
@@ -89,13 +99,23 @@ const useCarousel = s.voices.length >= 3;
       this.sync();
     }
     index(): number {
-      const w = this.cards[0].offsetWidth + 12; // gap込み概算
-      return Math.round(this.track.scrollLeft / w);
+      // スクロール終端では「最終カードが右端に張り付く」ため位置÷カード幅では最終indexに届かない。
+      // 終端は明示的に最終indexへクランプし、それ以外はoffsetLeftが最も近いカードを現在地とする。
+      const maxX = this.track.scrollWidth - this.track.clientWidth;
+      const x = this.track.scrollLeft;
+      if (x >= maxX - 4) return this.cards.length - 1;
+      const base = this.cards[0].offsetLeft;
+      let best = 0, bd = Infinity;
+      this.cards.forEach((c, i) => {
+        const d = Math.abs((c.offsetLeft - base) - x);
+        if (d < bd) { bd = d; best = i; }
+      });
+      return best;
     }
     go(i: number) {
       const n = Math.max(0, Math.min(i, this.cards.length - 1));
-      const w = this.cards[0].offsetWidth + 12;
-      this.track.scrollTo({ left: n * w, behavior: 'smooth' });
+      const left = this.cards[n].offsetLeft - this.cards[0].offsetLeft;
+      this.track.scrollTo({ left, behavior: 'smooth' });
     }
     sync() {
       const i = this.index();

@@ -42,12 +42,9 @@ const segNote = segment.notes[s.id];
       {s.points.map((p) => <li>{p}</li>)}
     </ul>
     <PriceTable school={s} />
-    <details class="sc-more">
-      <summary>注意点と編集部の評価をみる</summary>
-      <div class="box-warn"><div class="box-title">申し込む前の注意</div>{s.caution}</div>
-      <div class="sc-reason"><b>評価の理由</b>: {s.reason}</div>
-      <EditorNote text={s.editorNote} />
-    </details>
+    <div class="sc-reason"><b>編集部の評価</b>: {s.reason}</div>
+    <div class="box-warn"><div class="box-title">申し込む前の注意</div>{s.caution}</div>
+    <EditorNote text={s.editorNote} />
     <Voices school={s} />
     <div class="sc-cta">
       <a class="aff-btn" href={s.cta.url} rel={rel} target="_blank">{s.cta.primary}</a>

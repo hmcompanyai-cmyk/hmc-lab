@@ -153,3 +153,21 @@ html { scroll-behavior: smooth; }
   .top3-cards { flex-direction: column; }
   .sim-form input, .sim-form select { width: 100%; }
 }
+
+/* 口コミカードUI（prodig型・2026-07-07） */
+.vo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: .8em; }
+.vo-card {
+  background: #fff; border: 1px solid var(--border); border-radius: 12px;
+  padding: .8em .95em .6em;
+  box-shadow: 0 3px 10px rgba(30,25,20,.05);
+  display: flex; flex-direction: column;
+}
+.vo-top { display: flex; align-items: center; gap: .55em; margin-bottom: .45em; }
+.vo-av {
+  flex: 0 0 34px; width: 34px; height: 34px; border-radius: 50%;
+  color: #fff; font-weight: 800; font-size: .9rem;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.vo-attr { font-size: .76rem; color: var(--text-dim); font-weight: 700; line-height: 1.5; }
+.vo-text { font-size: .88rem; line-height: 1.85; margin: 0 0 .5em; flex: 1; }
+.vo-src { font-size: .72rem; color: var(--text-dim); text-align: right; border-top: 1px dashed var(--border); padding-top: .35em; }

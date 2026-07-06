@@ -42,9 +42,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
           <a class="ghost-w" href="#shindan">30秒で無料診断</a>
         </div>
         <div class="metrics">
-          <span><b>7</b>校を比較</span>
-          <span><b>5</b>軸で採点</span>
-          <span><b>毎週</b>更新</span>
+          <span><b>{GENRE.updatedDate.replace('-', '.')}</b> 更新（編集部が毎日点検しています）</span>
         </div>
       </div>
       <div class="hero-top3">
@@ -88,11 +86,11 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
         <QuickDiagnosis />
       </div>
       <div class="side-card">
-        <b class="sc-head">よく読まれている記事</b>
+        <b class="sc-head">編集部コラム</b>
         {posts.map((p) => (
           <a class="side-link" href={`/blog/${p.id}`}>{p.data.title}</a>
         ))}
-        <a class="side-link" href="/blog" style="border-bottom:none;font-weight:700;">記事一覧へ ›</a>
+        <a class="side-link" href="/blog" style="border-bottom:none;font-weight:700;">コラム一覧へ ›</a>
       </div>
       <div class="side-card shiori-card">
         <span class="face"><img src="/img/shiori.jpg" alt="編集部・栞" width="56" height="56" loading="lazy" /></span>

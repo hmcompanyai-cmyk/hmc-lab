@@ -1,19 +1,28 @@
 ---
-/** H-5: 出典（媒体名+リンク）を各引用ブロックに1:1で近接表示。
- *  声が無い校は voicesNote を表示（捏造しない）。 */
+/** 受講者の声（prodig型カードUI・2026-07-07改修）。
+ *  実在の声のみ・出典1:1（H-5）。アバターは属性ベースの円形イニシャル
+ *  （画像スプリント後にイラストアバターへ差し替え可能な構造）。 */
 import type { SchoolT } from '../../lib/schools';
 interface Props { school: SchoolT }
 const { school: s } = Astro.props;
+const AV_COLORS = ['#1C6B54', '#C39433', '#B87C48', '#134C3B', '#8a6d3b'];
+const initial = (attr: string) => attr.replace(/[（(].*$/, '').slice(0, 1) || '声';
 ---
 {s.voices.length > 0 ? (
   <div class="sc-voices">
-    <div class="voices-head">受講者・検討者の声<span class="voices-count">{s.voices.length}件</span></div>
-    {s.voices.map((v) => (
-      <div class="review">
-        <div class="rv-text">{v.quote}</div>
-        <div class="rv-src">{v.attr}（{v.year}・<a href={v.url} rel="noopener" target="_blank">{v.media}</a>）</div>
-      </div>
-    ))}
+    <div class="voices-head">受講者・検討者の声<span class="voices-count">実在の{s.voices.length}件</span></div>
+    <div class="vo-grid">
+      {s.voices.map((v, i) => (
+        <div class="vo-card">
+          <div class="vo-top">
+            <span class="vo-av" style={`background:${AV_COLORS[i % AV_COLORS.length]}`}>{initial(v.attr)}</span>
+            <span class="vo-attr">{v.attr}</span>
+          </div>
+          <p class="vo-text">{v.quote}</p>
+          <div class="vo-src">{v.year}・<a href={v.url} rel="noopener" target="_blank">{v.media}</a></div>
+        </div>
+      ))}
+    </div>
   </div>
 ) : (
   s.voicesNote && <p class="voices-none">{s.voicesNote}</p>

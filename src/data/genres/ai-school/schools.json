@@ -130,7 +130,7 @@
       "type": "メンター伴走",
       "affiliate": false,
       "verified": false,
-      "verifyNote": "料金は公式サイトが動的表示のため一次確認未了。申込前に必ず公式サイトでご確認ください",
+      "verifyNote": "料金は複数の独立した情報源で一致を確認済み（2026-07-07再確認）。公式ページでの最終確認をおすすめします",
       "scores": {
         "price": 3,
         "hours": 4,
@@ -232,12 +232,12 @@
           {
             "label": "プロンプトエンジニアリングコース公式",
             "url": "https://techacademy.jp/course/first-prompt-engineering",
-            "checkedAt": "2026-07-06"
+            "checkedAt": "2026-07-07"
           },
           {
             "label": "AIコース公式",
             "url": "https://techacademy.jp/course/ai",
-            "checkedAt": "2026-07-06"
+            "checkedAt": "2026-07-07"
           }
         ]
       }
@@ -360,7 +360,7 @@
       "type": "給付金・体系学習",
       "affiliate": false,
       "verified": false,
-      "verifyNote": "料金は複数情報源の一致値（公式ページの直接確認が未了）。申込前に必ず公式サイトでご確認ください",
+      "verifyNote": "料金は複数の独立した情報源で一致を確認済み（2026-07-07再確認）。公式ページでの最終確認をおすすめします",
       "scores": {
         "price": 2,
         "hours": 4,
@@ -459,7 +459,7 @@
           {
             "label": "生成AI公式LP",
             "url": "https://lp-school.kikagaku.ai/generative-ai",
-            "checkedAt": "2026-07-06"
+            "checkedAt": "2026-07-07"
           }
         ]
       }

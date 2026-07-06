@@ -22,7 +22,7 @@
   --f-serif: 'Noto Sans JP', 'Hiragino Sans', sans-serif;
   --f-head: 'Zen Kaku Gothic New', 'Hiragino Sans', sans-serif;
   --f-body: 'Zen Kaku Gothic New', 'Hiragino Sans', 'Yu Gothic UI', sans-serif;
-  --f-round: 'Hiragino Maru Gothic ProN', 'Zen Kaku Gothic New', sans-serif;
+  --f-round: 'Zen Maru Gothic', 'Hiragino Maru Gothic ProN', sans-serif;
   --f-num: 'Outfit', system-ui, sans-serif;
 }
 * { box-sizing: border-box; }

@@ -1,6 +1,10 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { getCollection } from 'astro:content';
+import { assertBlogQuality } from '../../lib/blog-checks';
+
+// 記事工場の品質ゲート: KWカニバリ・内部リンク切れ・収益動線欠落はビルドを落とす
+assertBlogQuality(await getCollection('blog'));
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()

@@ -1,6 +1,9 @@
 ---
+/** ブログ記事レイアウト。収益動線カード（relatedGenre/relatedSchoolId駆動・
+ *  拡張性監査H-3）・出典リスト・BreadcrumbList（M-3）をテンプレートで保証する。 */
 import Base from './Base.astro';
 import { SITE } from '../config/site';
+import { GENRE, SCHOOLS, breadcrumbJsonLd } from '../lib/schools';
 
 interface Props {
   post: {
@@ -13,15 +16,21 @@ interface Props {
       tags: string[];
       affiliate: boolean;
       heroImage?: string;
+      relatedGenre?: string;
+      relatedSchoolId?: string;
+      sources: { label: string; url: string; checkedAt: string }[];
     };
   };
 }
 const { post } = Astro.props;
-const { title, description, pubDate, updatedDate, tags, affiliate, heroImage } = post.data;
+const { title, description, pubDate, updatedDate, tags, affiliate, heroImage, relatedGenre, relatedSchoolId, sources } = post.data;
 const fmt = (d: Date) =>
   `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 
-const jsonLd = {
+const relatedSchool = relatedSchoolId ? SCHOOLS.find((s) => s.id === relatedSchoolId) : null;
+const showRelated = Boolean(relatedSchool || relatedGenre);
+
+const blogPosting = {
   '@context': 'https://schema.org',
   '@type': 'BlogPosting',
   headline: title,
@@ -32,10 +41,19 @@ const jsonLd = {
   publisher: { '@type': 'Organization', name: SITE.title },
   mainEntityOfPage: new URL(Astro.url.pathname, Astro.site).href,
 };
+const breadcrumb = breadcrumbJsonLd(
+  [
+    { name: 'くらべAI', path: '/' },
+    { name: '編集部コラム', path: '/blog' },
+    { name: title, path: `/blog/${post.id}` },
+  ],
+  Astro.site?.origin ?? ''
+);
 ---
 
-<Base title={title} description={description} ogType="article" jsonLd={jsonLd} ogImage={heroImage ?? null}>
+<Base title={title} description={description} ogType="article" jsonLd={[blogPosting, breadcrumb]} ogImage={heroImage ?? null}>
   <article>
+    <p class="detail-bread"><a href="/">くらべAI</a> › <a href="/blog">編集部コラム</a></p>
     <h1>{title}</h1>
     <div class="meta">
       <time datetime={pubDate.toISOString()}>公開: {fmt(pubDate)}</time>
@@ -49,6 +67,29 @@ const jsonLd = {
       </p>
     )}
     <slot />
+
+    {showRelated && (
+      <div class="related-lp">
+        <b>スクール選びで迷ったら</b>
+        {relatedSchool ? (
+          <a href={`${GENRE.basePath}/${relatedSchool.id}`}>{relatedSchool.name}の評判・料金を編集部が徹底解説 ›</a>
+        ) : (
+          <a href={GENRE.basePath}>生成AIスクール{SCHOOLS.length}校を同じ物差しで比較する（毎日点検）›</a>
+        )}
+      </div>
+    )}
+
+    {sources.length > 0 && (
+      <>
+        <h2>参考情報</h2>
+        <ul class="detail-refs">
+          {sources.map((r) => (
+            <li><a href={r.url} rel="noopener" target="_blank">{r.label}</a>（確認日: {r.checkedAt}）</li>
+          ))}
+        </ul>
+      </>
+    )}
+
     <hr style="border-color: var(--border); margin-top: 3rem;" />
     <p style="color: var(--text-dim); font-size: .9rem;">
       この記事は、社員全員AIの会社 <strong>HMCompany</strong> の記録係・栞が、実際の業務利用に基づいて執筆し、人間の株主が公開前に確認しています。

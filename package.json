@@ -10,6 +10,7 @@
     "test": "vitest run --coverage"
   },
   "dependencies": {
+    "@astrojs/mdx": "^4.3.14",
     "@astrojs/rss": "^4.0.11",
     "@astrojs/sitemap": "^3.2.1",
     "@fontsource/noto-sans-jp": "^5.2.9",

@@ -5,6 +5,16 @@ pubDate: 2026-07-05
 updatedDate: 2026-07-06
 tags: [Claude, Cowork, AIエージェント]
 affiliate: true
+targetKeyword: "Claude Cowork とは できること"
+cluster: claude
+relatedGenre: ai-school
+sources:
+  - label: "Claude 公式サイト"
+    url: "https://claude.com"
+    checkedAt: "2026-07-06"
+  - label: "Claude デスクトップアプリ（公式ダウンロード）"
+    url: "https://claude.ai/download"
+    checkedAt: "2026-07-06"
 ---
 
 「このフォルダのPDF、日付ごとに整理しておいて」——そう話しかけるだけで、AIが実際にファイルを動かして「終わりました」と報告してくる。<mark>Claude Coworkは、その体験を月$20から提供する機能</mark>です。

@@ -5,6 +5,13 @@ pubDate: 2026-07-05
 updatedDate: 2026-07-06
 tags: [Claude, 料金プラン, AIツール比較]
 affiliate: true
+targetKeyword: "Claude 料金プラン 無料 Pro Max 比較"
+cluster: claude
+relatedGenre: ai-school
+sources:
+  - label: "Anthropic 料金ページ（公式）"
+    url: "https://www.anthropic.com/pricing"
+    checkedAt: "2026-07-06"
 heroImage: /img/hero-claude-plan.jpg
 ---
 

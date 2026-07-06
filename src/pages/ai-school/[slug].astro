@@ -3,6 +3,7 @@
  *  slug衝突はlib/schools.tsのビルド時assertで防止済み（architect GO条件1）。 */
 import LpLayout from '../../layouts/LpLayout.astro';
 import SegmentSection from '../../components/school/SegmentSection.astro';
+import PrLabel from '../../components/school/PrLabel.astro';
 import PriceTable from '../../components/school/PriceTable.astro';
 import Voices from '../../components/school/Voices.astro';
 import EditorNote from '../../components/school/EditorNote.astro';
@@ -26,6 +27,8 @@ const noindex = !GENRE.indexable;
 
 let title = '', description = '', jsonLd: object | null = null;
 let seg = null, school = null, defRank = null;
+let altSchools: ReturnType<typeof rankedSchools> = [];
+let altSeg: { slug: string; label: string } | null = null;
 
 if (kind === 'segment') {
   seg = segmentBySlug(slug!)!;
@@ -35,7 +38,15 @@ if (kind === 'segment') {
 } else {
   school = SCHOOLS.find((s) => s.id === slug)!;
   const def = segmentBySlug('default')!;
-  defRank = rankedSchools(def).find((e) => e.school.id === school!.id)!;
+  const rankedDef = rankedSchools(def);
+  defRank = rankedDef.find((e) => e.school.id === school!.id)!;
+  // SEO監査H-6: 同じ目的の次点校2件＋該当セグメントLPへの横リンク（回遊とCV回収）
+  altSchools = rankedDef
+    .filter((e) => e.school.id !== school!.id && e.school.tags.purpose.some((p) => school!.tags.purpose.includes(p)))
+    .slice(0, 2);
+  const segSlug = school.subsidy.type !== 'none' ? 'kyufu' : school.tags.purpose[0];
+  const segMatch = SEGMENTS.find((x) => x.slug === segSlug);
+  altSeg = segMatch ? { slug: segMatch.slug, label: segMatch.label } : null;
   title = `${school.name}の評判・料金を徹底解説【${GENRE.updatedDate.slice(0, 7).replace('-', '年')}月】`;
   description = school.detail.lead.slice(0, 110);
   jsonLd = breadcrumbJsonLd(
@@ -60,6 +71,8 @@ const stickyCta = school ? { href: school.cta.url, label: '無料相談', rel } 
         <a href={GENRE.basePath}>生成AIスクール比較</a> › {school.shortName}
       </p>
       <h1>{school.name}の評判・料金・向いている人</h1>
+      {/* 法務監査C-1: affiliate:true化時にPR表記が7詳細ページで欠落しないよう必ず描画 */}
+      <PrLabel />
       <div class="meta">
         <span>総合{defRank.rank}位 / {SCHOOLS.length}校</span>
         <Stars score={defRank.score} />
@@ -100,6 +113,22 @@ const stickyCta = school ? { href: school.cta.url, label: '無料相談', rel } 
         <a class="aff-btn" href={school.cta.url} rel={rel} target="_blank">{school.cta.primary}</a>
         <div class="cta-note">{school.cta.note}</div>
       </div>
+
+      {(altSchools.length > 0 || altSeg) && (
+        <>
+          <h2>あわせて検討したい</h2>
+          <ul>
+            {altSchools.map((e) => (
+              <li>
+                <a href={`${GENRE.basePath}/${e.school.id}`}>{e.school.name}</a> — {e.school.type}（総合{e.rank}位）
+              </li>
+            ))}
+            {altSeg && (
+              <li><a href={`${GENRE.basePath}/${altSeg.slug}`}>{altSeg.label}で選ぶランキングをみる ›</a></li>
+            )}
+          </ul>
+        </>
+      )}
 
       <h2>参考情報</h2>
       <ul class="detail-refs">

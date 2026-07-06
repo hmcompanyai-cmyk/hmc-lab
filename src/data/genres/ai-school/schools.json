@@ -60,7 +60,7 @@
       "editorNote": "私たちも業務でツールを日々使い倒す側ですが、この価格で主要ツールを横断できる教材群は独学の遠回りをかなり削れる印象です。",
       "voices": [
         {
-          "quote": "受けて後悔はしていません。……（誰にでもおすすめできるかは）少し違うかなと思っています",
+          "quote": "受けて後悔はしていません。……〔編集部注: 誰にでもおすすめできるかは〕少し違うかなと思っています",
           "attr": "40代・100時間受講",
           "year": "2026年5月",
           "media": "note",
@@ -79,6 +79,20 @@
           "year": "2025年1月",
           "media": "note",
           "url": "https://note.com/powertravelers/n/nc25f614228d5"
+        },
+        {
+          "quote": "とりあえず、楽しい。いろいろ学べるのが一番いい",
+          "attr": "フリーランスデザイナー（学び放題受講者）",
+          "year": "2026",
+          "media": "個人ブログ",
+          "url": "https://fukufuku-life.com/dmm-ai-review/"
+        },
+        {
+          "quote": "思っていたより全然良かった",
+          "attr": "フリーランスデザイナー（学び放題受講者）（月額の価値について）",
+          "year": "2026",
+          "media": "個人ブログ",
+          "url": "https://fukufuku-life.com/dmm-ai-review/"
         }
       ],
       "cta": {
@@ -183,22 +197,36 @@
           "quote": "メンターさんのメンタリングがなかったら、続かなかっただろう",
           "attr": "受講者",
           "year": "2020年8月",
-          "media": "X（受講者ブログ経由）",
+          "media": "個人ブログ（X投稿の紹介）",
           "url": "https://omathin.org/techacademy-ai/"
         },
         {
           "quote": "難しすぎて頭がハゲるかと思いました",
           "attr": "AIコース受講者",
           "year": "2021年3月",
-          "media": "X（受講者ブログ経由）",
+          "media": "個人ブログ（X投稿の紹介）",
           "url": "https://omathin.org/techacademy-ai/"
         },
         {
           "quote": "独学できる人にとってはコスパ悪すぎる",
           "attr": "受講検討者",
           "year": "2020年4月",
-          "media": "X（受講者ブログ経由）",
+          "media": "個人ブログ（X投稿の紹介）",
           "url": "https://omathin.org/techacademy-ai/"
+        },
+        {
+          "quote": "わからない部分は…メンターに相談する、すると1日以内に返事がきて解決できる。これが一番のメリット",
+          "attr": "27歳・男性・製造業総務（Python/AIコース受講）",
+          "year": "2019",
+          "media": "個人ブログ",
+          "url": "https://www.tenshoku-stories.com/programming_school/kuchikomi_school/experience-techacademy-1/"
+        },
+        {
+          "quote": "8週間プランでしたが、結構カツカツだった印象",
+          "attr": "AIコース受講者（中級・8週間プラン）",
+          "year": "2021",
+          "media": "個人ブログ",
+          "url": "https://sukiburo.jp/techacademy-ai-review/"
         }
       ],
       "cta": {
@@ -312,6 +340,34 @@
           "year": "2026年",
           "media": "note",
           "url": "https://note.com/witty_ixora1236/n/n2e86fd8001dc"
+        },
+        {
+          "quote": "つまずいたときにすぐ質問できる環境って本当にありがたい",
+          "attr": "AI活用ブロガー（AIコース受講者）",
+          "year": "2025",
+          "media": "個人ブログ",
+          "url": "https://morin-ai.com/archives/4719"
+        },
+        {
+          "quote": "AIを『なんとなく使う』ではなく『意図的に操る』感覚がついてくる",
+          "attr": "AI活用ブロガー（AIコース受講者）",
+          "year": "2025",
+          "media": "個人ブログ",
+          "url": "https://morin-ai.com/archives/4719"
+        },
+        {
+          "quote": "毎日の学習の進行管理は自己責任になります",
+          "attr": "AI活用ブロガー（AIコース受講者）",
+          "year": "2025",
+          "media": "個人ブログ",
+          "url": "https://morin-ai.com/archives/4719"
+        },
+        {
+          "quote": "生成AIスクールとして見ると、さすがに金額が高い",
+          "attr": "WEBマーケター（AIコース無料カウンセリング検討者）",
+          "year": "2025",
+          "media": "note",
+          "url": "https://note.com/powertravelers/n/nbd40a1da9fff"
         }
       ],
       "cta": {
@@ -409,18 +465,39 @@
       "editorNote": "「実質5万円台〜」の魅力は本物ですが、それは条件をすべて達成した場合の話。先に自分が給付対象かを確認するのが正しい順番です。",
       "voices": [
         {
-          "quote": "講師の先生の解説が分かり易すぎます。具体的には、手書きの解説が良かったです",
-          "attr": "医師・医学博士",
-          "year": "2022年更新",
+          "quote": "前半は週6hが最低ライン／週12h以上で加速",
+          "attr": "化学メーカー研究職→AI研究職（長期コース受講）",
+          "year": "2025",
           "media": "個人ブログ",
-          "url": "https://obgynai.com/udemy-kikagaku/"
+          "url": "https://kota-saito.com/54_kikagaku-long-term-course-review/"
         },
         {
-          "quote": "内容が充実しており、ボリュームも多いのでスピードが少し早いです",
-          "attr": "同",
-          "year": "2022年更新",
+          "quote": "最初は“やりたいこと”を盛り込みすぎて要件が肥大化してしまいました",
+          "attr": "化学メーカー研究職→AI研究職（長期コース受講）",
+          "year": "2025",
           "media": "個人ブログ",
-          "url": "https://obgynai.com/udemy-kikagaku/"
+          "url": "https://kota-saito.com/54_kikagaku-long-term-course-review/"
+        },
+        {
+          "quote": "高い！高すぎる泣！",
+          "attr": "文系・デザイン職（AI長期コース受講）",
+          "year": "2020（2023更新）",
+          "media": "個人ブログ",
+          "url": "https://zootoeigo.com/kikagaku_ai_long_term/"
+        },
+        {
+          "quote": "手取り足取りおんぶにだっこマインドだと、正直辛くなると思います",
+          "attr": "文系・デザイン職（AI長期コース受講）",
+          "year": "2020（2023更新）",
+          "media": "個人ブログ",
+          "url": "https://zootoeigo.com/kikagaku_ai_long_term/"
+        },
+        {
+          "quote": "高額な商品を購入する前に、一度自分がどれだけ向いているのかを小額投資して確認",
+          "attr": "文系・デザイン職（AI長期コース受講、Udemy先行を推奨）",
+          "year": "2020（2023更新）",
+          "media": "個人ブログ",
+          "url": "https://zootoeigo.com/kikagaku_ai_long_term/"
         }
       ],
       "cta": {
@@ -517,7 +594,29 @@
       "caution": "計4.5時間の入門講座のため、開発スキルや深い実践までは扱わない",
       "reason": "「数十万円は無理。でも独学は不安」への現実解。対面で質問できる安心感と価格のバランスで、AI学習の最初の一歩に向く。",
       "editorNote": "内容は入門の域を出ませんが、「対面で聞ける」価値は初学者には大きい。ここで基礎を掴んでから独学やサブスク型に進む二段構えが賢い使い方です。",
-      "voices": [],
+      "voices": [
+        {
+          "quote": "相談会の最後に見積書をすぐに作ってくれるので、現実的に検討しやすかったのは良かった",
+          "attr": "AIスクール20校以上を比較した検討者（無料相談会を受講）",
+          "year": "2026",
+          "media": "レビューサイト",
+          "url": "https://ai-review.jp/winschool/"
+        },
+        {
+          "quote": "あまり自分から話すのが苦手な人は聞き一方になってしまうのではないかなと少し思いました",
+          "attr": "同（無料相談会を受講した検討者）",
+          "year": "2026",
+          "media": "レビューサイト",
+          "url": "https://ai-review.jp/winschool/"
+        },
+        {
+          "quote": "カウンセラーの話す内容が私はピッタリだったのであまり困りませんでしたが、意図している内容と違っていたらどうなんだろうとも思いました",
+          "attr": "同（無料相談会を受講した検討者）",
+          "year": "2026",
+          "media": "レビューサイト",
+          "url": "https://ai-review.jp/winschool/"
+        }
+      ],
       "voicesNote": "本講座の一次口コミは調査中です（出典を確認できた声のみ掲載する方針のため）",
       "cta": {
         "url": "https://www.winschool.jp/guidance/dx/generative_ai.html",
@@ -621,6 +720,34 @@
           "year": "2025年10月",
           "media": "note",
           "url": "https://note.com/hiro_seki/n/n92a9c6ac92e7"
+        },
+        {
+          "quote": "それをそのまま日々の判断に落とし込むには、もう一段、自分で翻訳する工程が必要だと感じました",
+          "attr": "同・飲食店経営者（最終的に他校を選択）",
+          "year": "2026",
+          "media": "note",
+          "url": "https://note.com/witty_ixora1236/n/na721a45746db"
+        },
+        {
+          "quote": "全部を追いかけようとすると勉強が追いつかず、取捨選択して学ぶ主体性がないと消化不良になりがち",
+          "attr": "同・フリーランスのブロガー（1年半受講）",
+          "year": "2025",
+          "media": "個人ブログ",
+          "url": "https://aimanabi.com/shiftai-hyouban/"
+        },
+        {
+          "quote": "筆者自身も、SHIFT AIで学んだ知識を活かしてライティング案件を獲得し、収益化に成功しました",
+          "attr": "現役受講生",
+          "year": "2025",
+          "media": "個人ブログ",
+          "url": "https://ai.01create.co.jp/shiftai-review/"
+        },
+        {
+          "quote": "平日の夜20〜22時頃の開催が多く、仕事終わりに視聴できる時間帯に合わせてくれる点が助かります",
+          "attr": "同・現役受講生（ウェビナーについて）",
+          "year": "2025",
+          "media": "個人ブログ",
+          "url": "https://ai.01create.co.jp/shiftai-review/"
         }
       ],
       "cta": {
@@ -741,6 +868,34 @@
           "quote": "（模試は）16,500円でお高い",
           "attr": "製造業・E資格対策受講",
           "year": "2023年",
+          "media": "note",
+          "url": "https://note.com/ordinary_people/n/n1ac745fc762d"
+        },
+        {
+          "quote": "スキルアップAIの講座は素晴らしく、最後まで諦めることなく勉強を続ける事ができました。お勧めです",
+          "attr": "理学部物理学科卒・組込画像処理10年以上（E資格講座受講）",
+          "year": "2020",
+          "media": "はてなブログ",
+          "url": "https://natsutan.hatenablog.com/entry/2020/03/04/083051"
+        },
+        {
+          "quote": "強化学習に関してはスキルアップAIの講座のテキストが一番良かったです",
+          "attr": "同・組込画像処理エンジニア（E資格講座受講）",
+          "year": "2020",
+          "media": "はてなブログ",
+          "url": "https://natsutan.hatenablog.com/entry/2020/03/04/083051"
+        },
+        {
+          "quote": "カリキュラムに合わせて動画が追加されていたのでしっかりしたものだと思います",
+          "attr": "製造業勤務・2023年E資格合格（総勉強時間168.5時間）",
+          "year": "2023",
+          "media": "note",
+          "url": "https://note.com/ordinary_people/n/n1ac745fc762d"
+        },
+        {
+          "quote": "動画はダウンロードできないので、電車で動画を観れないのはちょっと残念でした",
+          "attr": "同・製造業勤務（E資格対策受講）",
+          "year": "2023",
           "media": "note",
           "url": "https://note.com/ordinary_people/n/n1ac745fc762d"
         }

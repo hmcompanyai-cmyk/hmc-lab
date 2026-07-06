@@ -36,7 +36,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
   .slice(0, 4);
 ---
 <Base
-  title="生成AIスクール比較ランキング"
+  title={`生成AIスクール比較ランキング【${GENRE.updatedDate.slice(0, 7).replace('-', '年')}月】料金・給付金で${SCHOOLS.length}校を徹底比較`}
   description={seg.description}
   noindex={!GENRE.indexable}
   jsonLd={jsonLd}

@@ -1,0 +1,31 @@
+---
+/** 比較表: 横スクロール+1列目sticky+スクロールヒント。順位はスコア駆動（H-4）。 */
+import type { SegmentT } from '../../lib/schools';
+import { rankedSchools, yen, GENRE } from '../../lib/schools';
+interface Props { segment: SegmentT }
+const { segment } = Astro.props;
+const ranked = rankedSchools(segment);
+---
+<section id="hikaku">
+  <h2>{segment.label}の比較表</h2>
+  <div class="ct-wrap" role="region" aria-label="スクール比較表" tabindex="0">
+    <table class="ct">
+      <thead>
+        <tr><th scope="col">スクール</th><th scope="col">タイプ</th><th scope="col">月額</th><th scope="col">総額</th><th scope="col">給付金・補助金</th><th scope="col">評価</th></tr>
+      </thead>
+      <tbody>
+        {ranked.map((e) => (
+          <tr>
+            <th scope="row"><a href={`#${e.school.id}`}>{e.rank}位 {e.school.shortName}</a></th>
+            <td>{e.school.type}</td>
+            <td>{yen(e.school.budget.monthly)}</td>
+            <td>{yen(e.school.budget.total)}{!e.school.verified && ' ※要公式確認'}</td>
+            <td>{e.school.subsidy.type === 'none' ? '対象外' : '対象（条件達成後に支給）'}</td>
+            <td>{e.score.toFixed(1)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <p class="ct-hint">表は横にスクロールできます。評価の算出方法は<a href="/info#ranking-basis">こちら</a></p>
+</section>

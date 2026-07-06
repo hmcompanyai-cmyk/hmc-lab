@@ -1,0 +1,20 @@
+---
+/** 今月の変更点（H-6: expiresAt失効・zod検証済みデータのみ）。90日ローテと連動。 */
+import { activeChanges, schoolById, GENRE } from '../../lib/schools';
+const changes = activeChanges();
+---
+{changes.length > 0 && (
+  <section class="freshness" id="changes">
+    <h2>最近の変更点</h2>
+    <p class="freshness-sub">掲載情報の確認日: {GENRE.checkedDate}</p>
+    <ul>
+      {changes.map((c) => (
+        <li>
+          <span class="fr-date">{c.date}</span>
+          {c.schoolId && <b>{schoolById(c.schoolId)?.shortName}: </b>}{c.text}
+          {c.source && <a href={c.source} rel="noopener" target="_blank">出典</a>}
+        </li>
+      ))}
+    </ul>
+  </section>
+)}

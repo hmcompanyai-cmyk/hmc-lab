@@ -1,0 +1,22 @@
+---
+/** LP用レイアウト: Base（共有シェル）+ StickyBar + JSON-LD。 */
+import Base from './Base.astro';
+import StickyBar from '../components/school/StickyBar.astro';
+import '../styles/lp.css';
+
+interface Props {
+  title: string;
+  description: string;
+  noindex: boolean;
+  jsonLd?: object | null;
+}
+const { title, description, noindex, jsonLd = null } = Astro.props;
+---
+<Base title={title} description={description} noindex={noindex} jsonLd={jsonLd} ogType="website">
+  <slot />
+  <StickyBar />
+  <p class="lp-legal">
+    <a href="/info#company">運営者情報</a> ／ <a href="/info#ranking-basis">ランキングの評価方法</a> ／
+    <a href="/info#rule">免責事項</a> ／ <a href="/info#privacy">プライバシーポリシー</a>
+  </p>
+</Base>

@@ -1,0 +1,8 @@
+---
+/** H-1: affiliate校が1つでも存在する場合のみ、FV近傍に法定表記を自動表示。
+ *  現状は全校affiliate:falseのため何も描画されない。ASP提携でデータをtrueにした
+ *  瞬間、この表記とrel=sponsored（SchoolCard側）が同一ビルドで原子的に有効化される。 */
+import { SCHOOLS, GENRE } from '../../lib/schools';
+const show = SCHOOLS.some((s) => s.affiliate);
+---
+{show && <p class="pr-line">{GENRE.prLabel}</p>}

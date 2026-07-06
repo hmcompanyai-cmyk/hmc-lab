@@ -1,0 +1,296 @@
+{
+  "_meta": {
+    "checkedDate": "2026-07-06",
+    "scoring": "scores各軸1〜5。編集部評価=セグメント別weightsとの加重平均（lib/schools.tsがビルド時算出・手打ち順位なし）。軸の定義は/infoとARCHITECTURE.md参照",
+    "sources": "~/Desktop/research/2026-07-06-ai-school-data/01-school-facts.md（料金・給付金の出典つき一次調査）"
+  },
+  "schools": [
+    {
+      "id": "dmm",
+      "name": "DMM 生成AI CAMP",
+      "shortName": "DMM 生成AI CAMP",
+      "company": "合同会社DMM.com",
+      "type": "サブスク学び放題",
+      "affiliate": false,
+      "verified": true,
+      "verifyNote": null,
+      "scores": { "price": 5, "hours": 5, "subsidy": 2, "support": 3, "track": 4 },
+      "tags": { "purpose": ["fukugyo", "dx", "reskilling"], "format": ["subscription"], "kodawari": [] },
+      "budget": { "monthly": 16280, "total": null, "period": "縛りなし", "note": "6ヶ月一括90,530円・12ヶ月一括162,800円" },
+      "subsidy": { "type": "none", "rate": null, "cap": null, "baseFee": null, "conditionNote": "学び放題サブスク版は給付金の記載なし（給付金対応の別商品があるため申込前に公式で要確認）" },
+      "badges": ["入会金0円", "月額制・縛りなし"],
+      "points": [
+        "約1,000レッスン・16コースが定額で学び放題",
+        "ChatGPT・Gemini・Copilot・Claudeなどツール別コースが揃う",
+        "職種別コース（マーケ・営業・人事・エンジニア等）で仕事に直結",
+        "メンター相談会・AIチューター・コミュニティつき"
+      ],
+      "caution": "各AIツールの利用料は別途自己負担。マンツーマンの個別指導はなく、自主学習に近い進め方",
+      "reason": "価格・学べる範囲・辞めやすさのバランスが7校で最も良く、「まず仕事で使えるようになりたい」層の第一候補。数十万円の投資に踏み切る前の入口として勧めやすい。",
+      "editorNote": "私たちも業務でツールを日々使い倒す側ですが、この価格で主要ツールを横断できる教材群は独学の遠回りをかなり削れる印象です。",
+      "voices": [
+        { "quote": "受けて後悔はしていません。……（誰にでもおすすめできるかは）少し違うかなと思っています", "attr": "40代・100時間受講", "year": "2026年5月", "media": "note", "url": "https://note.com/snowrabbit_ai/n/ne02144bbc9c2" },
+        { "quote": "約1,000レッスンが学び放題で、メンター相談会、AIチューター、コミュニティもある", "attr": "WEBマーケター", "year": "2025年1月", "media": "note", "url": "https://note.com/powertravelers/n/nc25f614228d5" },
+        { "quote": "マンツーマン指導がなくなった", "attr": "WEBマーケター（トレードオフの指摘）", "year": "2025年1月", "media": "note", "url": "https://note.com/powertravelers/n/nc25f614228d5" }
+      ],
+      "cta": { "url": "https://genai.dmm.com/", "primary": "無料セミナーをみてみる", "note": "60分の無料セミナーあり・入会金0円" },
+      "detail": {
+        "lead": "DMM 生成AI CAMPは、月額16,280円で約1,000レッスンが学び放題になるサブスク型の生成AIスクールです。買い切り数十万円が主流のこの分野で「月額・縛りなし」は貴重な選択肢です。",
+        "curriculum": ["職種別コース（生成AIエンジニア/マーケ/営業/人事/デザイン等）", "ツール別マスターコース（ChatGPT/Gemini/Copilot/Claude/Dify/NotebookLM等）", "基礎から業務活用・一部開発まで"],
+        "pros": ["月額制で始めやすく、いつでもやめられる", "教材の範囲が広く、仕事に直結する職種別設計", "大手DMM運営の安心感"],
+        "cons": ["マンツーマン指導はなく自走力が必要", "ツール利用料は別途", "給付金はサブスク版では使えない（別商品要確認）"],
+        "faq": [
+          { "q": "初心者でもついていけますか？", "a": "基礎コースから始められます。ただし自主学習型なので、週数時間しか取れない場合はペース設計が大事という受講者の声があります。" },
+          { "q": "給付金は使えますか？", "a": "学び放題サブスク版には給付金の記載がありません。給付金前提なら別商品や他校を含めて公式で確認してください。" }
+        ],
+        "references": [{ "label": "公式サイト（料金・コース）", "url": "https://genai.dmm.com/", "checkedAt": "2026-07-06" }]
+      }
+    },
+    {
+      "id": "techacademy",
+      "name": "テックアカデミー（生成AI/AIコース）",
+      "shortName": "テックアカデミー",
+      "company": "キラメックス株式会社",
+      "type": "メンター伴走",
+      "affiliate": false,
+      "verified": false,
+      "verifyNote": "料金は公式サイトが動的表示のため一次確認未了。申込前に必ず公式サイトでご確認ください",
+      "scores": { "price": 3, "hours": 4, "subsidy": 4, "support": 5, "track": 3 },
+      "tags": { "purpose": ["tenshoku", "fukugyo", "reskilling"], "format": ["banso"], "kodawari": ["kyufu", "kaihatsu"] },
+      "budget": { "monthly": null, "total": 149600, "period": "4週間〜", "note": "プロンプトエンジニアリング4週間149,600円・AIコース174,900円〜339,900円（要公式確認）" },
+      "subsidy": { "type": "reskilling", "rate": 0.7, "cap": null, "baseFee": 339900, "conditionNote": "AIコースが対象。支給は修了・転職等の条件達成後（キャッシュバック方式）。適用条件は無料相談で要確認" },
+      "badges": ["週2回メンタリング", "AIコースは補助金対象"],
+      "points": [
+        "現役エンジニアが週2回のマンツーマンメンタリング",
+        "毎日15〜23時のチャットサポートで詰まりを解消",
+        "プロンプト入門からAI開発コースまで段階が揃う",
+        "受講者の一次発信が多く、実態を調べやすい"
+      ],
+      "caution": "AIコースは数学の前提知識が必要で難易度が高め。入門者はプロンプト系コースからが安全",
+      "reason": "メンターの伴走力は受講者の一次発信で評価が高い。「独学だと続かない」人が完走するための仕組みが7校で最も厚い。",
+      "editorNote": "サポートの手厚さは魅力ですが、AIコースの難易度に関する受講者の声は正直です。入門者はコース選びを慎重に。",
+      "voices": [
+        { "quote": "メンターさんのメンタリングがなかったら、続かなかっただろう", "attr": "受講者", "year": "2020年8月", "media": "X（受講者ブログ経由）", "url": "https://omathin.org/techacademy-ai/" },
+        { "quote": "難しすぎて頭がハゲるかと思いました", "attr": "AIコース受講者", "year": "2021年3月", "media": "X（受講者ブログ経由）", "url": "https://omathin.org/techacademy-ai/" },
+        { "quote": "独学できる人にとってはコスパ悪すぎる", "attr": "受講検討者", "year": "2020年4月", "media": "X（受講者ブログ経由）", "url": "https://omathin.org/techacademy-ai/" }
+      ],
+      "cta": { "url": "https://techacademy.jp/course/first-prompt-engineering", "primary": "無料相談をみてみる", "note": "まずはプロンプト入門コースの検討がおすすめ" },
+      "detail": {
+        "lead": "テックアカデミーは、現役エンジニアのメンタリングを軸にした伴走型スクールです。生成AI入門のプロンプトコースから、補助金対象のAIコースまで段階的に選べます。",
+        "curriculum": ["はじめてのプロンプトエンジニアリング（生成AI入門）", "AIコース（Python×機械学習・補助金対象）"],
+        "pros": ["週2回メンタリング＋毎日チャットの伴走力", "コースの段階設計で入門から開発まで", "補助金で実質負担を下げられる（条件達成前提）"],
+        "cons": ["AIコースは数学前提で未経験にはきついという声が複数", "料金が動的表示で比較しづらい", "自走できる人には割高感"],
+        "faq": [
+          { "q": "未経験でもAIコースに入れますか？", "a": "入れますが、受講者から「大学2年レベルの数学が要る」という声があります。未経験はプロンプト系コースからが現実的です。" }
+        ],
+        "references": [
+          { "label": "プロンプトエンジニアリングコース公式", "url": "https://techacademy.jp/course/first-prompt-engineering", "checkedAt": "2026-07-06" },
+          { "label": "AIコース公式", "url": "https://techacademy.jp/course/ai", "checkedAt": "2026-07-06" }
+        ]
+      }
+    },
+    {
+      "id": "samurai",
+      "name": "侍エンジニア（生成AIコース）",
+      "shortName": "侍エンジニア",
+      "company": "株式会社SAMURAI",
+      "type": "マンツーマン伴走",
+      "affiliate": false,
+      "verified": true,
+      "verifyNote": null,
+      "scores": { "price": 2, "hours": 4, "subsidy": 4, "support": 5, "track": 4 },
+      "tags": { "purpose": ["tenshoku", "dx", "reskilling"], "format": ["banso"], "kodawari": ["kyufu", "kaihatsu"] },
+      "budget": { "monthly": null, "total": 297000, "period": "4週間〜", "note": "4週間198,000円＋入学金99,000円。期間・コースで変動（〜72万円台）" },
+      "subsidy": { "type": "reskilling", "rate": 0.7, "cap": 560000, "baseFee": 297000, "conditionNote": "経産省リスキリング補助金。支給は修了＋転職して1年就業等の条件達成後。適用可否は無料カウンセリングで要確認" },
+      "badges": ["専属講師マンツーマン", "補助金 最大70%"],
+      "points": [
+        "専属講師が目標設定から完走まで伴走する完全マンツーマン",
+        "生成AI基礎・業務改善・AIアプリ開発・Claude Codeまでコースが幅広い",
+        "経産省リスキリング補助金の対象（上限56万円）",
+        "無料カウンセリングの対応が丁寧という検討者の一次レビュー"
+      ],
+      "caution": "数十万円単位の投資。「すでに業務でAIを使っていて手早く実装だけしたい」人には学習起点が重いという声も",
+      "reason": "「作りたいものが明確」「独学では続かない」人向けの伴走型代表。転職まで見据えるなら補助金で実質負担を大きく下げられる。",
+      "editorNote": "検討者レビューにある「学ぶこと中心の設計」という指摘は的確で、実務で即使いたい人と学び直したい人で向き不向きが分かれます。",
+      "voices": [
+        { "quote": "想像していたよりも丁寧で、無理に売り込まれる印象はなかった", "attr": "40代・飲食店経営（無料面談を受けた検討者）", "year": "2026年", "media": "note", "url": "https://note.com/witty_ixora1236/n/n2e86fd8001dc" },
+        { "quote": "学習起点が「学ぶこと」中心で、仕事での実装が二次的", "attr": "同・最終的に他校を選択した理由として", "year": "2026年", "media": "note", "url": "https://note.com/witty_ixora1236/n/n2e86fd8001dc" }
+      ],
+      "cta": { "url": "https://generative-ai.sejuku.net/", "primary": "無料カウンセリングをみてみる", "note": "オンライン・押し売りされなかったという検討者の声あり" },
+      "detail": {
+        "lead": "侍エンジニアの生成AIコースは、専属講師によるマンツーマン指導が特徴です。生成AIの基礎から業務改善、AIアプリ開発、Claude Codeまで目的に合わせてカリキュラムを組めます。",
+        "curriculum": ["生成AI基礎コース", "生成AI業務改善コース", "AIアプリコース", "Claude Codeコース"],
+        "pros": ["専属講師の伴走で完走しやすい", "補助金対象（条件達成で最大70%）", "目的に合わせたオーダーメイド性"],
+        "cons": ["入学金99,000円を含め投資額が大きい", "学習コミット前提で、忙しい人には重い", "即実務型の人には設計が合わない場合がある"],
+        "faq": [
+          { "q": "補助金は誰でも使えますか？", "a": "使えません。在職中などの受給要件に加え、修了・転職後1年就業といった条件達成後の支給です。無料カウンセリングで自分が対象か確認するのが先決です。" }
+        ],
+        "references": [{ "label": "生成AIコース公式", "url": "https://generative-ai.sejuku.net/", "checkedAt": "2026-07-06" }]
+      }
+    },
+    {
+      "id": "kikagaku",
+      "name": "キカガク（生成AI・長期コース）",
+      "shortName": "キカガク",
+      "company": "株式会社キカガク",
+      "type": "給付金・体系学習",
+      "affiliate": false,
+      "verified": false,
+      "verifyNote": "料金は複数情報源の一致値（公式ページの直接確認が未了）。申込前に必ず公式サイトでご確認ください",
+      "scores": { "price": 2, "hours": 4, "subsidy": 5, "support": 4, "track": 4 },
+      "tags": { "purpose": ["tenshoku", "reskilling", "dx"], "format": ["banso"], "kodawari": ["kyufu", "shikaku"] },
+      "budget": { "monthly": null, "total": 264000, "period": "コースによる", "note": "生成AIビジネス実践264,000円・AI人材育成長期コース792,000円（要公式確認）" },
+      "subsidy": { "type": "senmon-jissen", "rate": 0.8, "cap": 640000, "baseFee": 264000, "conditionNote": "専門実践教育訓練給付金。最大80%は修了＋資格取得・就職等の段階達成後の支給。要件は説明会で要確認" },
+      "badges": ["給付金 最大80%"],
+      "points": [
+        "専門実践教育訓練給付金の対象（現行では最高水準の給付率）",
+        "生成AIビジネス実践から機械学習まで体系的に学べる",
+        "手書き解説の分かりやすさに受講者の定評",
+        "無料説明会あり"
+      ],
+      "caution": "進行スピードが速めという受講者の声。給付金は条件達成後の支給なので、満たせない場合は満額負担",
+      "reason": "給付金の条件を満たせる人にとって、体系的なAI教育を最も低い実質負担で受けられる可能性がある。学び直し・リスキリングの本命。",
+      "editorNote": "「実質5万円台〜」の魅力は本物ですが、それは条件をすべて達成した場合の話。先に自分が給付対象かを確認するのが正しい順番です。",
+      "voices": [
+        { "quote": "講師の先生の解説が分かり易すぎます。具体的には、手書きの解説が良かったです", "attr": "医師・医学博士", "year": "2022年更新", "media": "個人ブログ", "url": "https://obgynai.com/udemy-kikagaku/" },
+        { "quote": "内容が充実しており、ボリュームも多いのでスピードが少し早いです", "attr": "同", "year": "2022年更新", "media": "個人ブログ", "url": "https://obgynai.com/udemy-kikagaku/" }
+      ],
+      "cta": { "url": "https://www.kikagaku.ai/", "primary": "無料説明会をみてみる", "note": "給付金の適用条件は説明会で確認を" },
+      "detail": {
+        "lead": "キカガクは、給付金を使った体系的なAI学習で知られるスクールです。生成AIビジネス実践コースから、機械学習を含む長期コースまで、腰を据えた学び直しに向いています。",
+        "curriculum": ["生成AIビジネス実践コース", "AI人材育成長期コース（機械学習・ディープラーニング含む）"],
+        "pros": ["給付率が現行最高水準（最大80%・条件達成後）", "数学が苦手でも付いていける解説と定評", "長期の体系学習に強い"],
+        "cons": ["料金の一次確認が取りづらい（公式で要確認）", "進行が速いという声", "給付条件を満たせないと負担が大きい"],
+        "faq": [
+          { "q": "実質5万円台というのは本当ですか？", "a": "給付金の条件（修了・就職等）をすべて達成した場合の目安です。達成できなければ満額負担になるため、無条件の割引と考えないでください。" }
+        ],
+        "references": [
+          { "label": "公式サイト", "url": "https://www.kikagaku.ai/", "checkedAt": "2026-07-06" },
+          { "label": "生成AI公式LP", "url": "https://lp-school.kikagaku.ai/generative-ai", "checkedAt": "2026-07-06" }
+        ]
+      }
+    },
+    {
+      "id": "win",
+      "name": "Winスクール（生成AI講座）",
+      "shortName": "Winスクール",
+      "company": "株式会社PCアシスト",
+      "type": "短期・対面可",
+      "affiliate": false,
+      "verified": true,
+      "verifyNote": null,
+      "scores": { "price": 5, "hours": 1, "subsidy": 1, "support": 4, "track": 4 },
+      "tags": { "purpose": ["fukugyo", "dx"], "format": ["taimen", "banso"], "kodawari": [] },
+      "budget": { "monthly": null, "total": 40700, "period": "約1ヶ月（90分×3回）", "note": "受講料28,600円＋入学金9,900円＋教材費2,200円" },
+      "subsidy": { "type": "none", "rate": null, "cap": null, "baseFee": null, "conditionNote": "本講座には給付金の記載なし" },
+      "badges": ["総額4万円台", "全国約50教室"],
+      "points": [
+        "総額40,700円で7校中の最安級",
+        "90分×3回・約1ヶ月で完結する入門設計",
+        "全国約50校で対面受講できる数少ない選択肢",
+        "少人数・個別対応"
+      ],
+      "caution": "計4.5時間の入門講座のため、開発スキルや深い実践までは扱わない",
+      "reason": "「数十万円は無理。でも独学は不安」への現実解。対面で質問できる安心感と価格のバランスで、AI学習の最初の一歩に向く。",
+      "editorNote": "内容は入門の域を出ませんが、「対面で聞ける」価値は初学者には大きい。ここで基礎を掴んでから独学やサブスク型に進む二段構えが賢い使い方です。",
+      "voices": [],
+      "voicesNote": "本講座の一次口コミは調査中です（出典を確認できた声のみ掲載する方針のため）",
+      "cta": { "url": "https://www.winschool.jp/guidance/dx/generative_ai.html", "primary": "無料カウンセリングをみてみる", "note": "全国の教室で対面相談も可能" },
+      "detail": {
+        "lead": "Winスクールの生成AI講座は、総額4万円台・約1ヶ月で生成AIの基礎を押さえる短期講座です。全国の教室で対面受講できる点が、オンライン一辺倒のこの分野では貴重です。",
+        "curriculum": ["生成AI（ChatGPT・Copilot）の基礎と業務活用（90分×3回）"],
+        "pros": ["7校中の最安級・短期完結", "対面で質問できる", "少人数・個別対応"],
+        "cons": ["学習ボリュームは小さい（計4.5時間）", "開発・応用は対象外", "給付金の記載なし"],
+        "faq": [
+          { "q": "この講座だけでAIを使いこなせるようになりますか？", "a": "基礎の入口です。業務での本格活用には、修了後にサブスク型教材や実務での実践を重ねる前提で考えてください。" }
+        ],
+        "references": [{ "label": "生成AI講座公式", "url": "https://www.winschool.jp/guidance/dx/generative_ai.html", "checkedAt": "2026-07-06" }]
+      }
+    },
+    {
+      "id": "shiftai",
+      "name": "SHIFT AI",
+      "shortName": "SHIFT AI",
+      "company": "株式会社SHIFT AI",
+      "type": "コミュニティ型",
+      "affiliate": false,
+      "verified": true,
+      "verifyNote": null,
+      "scores": { "price": 3, "hours": 5, "subsidy": 1, "support": 3, "track": 3 },
+      "tags": { "purpose": ["fukugyo", "dx"], "format": ["community", "subscription"], "kodawari": [] },
+      "budget": { "monthly": 21780, "total": null, "period": "縛りなし（月額）", "note": "月額21,780円／買い切り547,800円（内容は同一）" },
+      "subsidy": { "type": "none", "rate": null, "cap": null, "baseFee": null, "conditionNote": "給付金の記載なし（コミュニティ型のため対象外の見込み）" },
+      "badges": ["動画1,000本超", "ほぼ毎日ウェビナー"],
+      "points": [
+        "最新AIトレンドのウェビナーがほぼ毎日開催",
+        "動画1,000本超＋120講座以上のボリューム",
+        "副業・案件獲得系のコンテンツとネットワークが強み",
+        "入会金0円"
+      ],
+      "caution": "受け身だと元が取りにくいという受講者の声。情報量が膨大で消化しきれないという指摘も",
+      "reason": "体系カリキュラムより「情報の鮮度と人脈」を買う場所。自走できる人・AIの動きを追い続けたい人向けで、手取り足取り教わりたい人には不向き。",
+      "editorNote": "AIの変化速度を毎日浴びている身として、「情報の鮮度」に価値を置く発想は理にかなっています。ただしそれを消化する時間がない人には過剰です。",
+      "voices": [
+        { "quote": "生成AIを基礎から応用まで体系的に学べる。1000本以上の動画コンテンツ", "attr": "文筆家×生成AI研究家", "year": "2025年10月", "media": "note", "url": "https://note.com/hiro_seki/n/n92a9c6ac92e7" },
+        { "quote": "月額料金や買い切りプランが高額に感じる。提供される情報が膨大で消化しきれない", "attr": "同", "year": "2025年10月", "media": "note", "url": "https://note.com/hiro_seki/n/n92a9c6ac92e7" }
+      ],
+      "cta": { "url": "https://shift-ai.co.jp/", "primary": "無料セミナーをみてみる", "note": "入会前に無料オリエンテーションへの参加が必要な仕組み" },
+      "detail": {
+        "lead": "SHIFT AIは、動画教材とほぼ毎日のウェビナー、大規模コミュニティを組み合わせた「学び続ける場」型のサービスです。スクールというよりAI情報の会員制ジムに近い性格です。",
+        "curriculum": ["AI基礎〜実務応用の動画1,000本超", "ほぼ毎日のライブウェビナー", "副業・案件獲得系コンテンツ", "オフライン交流会"],
+        "pros": ["情報の鮮度はスクール随一", "横のつながりができる", "月額と買い切りを選べる"],
+        "cons": ["受け身だと価値を感じにくい", "情報過多で消化が大変という声", "給付金は使えない"],
+        "faq": [
+          { "q": "初心者でも大丈夫ですか？", "a": "教材は基礎からありますが、体系的に教わるより「自分で選んで浴びる」場です。学習の道筋を引いてほしい人は伴走型が合います。" }
+        ],
+        "references": [
+          { "label": "公式サイト", "url": "https://shift-ai.co.jp/", "checkedAt": "2026-07-06" },
+          { "label": "料金公式ブログ", "url": "https://shift-ai.co.jp/blog/18987/", "checkedAt": "2026-07-06" }
+        ]
+      }
+    },
+    {
+      "id": "skillupai",
+      "name": "スキルアップAI",
+      "shortName": "スキルアップAI",
+      "company": "スキルアップAI株式会社",
+      "type": "資格・開発志向",
+      "affiliate": false,
+      "verified": false,
+      "verifyNote": "講座ごとに料金が異なり一次確認未了。公式の講座一覧でご確認ください",
+      "scores": { "price": 2, "hours": 3, "subsidy": 4, "support": 3, "track": 3 },
+      "tags": { "purpose": ["tenshoku", "reskilling"], "format": ["banso"], "kodawari": ["kyufu", "shikaku", "kaihatsu"] },
+      "budget": { "monthly": null, "total": null, "period": "講座による", "note": "参考: E資格向け基礎講座55,000円・模試16,500円という受講者の一次記録あり" },
+      "subsidy": { "type": "senmon-jissen", "rate": 0.8, "cap": null, "baseFee": null, "conditionNote": "Reスキル講座認定・専門実践教育訓練給付の指定講座あり。支給は要件充足後（50〜80%）。対象講座は公式で要確認" },
+      "badges": ["E資格系に強い", "給付金対象講座あり"],
+      "points": [
+        "E資格対策から開発系までAI人材育成の本格ラインナップ",
+        "給付金指定講座あり（条件達成で50〜80%支給）",
+        "実装スタイルの講義で業務転用しやすいという受講者の声",
+        "無料説明会あり"
+      ],
+      "caution": "「E資格出題範囲対応」と受験資格の有無は別。講座選びの勘違いが起きやすいので説明会で要確認",
+      "reason": "ビジネス活用より「資格と開発」に振りたい実務者向け。当サイトの読者層（業務活用中心）は上位のスクールを先に検討するのが近道。",
+      "editorNote": "資格志向の人には価値がありますが、「生成AIを仕事で使いたい」だけなら本格的すぎるかもしれません。目的と講座の格を合わせてください。",
+      "voices": [
+        { "quote": "機械学習を体系的に学べるとても有意義な講座でした", "attr": "ドイツ在住エンジニア", "year": "2021年6月", "media": "個人ブログ", "url": "https://derakinblog.com/" },
+        { "quote": "E資格受験資格が得られるかと思っていましたが。。。講座違いでした", "attr": "同", "year": "2021年6月", "media": "個人ブログ", "url": "https://derakinblog.com/" },
+        { "quote": "（模試は）16,500円でお高い", "attr": "製造業・E資格対策受講", "year": "2023年", "media": "note", "url": "https://note.com/ordinary_people/n/n1ac745fc762d" }
+      ],
+      "cta": { "url": "https://www.skillupai.com/", "primary": "無料説明会をみてみる", "note": "給付金と受験資格の条件は説明会で確認を" },
+      "detail": {
+        "lead": "スキルアップAIは、E資格対策や機械学習の実装まで踏み込む、実務者・資格志向のAIスクールです。生成AIの「活用」より一段深い層を狙う人向けです。",
+        "curriculum": ["プロンプトエンジニアリング系講座", "生成AI組込み開発系講座", "E資格対策（機械学習・ディープラーニング）"],
+        "pros": ["資格・開発に強い本格派", "給付金指定講座あり", "実装スタイルで業務転用しやすい"],
+        "cons": ["料金が講座ごとで分かりづらい", "講座と受験資格の関係で勘違いが起きやすい", "ライト層には過剰"],
+        "faq": [
+          { "q": "E資格を取りたいのですが、どの講座でも受験資格が得られますか？", "a": "得られません。受験資格に必要なのはJDLA認定プログラムの修了です。「出題範囲対応」の講座と混同しやすいので、説明会で必ず確認してください。" }
+        ],
+        "references": [
+          { "label": "公式サイト", "url": "https://www.skillupai.com/", "checkedAt": "2026-07-06" },
+          { "label": "給付金対象講座", "url": "https://www.skillupai.com/subsidy-seminar/", "checkedAt": "2026-07-06" }
+        ]
+      }
+    }
+  ]
+}

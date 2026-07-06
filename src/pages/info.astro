@@ -1,0 +1,74 @@
+---
+/** 法務集約ページ（prodigの/info構成の移植）。
+ *  ランキング根拠のスコア表はlib/schools.tsから自動生成＝表示順位と機械的に一致（H-4）。 */
+import Base from '../layouts/Base.astro';
+import { SCHOOLS, SEGMENTS, segmentBySlug, rankedSchools, GENRE } from '../lib/schools';
+const def = segmentBySlug('default')!;
+const ranked = rankedSchools(def);
+const axes: { key: keyof typeof SCHOOLS[0]['scores']; label: string; desc: string }[] = [
+  { key: 'price', label: '価格', desc: '始めやすさ（受講料・契約の縛りの少なさ）' },
+  { key: 'hours', label: '学習量', desc: '教材・カリキュラムのボリューム' },
+  { key: 'subsidy', label: '給付金', desc: '公的給付・補助制度への対応' },
+  { key: 'support', label: 'サポート', desc: 'メンタリング・質問対応・伴走体制' },
+  { key: 'track', label: '情報確度', desc: '運営実績と、当編集部が公式情報を確認できた度合い' },
+];
+---
+<Base title="運営者情報・評価方法" description="くらべAIの運営者情報、ランキングの評価方法、免責事項、プライバシーポリシー。" noindex={!GENRE.indexable}>
+  <article>
+    <h1>サイト情報</h1>
+
+    <h2 id="company">運営者情報</h2>
+    <p>
+      サイト名: くらべAI<br />
+      運営: HMCompany（AIエージェントによる調査・執筆と、人間の編集長による監修・運営）<br />
+      お問い合わせ: <a href="https://note.com/hmai_company">noteのコメント欄</a>よりご連絡ください。掲載内容の誤りは確認のうえ速やかに修正します。
+    </p>
+
+    <h2 id="ranking-basis">ランキングの評価方法</h2>
+    <p>
+      掲載順位は、編集部が公開情報（各社公式サイト・公的制度の公表情報）に基づき、次の5軸を1〜5点で採点し、
+      ページの目的別に定めた重みとの加重平均で機械的に算出しています。順位・評価点・重みはすべて本ページで公開しています（{GENRE.checkedDate}時点）。
+    </p>
+    <ul>
+      {axes.map((a) => <li><b>{a.label}</b>: {a.desc}</li>)}
+    </ul>
+    <h3>各校の評価点</h3>
+    <table>
+      <thead><tr><th>スクール</th>{axes.map((a) => <th>{a.label}</th>)}<th>総合（加重平均）</th></tr></thead>
+      <tbody>
+        {ranked.map((e) => (
+          <tr>
+            <td><b>{e.rank}位 {e.school.shortName}</b></td>
+            {axes.map((a) => <td>{e.school.scores[a.key]}</td>)}
+            <td><b>{e.score.toFixed(1)}</b></td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    <h3>重み（ページ別）</h3>
+    <table>
+      <thead><tr><th>ページ</th>{axes.map((a) => <th>{a.label}</th>)}</tr></thead>
+      <tbody>
+        {SEGMENTS.map((s) => (
+          <tr><td>{s.label}</td>{axes.map((a) => <td>{s.weights[a.key]}</td>)}</tr>
+        ))}
+      </tbody>
+    </table>
+    <p>
+      料金・制度は変更されることがあります。編集部が公式サイトで直接確認できていない項目には、その旨を各所に明記しています。
+      申込前は必ず各社公式サイトで最新情報をご確認ください。
+    </p>
+
+    <h2 id="rule">免責事項</h2>
+    <p>
+      当サイトは各サービスの販売・提供者ではありません。掲載内容は記載の確認日時点の情報であり、正確性の維持に努めていますが、最新の価格・条件はリンク先の公式サイトでご確認ください。
+      当サイトの情報のご利用は、ご自身の判断でお願いします。
+    </p>
+
+    <h2 id="privacy">プライバシーポリシー</h2>
+    <p>
+      当サイトは現在、アクセス解析等による利用者情報の外部送信を行っていません。
+      今後、アクセス解析や広告配信を導入する場合は、送信される情報・送信先・利用目的を本ページに明記します。
+    </p>
+  </article>
+</Base>

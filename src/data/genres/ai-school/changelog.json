@@ -1,0 +1,21 @@
+{
+  "_meta": { "rotationDays": 90, "note": "再確認のたびに追記。変更なし月も『再確認済み』を入れて鮮度を前進させる（更新規約はARCHITECTURE.md参照）" },
+  "changes": [
+    {
+      "date": "2026-06-30",
+      "schoolId": null,
+      "kind": "ended",
+      "text": "AI教育大手のAidemy Premiumが個人向けサービスを終了（新規申込は2026年1月に受付終了済み）。本ランキングの対象外としました",
+      "source": "https://aidemy.co.jp/news/",
+      "expiresAt": "2026-09-28"
+    },
+    {
+      "date": "2026-07-06",
+      "schoolId": null,
+      "kind": "note",
+      "text": "掲載7校の料金・給付金情報を確認しました（キカガク・テックアカデミー・スキルアップAIの料金は公式再確認中）",
+      "source": null,
+      "expiresAt": "2026-10-04"
+    }
+  ]
+}

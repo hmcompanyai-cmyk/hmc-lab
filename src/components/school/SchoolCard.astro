@@ -1,0 +1,58 @@
+---
+/** ランキングカード（prodig型の全要素）。JSゼロ（開閉はdetails/summary）。
+ *  rel属性はaffiliateフラグから自動決定（H-1: PR化はデータ差替のみで原子的に）。 */
+import type { SchoolT, SegmentT } from '../../lib/schools';
+import RankBadge from './RankBadge.astro';
+import Stars from './Stars.astro';
+import PriceTable from './PriceTable.astro';
+import Voices from './Voices.astro';
+import EditorNote from './EditorNote.astro';
+import { GENRE } from '../../lib/schools';
+
+interface Props { school: SchoolT; rank: number; score: number; segment: SegmentT }
+const { school: s, rank, score, segment } = Astro.props;
+const rel = s.affiliate ? 'sponsored nofollow noopener' : 'noopener';
+const segNote = segment.notes[s.id];
+---
+<article
+  class={`school-card${rank === 1 ? ' top' : ''}`}
+  id={s.id}
+  data-purpose={s.tags.purpose.join(' ')}
+  data-format={s.tags.format.join(' ')}
+  data-kodawari={s.tags.kodawari.join(' ')}
+  data-monthly={s.budget.monthly ?? ''}
+  data-total={s.budget.total ?? ''}
+  data-subsidy={s.subsidy.type}
+  data-score={score}
+>
+  <div class="school-head">
+    <RankBadge rank={rank} />
+    <div>
+      <div class="sc-name"><a href={`${GENRE.basePath}/${s.id}`}>{s.name}</a></div>
+      <Stars score={score} />
+    </div>
+    <div class="sc-badges">
+      <span class="sc-badge">{s.type}</span>
+      {s.badges.map((b) => <span class="sc-badge warn">{b}</span>)}
+    </div>
+  </div>
+  <div class="school-body">
+    {segNote && <p class="sc-segnote">{segNote}</p>}
+    <ul class="sc-points">
+      {s.points.map((p) => <li>{p}</li>)}
+    </ul>
+    <PriceTable school={s} />
+    <details class="sc-more">
+      <summary>注意点と編集部の評価をみる</summary>
+      <div class="box-warn"><div class="box-title">申し込む前の注意</div>{s.caution}</div>
+      <div class="sc-reason"><b>評価の理由</b>: {s.reason}</div>
+      <EditorNote text={s.editorNote} />
+    </details>
+    <Voices school={s} />
+    <div class="sc-cta">
+      <a class="aff-btn" href={s.cta.url} rel={rel} target="_blank">{s.cta.primary}</a>
+      <a class="ghost" href={s.cta.url} rel={rel} target="_blank">公式サイトをみる</a>
+    </div>
+    <p class="cta-note" style="text-align:center;">{s.cta.note} ／ <a href={`${GENRE.basePath}/${s.id}`}>詳細レビューを読む</a></p>
+  </div>
+</article>

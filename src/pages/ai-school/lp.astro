@@ -1,0 +1,37 @@
+---
+/** 広告着地用バリアント（裁定3: 物理ページ・常時noindex・CTA密度高）。
+ *  リスティング広告のリンク先に使う。UTMは計測専用でコンテンツ分岐には使わない。 */
+import LpLayout from '../../layouts/LpLayout.astro';
+import DiagnosisForm from '../../components/school/DiagnosisForm.astro';
+import SchoolCard from '../../components/school/SchoolCard.astro';
+import PrLabel from '../../components/school/PrLabel.astro';
+import { segmentBySlug, rankedSchools, GENRE } from '../../lib/schools';
+
+const seg = segmentBySlug('default')!;
+const ranked = rankedSchools(seg);
+const top3 = ranked.slice(0, 3);
+---
+<LpLayout
+  title="生成AIスクール比較【診断つき】あなたに合う一校が30秒でわかる"
+  description="生成AIスクール7校を目的・予算・給付金で比較。30秒の診断で、あなたに合う一校がわかります。"
+  noindex={true}
+>
+  <div id="top"></div>
+  <div class="lp-fv">
+    <h1>生成AIスクール、<br />どれを選べばいいか30秒でわかる</h1>
+    <div class="lp-date">【{GENRE.updatedDate}更新】7校を同じ物差しで比較</div>
+  </div>
+  <PrLabel />
+  <DiagnosisForm />
+
+  <section id="ranking">
+    <h2>編集部評価の上位3校</h2>
+    {top3.map((e) => (
+      <SchoolCard school={e.school} rank={e.rank} score={e.score} segment={seg} />
+    ))}
+  </section>
+
+  <div class="cta-wrap">
+    <a class="aff-btn" href={GENRE.basePath}>7校すべての比較をみる</a>
+  </div>
+</LpLayout>

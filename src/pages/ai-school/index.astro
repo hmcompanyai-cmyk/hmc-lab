@@ -1,0 +1,12 @@
+---
+/** メインLP = default セグメント。 */
+import LpLayout from '../../layouts/LpLayout.astro';
+import SegmentSection from '../../components/school/SegmentSection.astro';
+import { segmentBySlug, itemListJsonLd, GENRE } from '../../lib/schools';
+
+const seg = segmentBySlug('default')!;
+const jsonLd = itemListJsonLd(seg, Astro.site?.origin ?? '');
+---
+<LpLayout title={seg.title} description={seg.description} noindex={!GENRE.indexable} jsonLd={jsonLd}>
+  <SegmentSection segment={seg} />
+</LpLayout>

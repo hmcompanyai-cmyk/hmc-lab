@@ -1,0 +1,155 @@
+/* ===== 生成AIスクール比較LP専用CSS（LpLayoutでのみ読み込み） ===== */
+
+.pr-line { font-size: .78rem; color: var(--text-dim); margin: -.6rem 0 1rem; }
+
+/* セグメントタブ */
+.seg-tabs {
+  display: flex; gap: .5em; flex-wrap: wrap;
+  margin: 0 0 1.6rem;
+}
+.seg-tabs a {
+  display: inline-block;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: .35em 1.1em;
+  font-size: .88rem; font-weight: 700;
+  color: var(--text-dim);
+  background: #fff;
+}
+.seg-tabs a[aria-current="page"] { background: var(--primary); color: #fff; border-color: var(--primary); }
+.seg-tabs a:hover { text-decoration: none; border-color: var(--primary); }
+
+/* 診断 */
+.diag {
+  display: block;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.1em 1.3em;
+  margin: 1.6rem 0;
+}
+.diag-head { font-weight: 800; font-size: 1.05rem; margin-bottom: .6em; }
+.diag-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: .8em; }
+.diag-form label { font-size: .82rem; font-weight: 700; color: var(--text-dim); display: flex; flex-direction: column; gap: .3em; }
+.diag-form select {
+  font-size: .95rem; padding: .5em .6em;
+  border: 1px solid var(--border); border-radius: 8px; background: #fff;
+}
+.diag-actions { grid-column: 1 / -1; display: flex; gap: 1em; align-items: center; justify-content: center; margin-top: .3em; }
+.diag-btn { border: none; cursor: pointer; font-size: 1rem; }
+.diag-reset { background: none; border: none; color: var(--text-dim); text-decoration: underline; cursor: pointer; font-size: .85rem; }
+.diag-result { font-weight: 800; min-height: 1.6em; margin: .6em 0 0; text-align: center; }
+
+/* 結論TOP3 */
+.top3-cards { display: flex; gap: .8em; flex-wrap: wrap; }
+.top3-card {
+  flex: 1 1 160px;
+  display: flex; align-items: center; gap: .6em;
+  background: #fff; border: 2px solid var(--border); border-radius: 12px;
+  padding: .7em .9em; color: var(--text);
+  box-shadow: 0 2px 8px rgba(31,39,51,.06);
+}
+.top3-card:hover { border-color: var(--primary); text-decoration: none; }
+.top3-card .rank-badge { flex: 0 0 34px; width: 34px; height: 34px; font-size: .95rem; }
+.t3-name { font-weight: 800; font-size: .95rem; }
+.t3-type { font-size: .72rem; color: var(--text-dim); }
+.t3-score { margin-left: auto; font-weight: 900; color: var(--primary-dark); }
+
+/* カード内・LP専用の追加分 */
+.sc-segnote {
+  background: #f5f8ff; border-left: 4px solid var(--primary);
+  padding: .5em .9em; border-radius: 0 8px 8px 0; font-size: .92rem; margin: .2em 0 .8em;
+}
+.pr-rows { display: flex; gap: 1.4em; flex-wrap: wrap; }
+.pr-row { display: flex; flex-direction: column; }
+.pr-row span { font-size: .74rem; color: var(--text-dim); }
+.pr-row b { font-size: 1.1rem; }
+.pr-note-s { font-size: .8rem; color: var(--text-dim); margin: .4em 0; }
+.pr-subsidy {
+  border-top: 1px dashed var(--border);
+  margin-top: .6em; padding-top: .6em; font-size: .95rem;
+}
+.pr-cond { font-size: .8rem; color: #8a5a13; background: #fff7ea; border-radius: 6px; padding: .5em .8em; margin: .5em 0 0; }
+.pr-verify { font-size: .8rem; color: var(--danger); margin: .5em 0 0; }
+.sc-more { margin: 1em 0; }
+.sc-more summary { cursor: pointer; font-weight: 700; color: var(--primary); }
+.sc-voices { margin-top: 1em; }
+.voices-head { font-weight: 800; font-size: .95rem; margin-bottom: .4em; }
+.voices-count { font-size: .78rem; color: var(--text-dim); font-weight: 400; margin-left: .5em; }
+.voices-none { font-size: .82rem; color: var(--text-dim); }
+.score-basis { font-size: .72rem; color: var(--text-dim); margin-left: .5em; }
+.school-card.is-hidden { display: none; }
+.school-card.is-reco { border-color: var(--cta); box-shadow: 0 4px 16px rgba(255,122,26,.25); }
+.school-card.is-reco::before {
+  content: "診断結果のおすすめ";
+  display: block;
+  background: var(--cta); color: #fff;
+  font-size: .78rem; font-weight: 800;
+  padding: .25em 1.2em;
+}
+
+/* 比較表 */
+.ct-wrap { overflow-x: auto; position: relative; }
+.ct-wrap::after {
+  content: ""; position: sticky; right: 0; top: 0;
+}
+.ct { border-collapse: collapse; width: 100%; font-size: .9rem; white-space: nowrap; }
+.ct th, .ct td { border: 1px solid var(--border); padding: .5em .8em; text-align: left; }
+.ct thead th { background: var(--primary); color: #fff; }
+.ct tbody th[scope="row"] {
+  position: sticky; left: 0; background: var(--bg-soft); z-index: 1;
+  font-weight: 800;
+}
+.ct tbody tr:nth-child(even) td { background: var(--bg-soft); }
+.ct-hint { font-size: .78rem; color: var(--text-dim); }
+
+/* シミュレータ */
+.sim { display: block; background: var(--bg-soft); border: 1px solid var(--border); border-radius: 14px; padding: 1.1em 1.3em; margin: 2rem 0; }
+.sim-sub { font-size: .88rem; color: var(--text-dim); margin-top: -.4em; }
+.sim-form { display: flex; gap: 1em; flex-wrap: wrap; align-items: flex-end; }
+.sim-form label { font-size: .82rem; font-weight: 700; color: var(--text-dim); display: flex; flex-direction: column; gap: .3em; }
+.sim-form input, .sim-form select { font-size: 1rem; padding: .5em .6em; border: 1px solid var(--border); border-radius: 8px; background: #fff; width: 12em; }
+.sim-btn { border: none; cursor: pointer; }
+.sim-result { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: .8em 1.1em; margin: 1em 0 .4em; max-width: 26em; }
+.sim-row { display: flex; justify-content: space-between; padding: .25em 0; font-size: .95rem; }
+.sim-eff { border-top: 2px solid var(--border); margin-top: .3em; padding-top: .5em; }
+.sim-eff b { color: var(--primary-dark); font-size: 1.2em; }
+
+/* 変更点 */
+.freshness ul { list-style: none; padding: 0; }
+.freshness li { padding: .5em .2em; border-bottom: 1px dashed var(--border); font-size: .92rem; }
+.fr-date { color: var(--text-dim); font-size: .8rem; margin-right: .8em; }
+.freshness-sub { font-size: .8rem; color: var(--text-dim); }
+.freshness li a { font-size: .78rem; margin-left: .6em; }
+
+/* 追従バー */
+.stickybar {
+  position: fixed; left: 0; right: 0; bottom: -60px;
+  display: flex; justify-content: space-around;
+  background: rgba(255,255,255,.97);
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -2px 12px rgba(31,39,51,.08);
+  padding: .55em 0;
+  transition: bottom .25s;
+  z-index: 90;
+}
+.stickybar.is-on { bottom: 0; }
+.stickybar a { font-size: .82rem; font-weight: 800; color: var(--text-dim); }
+.stickybar a:hover { color: var(--primary); text-decoration: none; }
+body:has(.stickybar.is-on) footer.site { padding-bottom: 4.5rem; }
+
+/* 個別ページ */
+.detail-bread { font-size: .78rem; color: var(--text-dim); margin-bottom: 1rem; }
+.detail-refs { font-size: .85rem; }
+.detail-refs li { margin: .3em 0; }
+.lp-legal { text-align: center; font-size: .78rem; color: var(--text-dim); margin-top: 3rem; }
+.lp-links ul { padding-left: 1.2em; }
+
+/* smooth scroll + アンカー位置 */
+html { scroll-behavior: smooth; }
+#ranking, #hikaku, #shindan, #top { scroll-margin-top: 1rem; }
+
+@media (max-width: 560px) {
+  .top3-cards { flex-direction: column; }
+  .sim-form input, .sim-form select { width: 100%; }
+}

@@ -1,0 +1,145 @@
+---
+/** 多軸フィルタ診断（<school-filter>カスタム要素・vanilla JS）。
+ *  M-1対応: 状態はURLSearchParams（enumホワイトリスト照合）・DOM操作はclassList/textContentのみ。
+ *  JS無効時は全カードが見える（プログレッシブ・エンハンスメント）。 */
+---
+<school-filter id="shindan" class="diag">
+  <div class="diag-head">あなたに合うスクールをしぼり込む</div>
+  <form class="diag-form">
+    <label>目的
+      <select name="p">
+        <option value="">指定なし</option>
+        <option value="tenshoku">AI転職</option>
+        <option value="fukugyo">副業・業務活用</option>
+        <option value="dx">社内DX・スキルアップ</option>
+        <option value="reskilling">リスキリング（学び直し）</option>
+      </select>
+    </label>
+    <label>予算
+      <select name="b">
+        <option value="">指定なし</option>
+        <option value="m2">月1〜2万円台で始めたい</option>
+        <option value="t5">総額5万円以内</option>
+        <option value="sub">給付金・補助金を使いたい</option>
+      </select>
+    </label>
+    <label>受講形式
+      <select name="f">
+        <option value="">指定なし</option>
+        <option value="subscription">動画で自分のペース</option>
+        <option value="banso">講師の伴走つき</option>
+        <option value="community">コミュニティ型</option>
+        <option value="taimen">教室（対面）</option>
+      </select>
+    </label>
+    <label>こだわり
+      <select name="k">
+        <option value="">指定なし</option>
+        <option value="kyufu">給付金対象</option>
+        <option value="shikaku">資格をとりたい</option>
+        <option value="kaihatsu">開発まで学びたい</option>
+      </select>
+    </label>
+    <div class="diag-actions">
+      <button type="submit" class="aff-btn diag-btn">この条件でしぼり込む</button>
+      <button type="reset" class="diag-reset">リセット</button>
+    </div>
+  </form>
+  <p class="diag-result" aria-live="polite"></p>
+</school-filter>
+
+<script>
+  const ENUM: Record<string, string[]> = {
+    p: ['tenshoku', 'fukugyo', 'dx', 'reskilling'],
+    b: ['m2', 't5', 'sub'],
+    f: ['subscription', 'banso', 'community', 'taimen'],
+    k: ['kyufu', 'shikaku', 'kaihatsu'],
+  };
+
+  class SchoolFilter extends HTMLElement {
+    form!: HTMLFormElement;
+    result!: HTMLElement;
+
+    connectedCallback() {
+      this.form = this.querySelector('form')!;
+      this.result = this.querySelector('.diag-result')!;
+      this.form.addEventListener('submit', (e) => { e.preventDefault(); this.apply(true); });
+      this.form.addEventListener('change', () => this.apply(false));
+      this.form.addEventListener('reset', () => setTimeout(() => this.apply(false), 0));
+      this.restore();
+    }
+
+    /** URL→フォーム復元（ホワイトリスト外の値は無視: M-1） */
+    restore() {
+      const q = new URLSearchParams(location.search);
+      let any = false;
+      for (const key of Object.keys(ENUM)) {
+        const v = q.get(key) ?? '';
+        if (v && ENUM[key].includes(v)) {
+          (this.form.elements.namedItem(key) as HTMLSelectElement).value = v;
+          any = true;
+        }
+      }
+      if (any) this.apply(false);
+    }
+
+    state(): Record<string, string> {
+      const st: Record<string, string> = {};
+      for (const key of Object.keys(ENUM)) {
+        const v = (this.form.elements.namedItem(key) as HTMLSelectElement).value;
+        if (v && ENUM[key].includes(v)) st[key] = v;
+      }
+      return st;
+    }
+
+    matches(card: HTMLElement, st: Record<string, string>): boolean {
+      if (st.p && !(card.dataset.purpose || '').split(' ').includes(st.p)) return false;
+      if (st.f && !(card.dataset.format || '').split(' ').includes(st.f)) return false;
+      if (st.k && !(card.dataset.kodawari || '').split(' ').includes(st.k)) return false;
+      if (st.b) {
+        const monthly = parseInt(card.dataset.monthly || '', 10);
+        const total = parseInt(card.dataset.total || '', 10);
+        const subsidy = card.dataset.subsidy || 'none';
+        if (st.b === 'm2' && !(Number.isFinite(monthly) && monthly <= 29999)) return false;
+        if (st.b === 't5' && !(Number.isFinite(total) && total <= 50000)) return false;
+        if (st.b === 'sub' && subsidy === 'none') return false;
+      }
+      return true;
+    }
+
+    apply(push: boolean) {
+      const st = this.state();
+      const cards = document.querySelectorAll<HTMLElement>('.school-card');
+      let shown = 0;
+      let best: HTMLElement | null = null;
+      let bestScore = -1;
+      cards.forEach((c) => {
+        const ok = this.matches(c, st);
+        c.classList.toggle('is-hidden', !ok);
+        c.classList.remove('is-reco');
+        if (ok) {
+          shown++;
+          const sc = parseFloat(c.dataset.score || '0');
+          if (sc > bestScore) { bestScore = sc; best = c; }
+        }
+      });
+      const active = Object.keys(st).length > 0;
+      if (!active) {
+        this.result.textContent = '';
+      } else if (shown === 0) {
+        this.result.textContent = '条件に合うスクールがありませんでした。条件を1つ減らしてみてください。';
+      } else {
+        if (best) (best as HTMLElement).classList.add('is-reco');
+        const name = best?.querySelector('.sc-name')?.textContent?.trim() ?? '';
+        this.result.textContent = `${shown}校が該当。編集部評価がもっとも高いのは「${name}」です（下に絞り込み表示中）`;
+      }
+      // URL同期（M-1: 値はENUM通過済みのみ）
+      const q = new URLSearchParams();
+      for (const [k, v] of Object.entries(st)) q.set(k, v);
+      const url = q.toString() ? `${location.pathname}?${q}` : location.pathname;
+      if (push) history.pushState(null, '', url);
+      else history.replaceState(null, '', url);
+    }
+  }
+  if (!customElements.get('school-filter')) customElements.define('school-filter', SchoolFilter);
+</script>

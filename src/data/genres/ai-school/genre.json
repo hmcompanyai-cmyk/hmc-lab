@@ -1,0 +1,14 @@
+{
+  "id": "ai-school",
+  "basePath": "/ai-school",
+  "siteName": "くらべAI",
+  "h1": "生成AIスクールおすすめ比較ランキング",
+  "listName": "生成AIスクールおすすめランキング",
+  "tagline": "料金・給付金・サポートで7校を比較",
+  "updatedDate": "2026-07-06",
+  "checkedDate": "2026-07-06",
+  "indexable": false,
+  "ctaPrimaryDefault": "無料相談をみてみる",
+  "ctaSecondaryDefault": "公式サイトをみる",
+  "prLabel": "本ページはプロモーションが含まれています"
+}

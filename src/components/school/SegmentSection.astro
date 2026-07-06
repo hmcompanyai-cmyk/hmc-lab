@@ -1,0 +1,68 @@
+---
+/** LP本体の単一描画経路（メインLP=defaultも目的別サブLPもここを通る）。
+ *  prodig単線ファネル: タブ→診断→TOP先出し→選び方→カード縦積み→比較表→シミュレータ→変更点 */
+import type { SegmentT } from '../../lib/schools';
+import { rankedSchools, GENRE } from '../../lib/schools';
+import LpNav from './LpNav.astro';
+import PrLabel from './PrLabel.astro';
+import DiagnosisForm from './DiagnosisForm.astro';
+import SchoolCard from './SchoolCard.astro';
+import CompareTable from './CompareTable.astro';
+import SubsidySimulator from './SubsidySimulator.astro';
+import FreshnessNote from './FreshnessNote.astro';
+
+interface Props { segment: SegmentT }
+const { segment } = Astro.props;
+const ranked = rankedSchools(segment);
+const top3 = ranked.slice(0, 3);
+---
+<div id="top"></div>
+<div class="lp-fv">
+  <h1>{segment.h1}</h1>
+  <div class="lp-date">【{GENRE.updatedDate}更新】</div>
+  <p class="lp-sub">{segment.intro}</p>
+</div>
+<PrLabel />
+<LpNav current={segment.slug} />
+
+<DiagnosisForm />
+
+<section class="top3" aria-label="結論の先出し">
+  <h2>結論: {segment.label}のおすすめ上位</h2>
+  <div class="top3-cards">
+    {top3.map((e) => (
+      <a class="top3-card" href={`#${e.school.id}`}>
+        <span class={`rank-badge r${e.rank}`}>{e.rank}</span>
+        <span class="t3-name">{e.school.shortName}</span>
+        <span class="t3-type">{e.school.type}</span>
+        <span class="t3-score">{e.score.toFixed(1)}</span>
+      </a>
+    ))}
+  </div>
+</section>
+
+<section class="erabikata">
+  <h2>失敗しない選び方の3ポイント</h2>
+  <div class="fit-box"><strong>1. 目的を先に決める</strong>：仕事で使う→サブスク・短期型。転職まで→伴走型。学び直し→給付金型。目的が違えば正解のスクールも違います。</div>
+  <div class="fit-box"><strong>2. 給付金は「条件」から読む</strong>：最大70〜80%の支給は修了・転職などの条件達成後です。自分が対象かを無料相談で確認してから金額を比べてください。</div>
+  <div class="fit-box"><strong>3. 無料相談を2校以上受ける</strong>：どのスクールにも無料の入口があります。比較してから決めるのがこの分野の鉄則です。</div>
+</section>
+
+<section id="ranking">
+  <h2>{segment.label}ランキング（{ranked.length}校）</h2>
+  {ranked.map((e) => (
+    <SchoolCard school={e.school} rank={e.rank} score={e.score} segment={segment} />
+  ))}
+</section>
+
+<CompareTable segment={segment} />
+<SubsidySimulator />
+<FreshnessNote />
+
+<section class="lp-links">
+  <h2>あわせて読みたい</h2>
+  <ul>
+    <li><a href="/blog/claude-plan-guide">Claude有料課金はやめとけ？無料/Pro/Maxを実測比較</a></li>
+    <li><a href="/blog/claude-cowork-review">Claude Coworkとは？できること・料金を実測解説</a></li>
+  </ul>
+</section>

@@ -1,0 +1,19 @@
+---
+/** スマホ追従バー（競合比較メディアが持たない差別化・UX調査P0）。 */
+---
+<sticky-bar class="stickybar" aria-label="ページ内ナビゲーション">
+  <a href="#top">TOP</a>
+  <a href="#shindan">診断</a>
+  <a href="#hikaku">比較表</a>
+  <a href="#ranking">ランキング</a>
+</sticky-bar>
+<script>
+  class StickyBar extends HTMLElement {
+    connectedCallback() {
+      const onScroll = () => this.classList.toggle('is-on', window.scrollY > 480);
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    }
+  }
+  if (!customElements.get('sticky-bar')) customElements.define('sticky-bar', StickyBar);
+</script>

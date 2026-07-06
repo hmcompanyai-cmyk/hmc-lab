@@ -1,0 +1,29 @@
+---
+/** H-2: 実質価格を主表示にしない。「総額→条件を満たせば実質」の順で、
+ *  条件注記を同等の視認性で近接表示。verified:falseの注意はスキーマ駆動で強制描画（H-6）。 */
+import type { SchoolT } from '../../lib/schools';
+import { yen } from '../../lib/schools';
+import { simulate, SCHEME_LABEL } from '../../lib/subsidy';
+
+interface Props { school: SchoolT }
+const { school: s } = Astro.props;
+const sim = s.subsidy.type !== 'none' && s.subsidy.baseFee
+  ? simulate(s.subsidy.baseFee, s.subsidy.type)
+  : null;
+---
+<div class="sc-price">
+  <div class="pr-rows">
+    {s.budget.monthly != null && <div class="pr-row"><span>月額</span><b>{yen(s.budget.monthly)}</b></div>}
+    {s.budget.total != null && <div class="pr-row"><span>総額</span><b>{yen(s.budget.total)}</b></div>}
+    <div class="pr-row"><span>期間</span><b>{s.budget.period}</b></div>
+  </div>
+  <p class="pr-note-s">{s.budget.note}</p>
+  {sim && (
+    <div class="pr-subsidy">
+      <div>{SCHEME_LABEL[s.subsidy.type]}の条件をすべて満たした場合、実質 <b>{yen(sim.effective)}</b> 程度</div>
+      <p class="pr-cond">{s.subsidy.conditionNote}</p>
+    </div>
+  )}
+  {s.subsidy.type === 'none' && <p class="pr-cond">{s.subsidy.conditionNote}</p>}
+  {!s.verified && s.verifyNote && <p class="pr-verify">{s.verifyNote}</p>}
+</div>

@@ -1,0 +1,68 @@
+---
+/** 給付金かんたんシミュレータ（<subsidy-sim>）。
+ *  H-2: 結果はサーバー側で既定値を描画（高さ予約・CLSゼロ）。条件注記はJS非依存で常時表示。
+ *  M-1: 入力は数値クランプ＋制度enumホワイトリスト。textContentのみでDOM更新。 */
+import { simulate, CONDITION_NOTE, SCHEME_LABEL } from '../../lib/subsidy';
+const def = simulate(297000, 'reskilling');
+---
+<subsidy-sim class="sim" id="sim"
+  data-rate-reskilling="0.7" data-cap-reskilling="560000"
+  data-rate-senmon-jissen="0.8" data-cap-senmon-jissen="640000">
+  <h2>給付金かんたんシミュレータ</h2>
+  <p class="sim-sub">受講料と制度を選ぶと、条件をすべて達成した場合の実質負担の目安を計算します。</p>
+  <div class="sim-form">
+    <label>受講料（税込・円）<input type="number" name="fee" min="0" max="5000000" step="1000" value="297000" inputmode="numeric" /></label>
+    <label>制度
+      <select name="scheme">
+        <option value="reskilling">{SCHEME_LABEL['reskilling']}</option>
+        <option value="senmon-jissen">{SCHEME_LABEL['senmon-jissen']}</option>
+      </select>
+    </label>
+    <button type="button" class="aff-btn sim-btn">計算する</button>
+  </div>
+  <div class="sim-result">
+    <div class="sim-row"><span>受講料（総額）</span><b class="sim-fee">{def.fee.toLocaleString('ja-JP')}円</b></div>
+    <div class="sim-row"><span>支給額の目安（条件達成後）</span><b class="sim-grant">{def.granted.toLocaleString('ja-JP')}円</b></div>
+    <div class="sim-row sim-eff"><span>条件を満たせば実質</span><b class="sim-effective">{def.effective.toLocaleString('ja-JP')}円</b></div>
+  </div>
+  <p class="pr-cond">{CONDITION_NOTE}</p>
+</subsidy-sim>
+
+<script>
+  class SubsidySim extends HTMLElement {
+    connectedCallback() {
+      const btn = this.querySelector('.sim-btn')!;
+      const fee = this.querySelector<HTMLInputElement>('input[name="fee"]')!;
+      const scheme = this.querySelector<HTMLSelectElement>('select[name="scheme"]')!;
+      btn.addEventListener('click', () => this.calc());
+      fee.addEventListener('change', () => this.calc());
+      scheme.addEventListener('change', () => this.calc());
+      // URL復元（M-1: クランプ+enum照合）
+      const q = new URLSearchParams(location.search);
+      const qf = parseInt(q.get('fee') || '', 10);
+      const qs = q.get('scheme') || '';
+      if (Number.isFinite(qf) && qf > 0) fee.value = String(Math.min(qf, 5000000));
+      if (qs === 'reskilling' || qs === 'senmon-jissen') scheme.value = qs;
+      if (q.has('fee') || q.has('scheme')) this.calc();
+    }
+    calc() {
+      const feeEl = this.querySelector<HTMLInputElement>('input[name="fee"]')!;
+      const schemeEl = this.querySelector<HTMLSelectElement>('select[name="scheme"]')!;
+      let fee = parseInt(feeEl.value, 10);
+      if (!Number.isFinite(fee) || fee < 0) fee = 0;
+      fee = Math.min(fee, 5000000);
+      const scheme = schemeEl.value === 'senmon-jissen' ? 'senmon-jissen' : 'reskilling';
+      const rate = parseFloat(this.dataset[scheme === 'reskilling' ? 'rateReskilling' : 'rateSenmonJissen'] || '0');
+      const cap = parseInt(this.dataset[scheme === 'reskilling' ? 'capReskilling' : 'capSenmonJissen'] || '0', 10);
+      const granted = Math.min(Math.floor(fee * rate), cap);
+      const effective = fee - granted;
+      this.querySelector('.sim-fee')!.textContent = fee.toLocaleString('ja-JP') + '円';
+      this.querySelector('.sim-grant')!.textContent = granted.toLocaleString('ja-JP') + '円';
+      this.querySelector('.sim-effective')!.textContent = effective.toLocaleString('ja-JP') + '円';
+      const q = new URLSearchParams(location.search);
+      q.set('fee', String(fee)); q.set('scheme', scheme);
+      history.replaceState(null, '', `${location.pathname}?${q}`);
+    }
+  }
+  if (!customElements.get('subsidy-sim')) customElements.define('subsidy-sim', SubsidySim);
+</script>

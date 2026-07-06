@@ -1,0 +1,11 @@
+---
+/** H-3: 星は「編集部評価」であることを明示し、根拠（/infoのスコア表）へリンク。
+ *  口コミ件数とは完全分離（口コミはVoices側で「実在の声N件」表記）。 */
+interface Props { score: number }
+const { score } = Astro.props;
+const full = Math.round(score);
+---
+<span class="stars" aria-label={`編集部評価 ${score}（5点満点）`}>
+  {'★'.repeat(full)}{'☆'.repeat(5 - full)}<span class="score">{score.toFixed(1)}</span>
+  <a class="score-basis" href="/info#ranking-basis">編集部評価</a>
+</span>

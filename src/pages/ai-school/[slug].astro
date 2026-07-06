@@ -1,0 +1,105 @@
+---
+/** サブLP4本（kind:segment）とスクール個別ページ7本（kind:school）の統合ルート。
+ *  slug衝突はlib/schools.tsのビルド時assertで防止済み（architect GO条件1）。 */
+import LpLayout from '../../layouts/LpLayout.astro';
+import SegmentSection from '../../components/school/SegmentSection.astro';
+import PriceTable from '../../components/school/PriceTable.astro';
+import Voices from '../../components/school/Voices.astro';
+import EditorNote from '../../components/school/EditorNote.astro';
+import Stars from '../../components/school/Stars.astro';
+import {
+  SEGMENTS, SCHOOLS, segmentBySlug, itemListJsonLd, breadcrumbJsonLd,
+  rankedSchools, GENRE,
+} from '../../lib/schools';
+
+export function getStaticPaths() {
+  const segs = SEGMENTS.filter((s) => s.slug !== 'default')
+    .map((s) => ({ params: { slug: s.slug }, props: { kind: 'segment' as const } }));
+  const schools = SCHOOLS.map((s) => ({ params: { slug: s.id }, props: { kind: 'school' as const } }));
+  return [...segs, ...schools];
+}
+
+const { slug } = Astro.params;
+const { kind } = Astro.props;
+const site = Astro.site?.origin ?? '';
+const noindex = !GENRE.indexable;
+
+let title = '', description = '', jsonLd: object | null = null;
+let seg = null, school = null, defRank = null;
+
+if (kind === 'segment') {
+  seg = segmentBySlug(slug!)!;
+  title = seg.title;
+  description = seg.description;
+  jsonLd = itemListJsonLd(seg, site);
+} else {
+  school = SCHOOLS.find((s) => s.id === slug)!;
+  const def = segmentBySlug('default')!;
+  defRank = rankedSchools(def).find((e) => e.school.id === school!.id)!;
+  title = `${school.name}の評判・料金を徹底解説【${GENRE.updatedDate.slice(0, 7).replace('-', '年')}月】`;
+  description = school.detail.lead.slice(0, 110);
+  jsonLd = breadcrumbJsonLd(
+    [
+      { name: 'くらべAI', path: '/' },
+      { name: '生成AIスクール比較', path: GENRE.basePath },
+      { name: school.shortName, path: `${GENRE.basePath}/${school.id}` },
+    ],
+    site
+  );
+}
+const rel = school?.affiliate ? 'sponsored nofollow noopener' : 'noopener';
+---
+<LpLayout title={title} description={description} noindex={noindex} jsonLd={jsonLd}>
+  {kind === 'segment' && seg && <SegmentSection segment={seg} />}
+
+  {kind === 'school' && school && defRank && (
+    <article>
+      <p class="detail-bread">
+        <a href={GENRE.basePath}>生成AIスクール比較</a> › {school.shortName}
+      </p>
+      <h1>{school.name}の評判・料金・向いている人</h1>
+      <div class="meta">
+        <span>総合{defRank.rank}位 / {SCHOOLS.length}校</span>
+        <Stars score={defRank.score} />
+        <span>確認日: {GENRE.checkedDate}</span>
+      </div>
+
+      <p>{school.detail.lead}</p>
+
+      <h2>料金と給付金</h2>
+      <PriceTable school={school} />
+
+      <h2>学べること</h2>
+      <ul>{school.detail.curriculum.map((c) => <li>{c}</li>)}</ul>
+
+      <h2>良い点・気になる点</h2>
+      <ul class="merit">{school.detail.pros.map((p) => <li>{p}</li>)}</ul>
+      <ul class="demerit">{school.detail.cons.map((c) => <li>{c}</li>)}</ul>
+
+      <div class="box-warn"><div class="box-title">申し込む前の注意</div>{school.caution}</div>
+      <EditorNote text={school.editorNote} />
+
+      <h2>実際の声</h2>
+      <Voices school={school} />
+
+      <h2>よくある質問</h2>
+      {school.detail.faq.map((f) => (
+        <p><b>Q. {f.q}</b><br />{f.a}</p>
+      ))}
+
+      <div class="cta-wrap">
+        <a class="aff-btn" href={school.cta.url} rel={rel} target="_blank">{school.cta.primary}</a>
+        <div class="cta-note">{school.cta.note}</div>
+      </div>
+
+      <h2>参考情報</h2>
+      <ul class="detail-refs">
+        {school.detail.references.map((r) => (
+          <li><a href={r.url} rel="noopener" target="_blank">{r.label}</a>（確認日: {r.checkedAt}）</li>
+        ))}
+      </ul>
+
+      <p><a href={GENRE.basePath}>← 生成AIスクール比較ランキングに戻る</a></p>
+    </article>
+  )}
+</LpLayout>

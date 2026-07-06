@@ -1,0 +1,20 @@
+---
+/** H-5: 出典（媒体名+リンク）を各引用ブロックに1:1で近接表示。
+ *  声が無い校は voicesNote を表示（捏造しない）。 */
+import type { SchoolT } from '../../lib/schools';
+interface Props { school: SchoolT }
+const { school: s } = Astro.props;
+---
+{s.voices.length > 0 ? (
+  <div class="sc-voices">
+    <div class="voices-head">受講者・検討者の声<span class="voices-count">{s.voices.length}件</span></div>
+    {s.voices.map((v) => (
+      <div class="review">
+        <div class="rv-text">{v.quote}</div>
+        <div class="rv-src">{v.attr}（{v.year}・<a href={v.url} rel="noopener" target="_blank">{v.media}</a>）</div>
+      </div>
+    ))}
+  </div>
+) : (
+  s.voicesNote && <p class="voices-none">{s.voicesNote}</p>
+)}

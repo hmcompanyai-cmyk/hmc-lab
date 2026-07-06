@@ -1,0 +1,12 @@
+---
+/** 水平セグメントタブ（prodigの目的別タブの移植）。現在地をaria-currentで示す。 */
+import { SEGMENTS, GENRE } from '../../lib/schools';
+interface Props { current: string }
+const { current } = Astro.props;
+const href = (slug: string) => (slug === 'default' ? GENRE.basePath : `${GENRE.basePath}/${slug}`);
+---
+<nav class="seg-tabs" aria-label="目的別ランキング">
+  {SEGMENTS.map((s) => (
+    <a href={href(s.slug)} aria-current={s.slug === current ? 'page' : undefined}>{s.label}</a>
+  ))}
+</nav>

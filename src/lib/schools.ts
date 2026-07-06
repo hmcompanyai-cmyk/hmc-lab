@@ -67,8 +67,14 @@ const School = z.object({
     pros: z.array(z.string()),
     cons: z.array(z.string()),
     faq: z.array(z.object({ q: z.string(), a: z.string() })),
-    references: z.array(z.object({ label: z.string(), url: z.string().url(), checkedAt: z.string() })),
+    references: z.array(z.object({
+      label: z.string(),
+      url: z.string().url(),
+      checkedAt: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+    })),
   }),
+}).refine((s) => s.verified || (s.verifyNote != null && s.verifyNote.length > 5), {
+  message: 'verified:false の学校には verifyNote が必須（H-6: 注記なし公開の構造的禁止）',
 });
 
 const Segment = z.object({

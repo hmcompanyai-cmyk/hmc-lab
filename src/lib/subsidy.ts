@@ -11,12 +11,12 @@ export const SCHEME_LABEL: Record<SubsidyScheme, string> = {
   none: '対象制度なし',
 };
 
-const SCHEME_RATE: Record<SubsidyScheme, number> = {
+export const SCHEME_RATE: Record<SubsidyScheme, number> = {
   reskilling: 0.7,
   'senmon-jissen': 0.8,
   none: 0,
 };
-const SCHEME_CAP: Record<SubsidyScheme, number | null> = {
+export const SCHEME_CAP: Record<SubsidyScheme, number | null> = {
   reskilling: 560000,
   'senmon-jissen': 640000,
   none: null,

@@ -18,12 +18,13 @@ const sim = s.subsidy.type !== 'none' && s.subsidy.baseFee
     <div class="pr-row"><span>期間</span><b>{s.budget.period}</b></div>
   </div>
   <p class="pr-note-s">{s.budget.note}</p>
-  {sim && (
+  {s.subsidy.type !== 'none' ? (
     <div class="pr-subsidy">
-      <div>{SCHEME_LABEL[s.subsidy.type]}の条件をすべて満たした場合、実質 <b>{yen(sim.effective)}</b> 程度</div>
+      {sim && <div>{SCHEME_LABEL[s.subsidy.type]}の条件をすべて満たした場合、実質 <b>{yen(sim.effective)}</b> 程度</div>}
       <p class="pr-cond">{s.subsidy.conditionNote}</p>
     </div>
+  ) : (
+    <p class="pr-cond">{s.subsidy.conditionNote}</p>
   )}
-  {s.subsidy.type === 'none' && <p class="pr-cond">{s.subsidy.conditionNote}</p>}
   {!s.verified && s.verifyNote && <p class="pr-verify">{s.verifyNote}</p>}
 </div>

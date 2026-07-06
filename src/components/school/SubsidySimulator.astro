@@ -2,12 +2,12 @@
 /** 給付金かんたんシミュレータ（<subsidy-sim>）。
  *  H-2: 結果はサーバー側で既定値を描画（高さ予約・CLSゼロ）。条件注記はJS非依存で常時表示。
  *  M-1: 入力は数値クランプ＋制度enumホワイトリスト。textContentのみでDOM更新。 */
-import { simulate, CONDITION_NOTE, SCHEME_LABEL } from '../../lib/subsidy';
+import { simulate, CONDITION_NOTE, SCHEME_LABEL, SCHEME_RATE, SCHEME_CAP } from '../../lib/subsidy';
 const def = simulate(297000, 'reskilling');
 ---
 <subsidy-sim class="sim" id="sim"
-  data-rate-reskilling="0.7" data-cap-reskilling="560000"
-  data-rate-senmon-jissen="0.8" data-cap-senmon-jissen="640000">
+  data-rate-reskilling={SCHEME_RATE['reskilling']} data-cap-reskilling={SCHEME_CAP['reskilling']}
+  data-rate-senmon-jissen={SCHEME_RATE['senmon-jissen']} data-cap-senmon-jissen={SCHEME_CAP['senmon-jissen']}>
   <h2>給付金かんたんシミュレータ</h2>
   <p class="sim-sub">受講料と制度を選ぶと、条件をすべて達成した場合の実質負担の目安を計算します。</p>
   <div class="sim-form">

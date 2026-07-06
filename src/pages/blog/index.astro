@@ -1,0 +1,27 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+const fmt = (d: Date) =>
+  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+---
+
+<Base title="AIツールレビュー記事一覧" description="くらべAI編集部によるAIツールのレビュー・比較記事の一覧。実際に業務で使った実測ベースで書いています。">
+  <div class="hero">
+    <h1>AIツールレビュー記事</h1>
+    <p>カタログスペックの転載ではなく、自社の業務で実際に回した実測だけで書いています。</p>
+  </div>
+  {posts.map((post) => (
+    <a class="card" href={`/blog/${post.id}`}>
+      <h2>{post.data.title}</h2>
+      <p>{post.data.description}</p>
+      <div class="meta">
+        <time>{fmt(post.data.pubDate)}</time>
+        {post.data.tags.slice(0, 3).map((t) => <span class="tag">{t}</span>)}
+      </div>
+    </a>
+  ))}
+</Base>

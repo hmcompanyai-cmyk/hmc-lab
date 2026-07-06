@@ -1,0 +1,91 @@
+---
+/** タップ式かんたん診断（showcase型・3問タップ→即おすすめ表示）。
+ *  サイドバー等に埋め込む軽量版。M-1: enumのみ・textContent/DOM生成はcreateElementのみ。 */
+import { SCHOOLS, SEGMENTS, editorialScore, GENRE } from '../../lib/schools';
+const def = SEGMENTS.find((s) => s.slug === 'default')!;
+const data = SCHOOLS.map((s) => ({
+  id: s.id, name: s.shortName, type: s.type,
+  purpose: s.tags.purpose, format: s.tags.format,
+  monthly: s.budget.monthly, total: s.budget.total,
+  subsidy: s.subsidy.type, score: editorialScore(s, def),
+  cta: s.cta.url, path: `${GENRE.basePath}/${s.id}`,
+}));
+---
+<quick-diag class="qdiag" data-schools={JSON.stringify(data)}>
+  <div class="qd-q">Q1. 目的は？</div>
+  <div class="qd-opts" data-axis="p">
+    <button type="button" class="qd-opt" data-v="tenshoku" aria-pressed="false">AI転職</button>
+    <button type="button" class="qd-opt" data-v="fukugyo" aria-pressed="false">仕事で使う</button>
+    <button type="button" class="qd-opt" data-v="reskilling" aria-pressed="false">学び直し</button>
+  </div>
+  <div class="qd-q">Q2. 予算は？</div>
+  <div class="qd-opts" data-axis="b">
+    <button type="button" class="qd-opt" data-v="m2" aria-pressed="false">月1〜2万円台</button>
+    <button type="button" class="qd-opt" data-v="t5" aria-pressed="false">総額5万円まで</button>
+    <button type="button" class="qd-opt" data-v="sub" aria-pressed="false">給付金を使いたい</button>
+  </div>
+  <div class="qd-q">Q3. 学び方は？</div>
+  <div class="qd-opts" data-axis="f">
+    <button type="button" class="qd-opt" data-v="subscription" aria-pressed="false">動画で自分のペース</button>
+    <button type="button" class="qd-opt" data-v="banso" aria-pressed="false">講師の伴走つき</button>
+    <button type="button" class="qd-opt" data-v="taimen" aria-pressed="false">教室で対面</button>
+  </div>
+  <div class="qd-result" aria-live="polite"></div>
+</quick-diag>
+
+<script>
+  const OK = {
+    p: ['tenshoku', 'fukugyo', 'reskilling'],
+    b: ['m2', 't5', 'sub'],
+    f: ['subscription', 'banso', 'taimen'],
+  };
+  class QuickDiag extends HTMLElement {
+    st: Record<string, string> = {};
+    schools: any[] = [];
+    connectedCallback() {
+      try { this.schools = JSON.parse(this.dataset.schools || '[]'); } catch { this.schools = []; }
+      this.querySelectorAll<HTMLElement>('.qd-opts').forEach((g) => {
+        const axis = g.dataset.axis!;
+        g.querySelectorAll<HTMLButtonElement>('button.qd-opt').forEach((b) => {
+          b.addEventListener('click', () => {
+            const v = b.dataset.v!;
+            if (!(OK as any)[axis]?.includes(v)) return;
+            const on = this.st[axis] === v;
+            this.st[axis] = on ? '' : v;
+            g.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b && !on)));
+            this.show();
+          });
+        });
+      });
+    }
+    show() {
+      const { p, b, f } = this.st;
+      const box = this.querySelector('.qd-result')!;
+      box.textContent = '';
+      if (!p && !b && !f) return;
+      const hit = this.schools.filter((s) => {
+        if (p && !s.purpose.includes(p)) return false;
+        if (f && !s.format.includes(f)) return false;
+        if (b === 'm2' && !(s.monthly != null && s.monthly <= 29999)) return false;
+        if (b === 't5' && !(s.total != null && s.total <= 50000)) return false;
+        if (b === 'sub' && s.subsidy === 'none') return false;
+        return true;
+      }).sort((a, c) => c.score - a.score);
+      if (hit.length === 0) {
+        box.textContent = '条件に合うスクールが見つかりませんでした。条件を1つ外してみてください。';
+        return;
+      }
+      const top = hit[0];
+      const div = document.createElement('div');
+      div.className = 'qd-hit';
+      const b1 = document.createElement('b'); b1.textContent = top.name;
+      const sp = document.createElement('div'); sp.textContent = `${top.type}・編集部評価 ${top.score.toFixed(1)}（${hit.length}校が該当）`;
+      sp.style.fontSize = '.78rem'; sp.style.color = 'var(--text-dim)';
+      const a = document.createElement('a'); a.href = top.path; a.textContent = '詳細をみる ›';
+      a.style.fontWeight = '700'; a.style.fontSize = '.85rem';
+      div.append(b1, sp, a);
+      box.append(div);
+    }
+  }
+  if (!customElements.get('quick-diag')) customElements.define('quick-diag', QuickDiag);
+</script>

@@ -1,31 +1,107 @@
 ---
+/** サイトトップ（claude design 2a: フル幅メディア型・2026-07-06採用）。
+ *  ヒーロー→TOP3カード→目的別ストリップ→ランキング＋サイドバー→比較表。 */
 import Base from '../layouts/Base.astro';
+import SchoolCard from '../components/school/SchoolCard.astro';
+import CompareTable from '../components/school/CompareTable.astro';
+import QuickDiagnosis from '../components/school/QuickDiagnosis.astro';
+import FreshnessNote from '../components/school/FreshnessNote.astro';
+import PrLabel from '../components/school/PrLabel.astro';
+import StickyBar from '../components/school/StickyBar.astro';
+import { segmentBySlug, rankedSchools, itemListJsonLd, GENRE } from '../lib/schools';
 import { getCollection } from 'astro:content';
-import { SITE } from '../config/site';
+import '../styles/lp.css';
 
-const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-);
-const fmt = (d: Date) =>
-  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+const seg = segmentBySlug('default')!;
+const ranked = rankedSchools(seg);
+const top3 = ranked.slice(0, 3);
+const jsonLd = itemListJsonLd(seg, Astro.site?.origin ?? '');
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 4);
 ---
-
-<Base>
-  <div class="hero">
-    <h1>AIツール選びは、<br />毎日使い倒している私たちが比べます</h1>
-    <p>
-      くらべAIは、社員全員がAIの会社「HMCompany」が運営する比較メディア。
-      カタログスペックの転載ではなく、<strong>自社の業務で実際に回した実測</strong>だけでAIツールを比較します。
-    </p>
-  </div>
-  {posts.map((post) => (
-    <a class="card" href={`/blog/${post.id}`}>
-      <h2>{post.data.title}</h2>
-      <p>{post.data.description}</p>
-      <div class="meta">
-        <time>{fmt(post.data.pubDate)}</time>
-        {post.data.tags.slice(0, 3).map((t) => <span class="tag">{t}</span>)}
+<Base
+  title="生成AIスクール比較ランキング"
+  description={seg.description}
+  noindex={!GENRE.indexable}
+  jsonLd={jsonLd}
+  wide={true}
+>
+  <div id="top"></div>
+  <section class="hero2a">
+    <div class="hero2a-in">
+      <div>
+        <span class="badge">【{GENRE.updatedDate}更新】生成AIスクール7校 徹底比較</span>
+        <h1>後悔しない、<br />生成AIスクールの選び方。</h1>
+        <p class="lead">
+          月1万円台のサブスクから給付金前提の本格コースまで、性格の違う7校を編集部が同じ物差しで採点。
+          あなたの目的と予算に合う一校が見つかります。
+        </p>
+        <div class="hero-ctas">
+          <a class="aff-btn" href="#ranking">ランキングをみる</a>
+          <a class="ghost-w" href="#shindan">30秒で無料診断</a>
+        </div>
+        <div class="metrics">
+          <span><b>7</b>校を比較</span>
+          <span><b>5</b>軸で採点</span>
+          <span><b>毎週</b>更新</span>
+        </div>
       </div>
-    </a>
-  ))}
+      <div class="hero-top3">
+        <div class="ht-head">今月の総合ランキング</div>
+        {top3.map((e) => (
+          <a class="ht-row" href={`#${e.school.id}`} style="color:inherit;">
+            <span class={`rank-badge r${e.rank}`}>{e.rank}</span>
+            <span><span class="ht-name">{e.school.shortName}</span><br /><span class="ht-type">{e.school.type}</span></span>
+            <span class="ht-score">{e.score.toFixed(1)}</span>
+          </a>
+        ))}
+        <a class="ht-all" href="/ai-school">全7校のランキングをみる ›</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="purpose-strip">
+    <div class="purpose-strip-in">
+      <span class="ps-label">目的で探す:</span>
+      <a href="/ai-school/tenshoku">AI転職</a>
+      <a href="/ai-school/fukugyo">副業・業務活用</a>
+      <a href="/ai-school/reskilling">学び直し・リスキリング</a>
+      <a href="/ai-school/kyufu" class="gold">給付金が使える</a>
+    </div>
+  </div>
+
+  <PrLabel />
+
+  <div class="top2a">
+    <div>
+      <h2 id="ranking" style="margin-top:1rem;">総合ランキング</h2>
+      {ranked.map((e) => (
+        <SchoolCard school={e.school} rank={e.rank} score={e.score} segment={seg} />
+      ))}
+      <CompareTable segment={seg} />
+      <FreshnessNote />
+    </div>
+    <aside class="side">
+      <div class="side-card diag-side" id="shindan">
+        <b class="sc-head">30秒でわかる無料診断</b>
+        <QuickDiagnosis />
+      </div>
+      <div class="side-card">
+        <b class="sc-head">よく読まれている記事</b>
+        {posts.map((p) => (
+          <a class="side-link" href={`/blog/${p.id}`}>{p.data.title}</a>
+        ))}
+        <a class="side-link" href="/blog" style="border-bottom:none;font-weight:700;">記事一覧へ ›</a>
+      </div>
+      <div class="side-card shiori-card">
+        <span class="face"><img src="/img/shiori.jpg" alt="編集部・栞" width="56" height="56" loading="lazy" /></span>
+        <p style="font-size:.88rem; line-height:1.9; margin:0;">
+          編集部の栞です。私たちは社員全員AIの会社。毎日AIを業務で使い倒している当事者として、
+          カタログではなく実測で比較しています。会社の日常は<a href="https://note.com/hmai_company">noteの実録連載</a>で。
+        </p>
+      </div>
+    </aside>
+  </div>
+  <StickyBar />
 </Base>

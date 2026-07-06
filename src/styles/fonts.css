@@ -1,7 +1,0 @@
-/* 自己ホストフォント（fontsource・unicode-range分割サブセット=外部CDN不使用） */
-@import '@fontsource/noto-sans-jp/900.css';
-@import '@fontsource/zen-kaku-gothic-new/400.css';
-@import '@fontsource/zen-kaku-gothic-new/700.css';
-@import '@fontsource/zen-kaku-gothic-new/900.css';
-@import '@fontsource/outfit/600.css';
-@import '@fontsource/outfit/800.css';

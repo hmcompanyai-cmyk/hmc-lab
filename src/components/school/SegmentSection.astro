@@ -26,11 +26,11 @@ const segHero = fs.existsSync(`public/img/genres/ai-school/seg-${segment.slug}.j
 <div class="lp-fv">
   <h1>{segment.h1}</h1>
   <div class="lp-date">【{GENRE.updatedDate}更新】</div>
+  {segHero && (
+    <p class="lp-hero-img"><img src={segHero} alt={`${segment.label}の学習イメージ（編集部作成イラスト）`} width="1200" height="568" loading="eager" /></p>
+  )}
   <p class="lp-sub">{segment.intro}</p>
 </div>
-{segHero && (
-  <p class="lp-hero-img"><img src={segHero} alt={`${segment.label}の学習イメージ（編集部作成イラスト）`} width="1200" height="568" loading="eager" /></p>
-)}
 <PrLabel />
 <LpNav current={segment.slug} />
 

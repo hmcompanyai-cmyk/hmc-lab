@@ -8,11 +8,16 @@ import PriceTable from './PriceTable.astro';
 import Voices from './Voices.astro';
 import EditorNote from './EditorNote.astro';
 import { GENRE } from '../../lib/schools';
+import fs from 'node:fs';
 
 interface Props { school: SchoolT; rank: number; score: number; segment: SegmentT }
 const { school: s, rank, score, segment } = Astro.props;
 const rel = s.affiliate ? 'sponsored nofollow noopener' : 'noopener';
 const segNote = segment.notes[s.id];
+// 編集部作成イラスト（画像スプリント生成分・未生成校はスキップ）
+const eyecatch = fs.existsSync(`public/img/genres/ai-school/${s.id}.jpg`)
+  ? `/img/genres/ai-school/${s.id}.jpg`
+  : null;
 ---
 <article
   class={`school-card${rank === 1 ? ' top' : ''}`}
@@ -37,6 +42,9 @@ const segNote = segment.notes[s.id];
     </div>
   </div>
   <div class="school-body">
+    {eyecatch && (
+      <img class="sc-eyecatch" src={eyecatch} alt={`${s.shortName}の学習イメージ（編集部作成イラスト）`} width="1200" height="568" loading="lazy" />
+    )}
     {segNote && <p class="sc-segnote">{segNote}</p>}
     <ul class="sc-points">
       {s.points.map((p) => <li>{p}</li>)}

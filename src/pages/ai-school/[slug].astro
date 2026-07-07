@@ -61,8 +61,14 @@ if (kind === 'segment') {
 const rel = school?.affiliate ? 'sponsored nofollow noopener' : 'noopener';
 // 個別ページの追従CTAは当該校の無料相談へ直結（CRO監査H-1）
 const stickyCta = school ? { href: school.cta.url, label: '無料相談', rel } : undefined;
+// アイキャッチ（画像スプリント生成分。未生成校はビルド時のfs存在チェックでスキップ）
+import fs from 'node:fs';
+const eyecatch =
+  school && fs.existsSync(`public/img/genres/ai-school/${school.id}.jpg`)
+    ? `/img/genres/ai-school/${school.id}.jpg`
+    : null;
 ---
-<LpLayout title={title} description={description} noindex={noindex} jsonLd={jsonLd} stickyCta={stickyCta}>
+<LpLayout title={title} description={description} noindex={noindex} jsonLd={jsonLd} stickyCta={stickyCta} ogImage={eyecatch}>
   {kind === 'segment' && seg && <SegmentSection segment={seg} />}
 
   {kind === 'school' && school && defRank && (
@@ -71,8 +77,11 @@ const stickyCta = school ? { href: school.cta.url, label: '無料相談', rel } 
         <a href={GENRE.basePath}>生成AIスクール比較</a> › {school.shortName}
       </p>
       <h1>{school.name}の評判・料金・向いている人</h1>
-      {/* 法務監査C-1: affiliate:true化時にPR表記が7詳細ページで欠落しないよう必ず描画 */}
+      {/* 法務監査C-1: affiliate:true化時にPR表記が詳細ページで欠落しないよう必ず描画 */}
       <PrLabel />
+      {eyecatch && (
+        <p class="detail-eyecatch"><img src={eyecatch} alt={`${school.shortName}の学習イメージ（編集部作成イラスト）`} width="1200" height="568" loading="eager" /></p>
+      )}
       <div class="meta">
         <span>総合{defRank.rank}位 / {SCHOOLS.length}校</span>
         <Stars score={defRank.score} />

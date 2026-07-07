@@ -10,10 +10,11 @@ interface Props {
   noindex: boolean;
   jsonLd?: object | null;
   stickyCta?: { href: string; label: string; rel?: string };
+  ogImage?: string | null;
 }
-const { title, description, noindex, jsonLd = null, stickyCta } = Astro.props;
+const { title, description, noindex, jsonLd = null, stickyCta, ogImage = null } = Astro.props;
 ---
-<Base title={title} description={description} noindex={noindex} jsonLd={jsonLd} ogType="website">
+<Base title={title} description={description} noindex={noindex} jsonLd={jsonLd} ogType="website" ogImage={ogImage}>
   <slot />
   <StickyBar cta={stickyCta} />
   <p class="lp-legal">

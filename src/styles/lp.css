@@ -183,9 +183,18 @@ html { scroll-behavior: smooth; }
 .vo-top { display: flex; align-items: center; gap: .55em; margin-bottom: .45em; }
 .vo-av {
   flex: 0 0 34px; width: 34px; height: 34px; border-radius: 50%;
-  color: #fff; font-weight: 800; font-size: .9rem;
+  background: var(--bg-soft); overflow: hidden;
   display: inline-flex; align-items: center; justify-content: center;
 }
+.vo-av img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* 編集部作成イラスト（カード・詳細ページのアイキャッチ） */
+.sc-eyecatch {
+  width: 100%; height: auto; aspect-ratio: 1200 / 568; object-fit: cover;
+  border-radius: 10px; margin: 0 0 .9em; display: block;
+}
+.detail-eyecatch { margin: 1rem 0 0; }
+.detail-eyecatch img { width: 100%; height: auto; border-radius: 14px; display: block; }
 .vo-attr { font-size: .76rem; color: var(--text-dim); font-weight: 700; line-height: 1.5; }
 .vo-text { font-size: .88rem; line-height: 1.85; margin: 0 0 .5em; flex: 1; }
 .vo-src { font-size: .72rem; color: var(--text-dim); text-align: right; border-top: 1px dashed var(--border); padding-top: .35em; }

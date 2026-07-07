@@ -7,14 +7,15 @@
 import type { SchoolT } from '../../lib/schools';
 interface Props { school: SchoolT }
 const { school: s } = Astro.props;
-const AV_COLORS = ['#1C6B54', '#C39433', '#B87C48', '#134C3B', '#8a6d3b'];
-/** 「40代・営業職」→「営」のように、年代数字ではなく職業・立場の頭文字を使う
- *  （数字だと順位バッジと紛らわしい）。 */
-const initial = (attr: string) => {
-  const cleaned = attr.replace(/[（(].*$/, '');
-  const seg = cleaned.includes('・') ? cleaned.split('・').find((x) => !/^\d/.test(x)) ?? cleaned : cleaned;
-  const m = seg.match(/[぀-ヿ㐀-鿿A-Za-z]/u);
-  return m ? m[0] : '声';
+/** イメージイラストのアバター割当（画像スプリント生成の5種）。
+ *  属性に性別・職業の明記がある場合は矛盾しないものを選び、それ以外は巡回。
+ *  1=女性 2=男性 3=女性(医療系白衣) 4=男性(若め) 5=男性(製造業作業服) */
+const pickAvatar = (attr: string, i: number): number => {
+  if (/医師|薬剤|医学/.test(attr)) return 3;
+  if (/製造/.test(attr)) return 5;
+  if (/女性/.test(attr)) return 1;
+  if (/男性/.test(attr)) return 2;
+  return [1, 4, 2, 5][i % 4];
 };
 /** 鮮度優先: 新しい年の声から順に表示（ここ1年以内の声が最重要という編集方針） */
 const voices = [...s.voices].sort(
@@ -37,7 +38,7 @@ const useCarousel = voices.length >= 3;
           {voices.map((v, i) => (
             <div class="vo-card" role="listitem">
               <div class="vo-top">
-                <span class="vo-av" style={`background:${AV_COLORS[i % AV_COLORS.length]}`}>{initial(v.attr)}</span>
+                <span class="vo-av"><img src={`/img/genres/ai-school/avatar-${pickAvatar(v.attr, i)}.jpg`} alt="" width="34" height="34" loading="lazy" /></span>
                 <span class="vo-attr">{v.attr}</span>
               </div>
               <p class="vo-text">{v.quote}</p>
@@ -59,7 +60,7 @@ const useCarousel = voices.length >= 3;
         {voices.map((v, i) => (
           <div class="vo-card">
             <div class="vo-top">
-              <span class="vo-av" style={`background:${AV_COLORS[i % AV_COLORS.length]}`}>{initial(v.attr)}</span>
+              <span class="vo-av"><img src={`/img/genres/ai-school/avatar-${pickAvatar(v.attr, i)}.jpg`} alt="" width="34" height="34" loading="lazy" /></span>
               <span class="vo-attr">{v.attr}</span>
             </div>
             <p class="vo-text">{v.quote}</p>

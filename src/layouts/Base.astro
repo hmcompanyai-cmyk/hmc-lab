@@ -24,6 +24,8 @@ const {
 } = Astro.props;
 const pageTitle = title ? `${title} | ${SITE.title}` : `${SITE.title} | ${SITE.tagline}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+// SNSシェア時に画像なしカードにならないよう、未指定ページはサイト既定のOG画像を使う（SEO監査H-4）
+const ogImg = ogImage ?? '/img/genres/ai-school/column-default.jpg';
 ---
 
 <!doctype html>
@@ -44,8 +46,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:site_name" content={SITE.title} />
     <meta property="og:locale" content={SITE.locale} />
     <meta name="twitter:card" content="summary_large_image" />
-    {ogImage && <meta property="og:image" content={new URL(ogImage, Astro.site)} />}
-    {ogImage && <meta name="twitter:image" content={new URL(ogImage, Astro.site)} />}
+    <meta property="og:image" content={new URL(ogImg, Astro.site)} />
+    <meta name="twitter:image" content={new URL(ogImg, Astro.site)} />
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
   </head>
   <body>

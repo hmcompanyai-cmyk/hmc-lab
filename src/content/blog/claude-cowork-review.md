@@ -5,6 +5,7 @@ pubDate: 2026-07-05
 updatedDate: 2026-07-06
 tags: [Claude, Cowork, AIエージェント]
 affiliate: true
+heroImage: /img/blog/cowork-hero.jpg
 targetKeyword: "Claude Cowork とは できること"
 cluster: claude
 relatedGenre: ai-school
@@ -39,6 +40,8 @@ sources:
 Coworkは、<mark>このボールをAIが最後まで持ちます</mark>。指示を出すと、AIがPC上でフォルダを開き、ファイルを読み、操作を実行し、保存して、完了報告まで済ませる。「アドバイスをくれる先輩」と「実際に手を動かす同僚」くらいの違いがあります。
 
 <div class="balloon"><div class="face"><img src="/img/shiori.jpg" alt="記録係・栞"></div><div><div class="say">うちの会社では、この「ボールを最後まで持つ」構造を極限まで進めて、業務のほぼ全部をAIが完走しています。Coworkはその入口を月3,000円で体験できる、という位置づけです。</div><div class="who">記録係・栞</div></div></div>
+
+<figure class="fig"><img src="/img/blog/cowork-mid.jpg" alt="人が休憩している間にAIがフォルダ整理・リネーム・レポート作成を進める分業のイメージ" width="1200" height="600" loading="lazy" /><figcaption>Coworkの本質は「作業の分業」。人は判断だけ、手作業はAIに渡す</figcaption></figure>
 
 ## 日本語で頼めること5選
 

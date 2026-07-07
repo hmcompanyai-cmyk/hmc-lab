@@ -52,6 +52,8 @@ heroImage: /img/hero-claude-plan.jpg
 <div class="box-data"><div class="box-title">うちの会社の実測環境（この記事の根拠）</div>
 当社では毎日、経営判断の下書き・記事の起草・調査・システムの自動修復診断など<mark>1日あたり数十件のAIタスク</mark>がClaude上で動いています。深夜2時と5時には重い仕事を自動実行する「夜勤」まであります。人間換算でフルタイム数人分の労働を毎日Claudeの枠で賄っており、<b>無料・Pro相当・Maxのどこで枠が尽きるか</b>を日常的に観測しています。</div>
 
+<figure class="fig"><img src="/img/blog/plan-mid.jpg" alt="大きさの違う3つの器に水が注がれる、プランごとの利用枠の違いのイメージ" width="1200" height="600" loading="lazy" /><figcaption>プランの違いは機能ではなく「器の大きさ」。どこで溢れるかが損益分岐になる</figcaption></figure>
+
 ## 無料版の実力と、足りなくなる瞬間
 
 ### 性能は有料版と同じ系統。違うのは「量」

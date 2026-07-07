@@ -519,6 +519,11 @@ footer.site { background: var(--paper2); }
 /* sticky header(約75px)にアンカー先が隠れないための全ID共通マージン */
 [id] { scroll-margin-top: 5.75rem; }
 .side { position: sticky; top: 80px; display: flex; flex-direction: column; gap: 1.2rem; }
+/* 記事内の図版（figure＋キャプション） */
+article .fig { margin: 2rem 0; }
+article .fig img { width: 100%; height: auto; border-radius: 12px; display: block; }
+article .fig figcaption { font-size: .8rem; color: var(--text-dim); text-align: center; margin-top: .55em; }
+
 /* 記事→比較LPの収益動線カード（Post.astroが自動描画） */
 .related-lp { background: var(--bg-soft); border: 1.5px solid var(--primary); border-radius: 12px; padding: 1em 1.3em; margin: 2.4rem 0 0; }
 .related-lp b { display: block; margin-bottom: .3em; font-size: .88rem; color: var(--primary-dark); }

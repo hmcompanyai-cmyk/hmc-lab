@@ -9,12 +9,18 @@ import DiagnosisForm from './DiagnosisForm.astro';
 import SchoolCard from './SchoolCard.astro';
 import CompareTable from './CompareTable.astro';
 import SubsidySimulator from './SubsidySimulator.astro';
+import SubsidySteps from './SubsidySteps.astro';
 import FreshnessNote from './FreshnessNote.astro';
+import fs from 'node:fs';
 
 interface Props { segment: SegmentT }
 const { segment } = Astro.props;
 const ranked = rankedSchools(segment);
 const top3 = ranked.slice(0, 3);
+// セグメント冒頭イラスト（画像スプリント生成分・存在チェック付き）
+const segHero = fs.existsSync(`public/img/genres/ai-school/seg-${segment.slug}.jpg`)
+  ? `/img/genres/ai-school/seg-${segment.slug}.jpg`
+  : null;
 ---
 <div id="top"></div>
 <div class="lp-fv">
@@ -22,6 +28,9 @@ const top3 = ranked.slice(0, 3);
   <div class="lp-date">【{GENRE.updatedDate}更新】</div>
   <p class="lp-sub">{segment.intro}</p>
 </div>
+{segHero && (
+  <p class="lp-hero-img"><img src={segHero} alt={`${segment.label}の学習イメージ（編集部作成イラスト）`} width="1200" height="568" loading="eager" /></p>
+)}
 <PrLabel />
 <LpNav current={segment.slug} />
 
@@ -64,6 +73,7 @@ const top3 = ranked.slice(0, 3);
 </section>
 
 <CompareTable segment={segment} />
+<SubsidySteps />
 <SubsidySimulator />
 <FreshnessNote />
 

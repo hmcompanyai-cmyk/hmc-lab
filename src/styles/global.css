@@ -1,5 +1,5 @@
 :root {
-  /* くらべAIブランド（claude design 2026-07-06 採用: 生成り×パイングリーン×柿） */
+  /* AI番付ブランド（claude design 2026-07-06 採用: 生成り×パイングリーン×柿） */
   --bg: #FBF8F2;           /* --paper 生成り */
   --bg-soft: #F4EEE1;      /* 淡い面 */
   --paper2: #F1E9DA;       /* フッター等の濃い生成り */
@@ -472,7 +472,14 @@ article tr:nth-child(even) td { background: var(--bg-soft); }
 .utilbar a { color: #fff; opacity: .85; margin-left: 1.2em; }
 header.site { position: sticky; top: 0; z-index: 40; background: #fff; border-bottom: 1px solid var(--border); margin-bottom: 0; padding: 0; }
 .site-in { max-width: var(--max-site); margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; gap: 20px; }
-header.site .logo { font-family: var(--f-round); font-weight: 900; font-size: 23px; }
+/* AI番付ロゴ: 「AI」は英字を締めた緑、「番付」は和の骨太墨字＋金の落款アクセント（和モダン） */
+header.site .logo { font-family: var(--f-round); font-weight: 900; font-size: 23px; letter-spacing: .06em; color: var(--text); display: inline-flex; align-items: center; }
+header.site .logo span {
+  font-family: var(--f-num); font-weight: 800; color: #fff; letter-spacing: 0;
+  background: var(--primary); border-radius: 6px;
+  padding: 1px 7px; margin-right: 4px;
+  box-shadow: 0 1px 0 var(--gold);
+}
 header.site nav { margin-left: auto; display: flex; gap: 18px; font-size: 13.5px; font-weight: 700; flex-wrap: wrap; }
 header.site nav a { color: var(--text); }
 .head-cta { padding: .45em 1.3em; font-size: .88rem; }

@@ -43,7 +43,7 @@ const blogPosting = {
 };
 const breadcrumb = breadcrumbJsonLd(
   [
-    { name: 'くらべAI', path: '/' },
+    { name: 'AI番付', path: '/' },
     { name: '編集部コラム', path: '/blog' },
     { name: title, path: `/blog/${post.id}` },
   ],
@@ -53,7 +53,7 @@ const breadcrumb = breadcrumbJsonLd(
 
 <Base title={title} description={description} ogType="article" jsonLd={[blogPosting, breadcrumb]} ogImage={heroImage ?? null}>
   <article>
-    <p class="detail-bread"><a href="/">くらべAI</a> › <a href="/blog">編集部コラム</a></p>
+    <p class="detail-bread"><a href="/">AI番付</a> › <a href="/blog">編集部コラム</a></p>
     <h1>{title}</h1>
     <div class="meta">
       <time datetime={pubDate.toISOString()}>公開: {fmt(pubDate)}</time>

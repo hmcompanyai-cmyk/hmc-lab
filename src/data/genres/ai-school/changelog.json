@@ -5,6 +5,14 @@
   },
   "changes": [
     {
+      "date": "2026-07-08",
+      "schoolId": null,
+      "kind": "note",
+      "text": "掲載7校の料金・提供状況を再確認しました（変更なし）",
+      "source": null,
+      "expiresAt": "2026-10-06"
+    },
+    {
       "date": "2026-06-30",
       "schoolId": null,
       "kind": "ended",

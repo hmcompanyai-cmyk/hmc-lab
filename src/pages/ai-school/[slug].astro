@@ -28,6 +28,7 @@ const noindex = !GENRE.indexable;
 let title = '', description = '', jsonLd: object | null = null;
 let seg = null, school = null, defRank = null;
 let altSchools: ReturnType<typeof rankedSchools> = [];
+let rankedDef: ReturnType<typeof rankedSchools> = [];
 let altSeg: { slug: string; label: string } | null = null;
 
 if (kind === 'segment') {
@@ -38,8 +39,8 @@ if (kind === 'segment') {
 } else {
   school = SCHOOLS.find((s) => s.id === slug)!;
   const def = segmentBySlug('default')!;
-  const rankedDef = rankedSchools(def);
-  defRank = rankedDef.find((e) => e.school.id === school!.id)!;
+  rankedDef = rankedSchools(def);
+  defRank = rankedDef.find((e) => e.school.id === school!.id) ?? null; // 受付停止校はランキング外
   // SEO監査H-6: 同じ目的の次点校2件＋該当セグメントLPへの横リンク（回遊とCV回収）
   altSchools = rankedDef
     .filter((e) => e.school.id !== school!.id && e.school.tags.purpose.some((p) => school!.tags.purpose.includes(p)))
@@ -71,7 +72,7 @@ const eyecatch =
 <LpLayout title={title} description={description} noindex={noindex} jsonLd={jsonLd} stickyCta={stickyCta} ogImage={eyecatch}>
   {kind === 'segment' && seg && <SegmentSection segment={seg} />}
 
-  {kind === 'school' && school && defRank && (
+  {kind === 'school' && school && (
     <article>
       <p class="detail-bread">
         <a href={GENRE.basePath}>生成AIスクール比較</a> › {school.shortName}
@@ -83,10 +84,21 @@ const eyecatch =
         <p class="detail-eyecatch"><img src={eyecatch} alt={`${school.shortName}の学習イメージ（編集部作成イラスト）`} width="1200" height="568" loading="eager" /></p>
       )}
       <div class="meta">
-        <span>総合{defRank.rank}位 / {SCHOOLS.length}校</span>
-        <Stars score={defRank.score} />
+        {defRank ? (
+          <>
+            <span>総合{defRank.rank}位 / {rankedDef.length}校</span>
+            <Stars score={defRank.score} />
+          </>
+        ) : (
+          <span>ランキング対象外（新規受付停止中）</span>
+        )}
         <span>確認日: {GENRE.checkedDate}</span>
       </div>
+      {!school.enrollable && (
+        <div class="box-warn"><div class="box-title">新規受付停止中</div>
+          このスクールは現在、公式サイトで新規申込を停止しています（{GENRE.checkedDate}確認）。再開までランキング・比較の対象から外しています。掲載中の料金・内容は停止前の情報です。
+        </div>
+      )}
 
       <p>{school.detail.lead}</p>
 
@@ -95,7 +107,7 @@ const eyecatch =
 
       <div class="cta-wrap">
         <a class="aff-btn" href={school.cta.url} rel={rel} target="_blank">
-          {school.subsidy.type !== 'none' ? '無料相談で給付金の対象か確認する' : school.cta.primary}
+          {school.enrollable && school.subsidy.type !== 'none' ? '無料相談で給付金の対象か確認する' : school.cta.primary}
         </a>
         <div class="cta-note">{school.cta.note}</div>
       </div>

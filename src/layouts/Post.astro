@@ -3,7 +3,7 @@
  *  拡張性監査H-3）・出典リスト・BreadcrumbList（M-3）をテンプレートで保証する。 */
 import Base from './Base.astro';
 import { SITE } from '../config/site';
-import { GENRE, SCHOOLS, breadcrumbJsonLd } from '../lib/schools';
+import { GENRE, SCHOOLS, ACTIVE_SCHOOLS, breadcrumbJsonLd } from '../lib/schools';
 
 interface Props {
   post: {
@@ -74,7 +74,7 @@ const breadcrumb = breadcrumbJsonLd(
         {relatedSchool ? (
           <a href={`${GENRE.basePath}/${relatedSchool.id}`}>{relatedSchool.name}の評判・料金を編集部が徹底解説 ›</a>
         ) : (
-          <a href={GENRE.basePath}>生成AIスクール{SCHOOLS.length}校を同じ物差しで比較する（毎日点検）›</a>
+          <a href={GENRE.basePath}>生成AIスクール{ACTIVE_SCHOOLS.length}校を同じ物差しで比較する（毎日点検）›</a>
         )}
       </div>
     )}

@@ -3,7 +3,7 @@
  *  サイドバー等に埋め込む軽量版。M-1: enumのみ・textContent/DOM生成はcreateElementのみ。 */
 import { SCHOOLS, SEGMENTS, editorialScore, GENRE } from '../../lib/schools';
 const def = SEGMENTS.find((s) => s.slug === 'default')!;
-const data = SCHOOLS.map((s) => ({
+const data = SCHOOLS.filter((s) => s.enrollable).map((s) => ({
   id: s.id, name: s.shortName, type: s.type,
   purpose: s.tags.purpose, format: s.tags.format,
   monthly: s.budget.monthly, total: s.budget.total,

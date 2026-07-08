@@ -5,7 +5,7 @@ import LpLayout from '../../layouts/LpLayout.astro';
 import DiagnosisForm from '../../components/school/DiagnosisForm.astro';
 import SchoolCard from '../../components/school/SchoolCard.astro';
 import PrLabel from '../../components/school/PrLabel.astro';
-import { segmentBySlug, rankedSchools, GENRE, SCHOOLS } from '../../lib/schools';
+import { segmentBySlug, rankedSchools, GENRE, ACTIVE_SCHOOLS } from '../../lib/schools';
 
 const seg = segmentBySlug('default')!;
 const ranked = rankedSchools(seg);
@@ -13,13 +13,13 @@ const top3 = ranked.slice(0, 3);
 ---
 <LpLayout
   title="生成AIスクール比較【診断つき】あなたに合う一校が30秒でわかる"
-  description={`生成AIスクール${SCHOOLS.length}校を目的・予算・給付金で比較。30秒の診断で、あなたに合う一校がわかります。`}
+  description={`生成AIスクール${ACTIVE_SCHOOLS.length}校を目的・予算・給付金で比較。30秒の診断で、あなたに合う一校がわかります。`}
   noindex={true}
 >
   <div id="top"></div>
   <div class="lp-fv">
     <h1>生成AIスクール、<br />どれを選べばいいか30秒でわかる</h1>
-    <div class="lp-date">【{GENRE.updatedDate}更新】{SCHOOLS.length}校を同じ物差しで比較</div>
+    <div class="lp-date">【{GENRE.updatedDate}更新】{ACTIVE_SCHOOLS.length}校を同じ物差しで比較</div>
   </div>
   <PrLabel />
   <DiagnosisForm />
@@ -32,6 +32,6 @@ const top3 = ranked.slice(0, 3);
   </section>
 
   <div class="cta-wrap">
-    <a class="aff-btn" href={GENRE.basePath}>{SCHOOLS.length}校すべての比較をみる</a>
+    <a class="aff-btn" href={GENRE.basePath}>{ACTIVE_SCHOOLS.length}校すべての比較をみる</a>
   </div>
 </LpLayout>

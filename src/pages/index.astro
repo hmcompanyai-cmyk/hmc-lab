@@ -8,7 +8,7 @@ import QuickDiagnosis from '../components/school/QuickDiagnosis.astro';
 import FreshnessNote from '../components/school/FreshnessNote.astro';
 import PrLabel from '../components/school/PrLabel.astro';
 import StickyBar from '../components/school/StickyBar.astro';
-import { segmentBySlug, rankedSchools, itemListJsonLd, GENRE, SCHOOLS, yen } from '../lib/schools';
+import { segmentBySlug, rankedSchools, itemListJsonLd, GENRE, SCHOOLS, ACTIVE_SCHOOLS, yen } from '../lib/schools';
 import type { SchoolT } from '../lib/schools';
 import { simulate } from '../lib/subsidy';
 import { getCollection } from 'astro:content';
@@ -31,7 +31,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
   .slice(0, 4);
 ---
 <Base
-  title={`生成AIスクール比較ランキング【${GENRE.updatedDate.slice(0, 7).replace('-', '年')}月】料金・給付金で${SCHOOLS.length}校を徹底比較`}
+  title={`生成AIスクール比較ランキング【${GENRE.updatedDate.slice(0, 7).replace('-', '年')}月】料金・給付金で${ACTIVE_SCHOOLS.length}校を徹底比較`}
   description={seg.description}
   noindex={!GENRE.indexable}
   jsonLd={jsonLd}
@@ -41,10 +41,10 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
   <section class="hero2a">
     <div class="hero2a-in">
       <div>
-        <span class="badge">【{GENRE.updatedDate}更新】生成AIスクール{SCHOOLS.length}校 徹底比較</span>
+        <span class="badge">【{GENRE.updatedDate}更新】生成AIスクール{ACTIVE_SCHOOLS.length}校 徹底比較</span>
         <h1>後悔しない、<br />生成AIスクールの選び方。</h1>
         <p class="lead">
-          月1万円台のサブスクから給付金前提の本格コースまで、性格の違う{SCHOOLS.length}校を編集部が同じ物差しで採点。
+          月1万円台のサブスクから給付金前提の本格コースまで、性格の違う{ACTIVE_SCHOOLS.length}校を編集部が同じ物差しで採点。
           あなたの目的と予算に合う一校が見つかります。
         </p>
         <div class="hero-ctas">
@@ -65,7 +65,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
             <span class="ht-score">{e.score.toFixed(1)}</span>
           </a>
         ))}
-        <a class="ht-all" href="/ai-school">全{SCHOOLS.length}校のランキングをみる ›</a>
+        <a class="ht-all" href="/ai-school">全{ACTIVE_SCHOOLS.length}校のランキングをみる ›</a>
       </div>
     </div>
   </section>

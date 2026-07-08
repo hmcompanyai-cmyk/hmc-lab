@@ -28,15 +28,15 @@ describe('editorialScore / rankedSchools（H-3/H-4）', () => {
   });
   it('順位はスコア降順・全校連番', () => {
     const r = rankedSchools(def);
-    expect(r.length).toBe(9);
+    expect(r.length).toBe(8); // TA受付停止でenrollable:false
     for (let i = 1; i < r.length; i++) expect(r[i - 1].score).toBeGreaterThanOrEqual(r[i].score);
-    expect(r.map((e) => e.rank)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    expect(r.map((e) => e.rank)).toEqual([1, 2, 3, 4, 5, 6, 7, 8]);
   });
   it('給付金セグメントは対象校のみ（requireSubsidy）', () => {
     const kyufu = segmentBySlug('kyufu')!;
     const r = rankedSchools(kyufu);
     expect(r.every((e) => e.school.subsidy.type !== 'none')).toBe(true);
-    expect(r.length).toBe(5); // TA/侍/キカガク/スキルアップ/ヒューマン
+    expect(r.length).toBe(4); // 侍/キカガク/スキルアップ/ヒューマン（TAは受付停止中）
   });
   it('セグメントで順位が変わる（重み駆動の実証）', () => {
     const def1 = rankedSchools(segmentBySlug('default')!)[0].school.id;
@@ -57,7 +57,7 @@ describe('構造化データ', () => {
     const ld = itemListJsonLd(segmentBySlug('default')!, 'https://example.com');
     expect(ld['@type']).toBe('ItemList');
     expect(ld.itemListElement[0].position).toBe(1);
-    expect(ld.itemListElement.length).toBe(9);
+    expect(ld.itemListElement.length).toBe(8);
   });
   it('BreadcrumbList生成', () => {
     const ld = breadcrumbJsonLd([{ name: 'A', path: '/a' }], 'https://x.jp');

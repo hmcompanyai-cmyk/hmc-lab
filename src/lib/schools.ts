@@ -33,6 +33,9 @@ const School = z.object({
   type: z.string(),
   affiliate: z.boolean(), // H-1: trueでPR表記+rel=sponsoredが原子的に付く
   verified: z.boolean(),
+  // 新規申込を受け付けているか。falseはランキング・比較表・診断から自動除外され、
+  // 詳細ページのみ「受付停止中」明示で残る（申し込めない校を推薦しないための構造保証）
+  enrollable: z.boolean().default(true),
   verifyNote: z.string().nullable(),
   scores: ScoreAxes,
   tags: z.object({
@@ -108,6 +111,8 @@ const Change = z.object({
 
 export const GENRE = genreRaw;
 export const SCHOOLS = z.array(School).min(1).parse((schoolsRaw as any).schools);
+/** 申込可能（enrollable）な校のみ。校数表示・ランキング母数はこちらを使う */
+export const ACTIVE_SCHOOLS = SCHOOLS.filter((s) => s.enrollable);
 export const SEGMENTS = z.array(Segment).min(1).parse((segmentsRaw as any).segments);
 export const CHANGES = z.array(Change).parse((changelogRaw as any).changes);
 
@@ -145,7 +150,7 @@ export function editorialScore(s: SchoolT, seg: SegmentT): number {
 
 /** セグメント別ランキング（スコア降順・同点はid昇順で安定）。requireSubsidyで対象絞込み */
 export function rankedSchools(seg: SegmentT): { school: SchoolT; score: number; rank: number }[] {
-  let pool = SCHOOLS;
+  let pool = SCHOOLS.filter((s) => s.enrollable);
   if (seg.requireSubsidy) pool = pool.filter((s) => s.subsidy.type !== 'none');
   return pool
     .map((school) => ({ school, score: editorialScore(school, seg) }))

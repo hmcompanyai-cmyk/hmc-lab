@@ -60,7 +60,7 @@ const breadcrumb = breadcrumbJsonLd(
       {updatedDate && <time datetime={updatedDate.toISOString()}>更新: {fmt(updatedDate)}</time>}
       {tags.map((t) => <span class="tag">{t}</span>)}
     </div>
-    {heroImage && <p style="margin: 1rem 0 0;"><img src={heroImage} alt={title} /></p>}
+    {heroImage && <p style="margin: 1rem 0 0;"><img src={heroImage} alt={title} width="1200" height="568" loading="eager" fetchpriority="high" style="max-width:100%;height:auto;" /></p>}
     {affiliate && (
       <p class="pr-note">
         【PR】本記事は広告（アフィリエイトリンク）を含みます。紹介内容は当社の業務で実際に使用した記録に基づきます。

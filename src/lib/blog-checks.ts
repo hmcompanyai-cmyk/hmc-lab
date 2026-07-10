@@ -31,6 +31,8 @@ export function assertBlogQuality(posts: BlogEntryLike[]): void {
     '/',
     '/blog',
     '/info',
+    '/about',
+    '/privacy',
     GENRE.basePath,
     `${GENRE.basePath}/lp`,
     ...SCHOOLS.map((s) => `${GENRE.basePath}/${s.id}`),

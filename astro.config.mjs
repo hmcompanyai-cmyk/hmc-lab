@@ -10,12 +10,13 @@ export default defineConfig({
   integrations: [
     mdx(),
     sitemap({
-      // noindexページをsitemapに載せない（拡張性監査M-1）:
-      // 広告LPは常時除外、ジャンルが非公開(indexable:false)の間はトップ+LP群も除外
+      // noindexページをsitemapに載せない（拡張性監査M-1 + 技術SEO監査B-2）:
+      // 非公開(indexable:false)の間は全ページnoindexなのでsitemapも空にする（矛盾ゼロ）。
+      // 公開後も 広告LP と /info重複のorphan(about/privacy) は常時除外
       filter: (page) => {
+        if (!genre.indexable) return false;
         const p = new URL(page).pathname.replace(/\/$/, '') || '/';
-        if (p === '/ai-school/lp') return false;
-        if (!genre.indexable && (p === '/' || p.startsWith('/ai-school'))) return false;
+        if (p === '/ai-school/lp' || p === '/about' || p === '/privacy') return false;
         return true;
       },
     }),

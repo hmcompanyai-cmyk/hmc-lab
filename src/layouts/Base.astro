@@ -1,5 +1,6 @@
 ---
 import { SITE } from '../config/site';
+import GENRE from '../data/genres/ai-school/genre.json';
 import '@fontsource/noto-sans-jp/900.css';
 import '@fontsource/zen-kaku-gothic-new/400.css';
 import '@fontsource/zen-kaku-gothic-new/700.css';
@@ -20,7 +21,11 @@ interface Props {
 }
 const {
   title, description = SITE.description, ogType = 'website',
-  jsonLd = null, ogImage = null, noindex = false, wide = false,
+  jsonLd = null, ogImage = null,
+  // 既定は「サイト公開フラグに従う」: genre.indexable:false の間は全ページ noindex。
+  // 公開時は genre.json の indexable を true にするだけで全ページ・sitemapが一斉に追従する
+  // （blog/about/privacy だけ index可能になる部分漏れが起きていた技術SEO監査B-1の修正）
+  noindex = !GENRE.indexable, wide = false,
 } = Astro.props;
 const pageTitle = title ? `${title} | ${SITE.title}` : `${SITE.title} | ${SITE.tagline}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -36,6 +41,8 @@ const ogImg = ogImage ?? '/img/genres/ai-school/column-default.jpg';
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="alternate" type="application/rss+xml" title={SITE.title} href="/rss.xml" />

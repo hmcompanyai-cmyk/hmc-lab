@@ -3,10 +3,10 @@ import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 import genre from './src/data/genres/ai-school/genre.json' with { type: 'json' };
 
-// kurabeai.com 取得後は site を 'https://kurabeai.com' に差し替えるだけ
-// （canonical/sitemap/OGP/RSSが全て追従する）
+// 本番ドメイン aibanzuke.com（2026-07-11取得・お名前.com/NSはVercel委任）
+// canonical/sitemap/OGP/RSSはすべてこのsiteから導出される
 export default defineConfig({
-  site: 'https://kurabeai.com',
+  site: 'https://aibanzuke.com',
   integrations: [
     mdx(),
     sitemap({

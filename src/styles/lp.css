@@ -119,6 +119,22 @@
   position: sticky; left: 0; background: var(--bg-soft); z-index: 1;
   font-weight: 800;
 }
+/* 固定列の右端に影=「ここから先がスクロール領域」の視覚合図 */
+.ct tbody th[scope="row"]::after, .ct thead th:first-child::after {
+  content: ""; position: absolute; top: 0; right: -7px; width: 7px; height: 100%;
+  background: linear-gradient(90deg, rgba(31, 39, 51, .14), transparent);
+  pointer-events: none;
+}
+.ct thead th:first-child { position: sticky; left: 0; z-index: 2; }
+/* SP: 固定列が画面を占拠しないよう折り返し+幅制限（2026-07-11株主指摘） */
+@media (max-width: 760px) {
+  .ct { font-size: .82rem; }
+  .ct th, .ct td { padding: .45em .6em; }
+  .ct tbody th[scope="row"] {
+    white-space: normal; min-width: 7.6em; max-width: 7.6em;
+    font-size: .78rem; line-height: 1.45;
+  }
+}
 .ct tbody tr:nth-child(even) td { background: var(--bg-soft); }
 .ct-hint { font-size: .78rem; color: var(--text-dim); }
 

@@ -502,6 +502,8 @@ footer.site { background: var(--paper2); }
   .foot-in { grid-template-columns: 1fr 1fr; }
   .utilbar-in span:first-child { display: none; }
   header.site nav { display: none; }
+  /* navが消えるとmargin-left:autoの右寄せ機構も消えるため、ロゴ左端・CTA右端を明示 */
+  .site-in { justify-content: space-between; }
 }
 
 /* 2a トップ */

@@ -5,7 +5,6 @@ import Base from '../layouts/Base.astro';
 import SchoolCard from '../components/school/SchoolCard.astro';
 import CompareTable from '../components/school/CompareTable.astro';
 import QuickDiagnosis from '../components/school/QuickDiagnosis.astro';
-import DiagnosisWizard from '../components/school/DiagnosisWizard.astro';
 import FreshnessNote from '../components/school/FreshnessNote.astro';
 import PrLabel from '../components/school/PrLabel.astro';
 import StickyBar from '../components/school/StickyBar.astro';
@@ -118,32 +117,4 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
   </div>
   <StickyBar />
 
-  <!-- モバイル用: 無料診断をポップアップ表示（スクロール不要・株主UX指摘2026-07-11） -->
-  <div class="diag-modal" id="diag-modal" hidden>
-    <div class="dm-backdrop" data-close></div>
-    <div class="dm-panel" role="dialog" aria-modal="true" aria-label="無料診断">
-      <button type="button" class="dm-close" data-close aria-label="閉じる">×</button>
-      <div class="dm-head">30秒で、あなたに合うAIスクール診断</div>
-      <DiagnosisWizard />
-    </div>
-  </div>
-  <script>
-    (() => {
-      const modal = document.getElementById('diag-modal');
-      if (!modal) return;
-      const isMobile = () => window.matchMedia('(max-width: 760px)').matches;
-      const open = () => { modal.hidden = false; document.body.style.overflow = 'hidden'; };
-      const close = () => { modal.hidden = true; document.body.style.overflow = ''; };
-      // #shindan を指すリンク（ヘッダー/ヒーロー/追従バー）をモバイルではモーダル化
-      document.querySelectorAll('a[href$="#shindan"]').forEach((a) => {
-        a.addEventListener('click', (e) => {
-          if (!isMobile()) return; // PCは従来どおりスクロール
-          e.preventDefault();
-          open();
-        });
-      });
-      modal.querySelectorAll('[data-close]').forEach((el) => el.addEventListener('click', close));
-      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.hidden) close(); });
-    })();
-  </script>
 </Base>

@@ -584,7 +584,11 @@ article .fig figcaption { font-size: .8rem; color: var(--text-dim); text-align: 
 @keyframes dm-up { from { transform: translateY(100%); } to { transform: translateY(0); } }
 .dm-close { position: absolute; top: 12px; right: 14px; width: 34px; height: 34px; border: none; background: var(--bg-soft, #eef2f0); border-radius: 50%; font-size: 1.3rem; line-height: 1; color: var(--text); cursor: pointer; }
 .dm-head { font-family: var(--f-head); font-weight: 800; font-size: 1.05rem; margin: 2px 40px 14px 4px; }
-@media (min-width: 761px) { .diag-modal { display: none !important; } }
+/* PCでは中央ダイアログとして表示（ページ内に診断が無いページ用） */
+@media (min-width: 761px) {
+  .diag-modal { align-items: center; justify-content: center; }
+  .dm-panel { width: min(460px, 92vw); border-radius: 20px; max-height: 86vh; }
+}
 
 /* 診断ウィザード（1問1画面・2026-07-11） */
 .dwiz { display: block; }

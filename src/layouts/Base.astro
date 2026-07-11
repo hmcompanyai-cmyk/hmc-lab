@@ -8,6 +8,7 @@ import '@fontsource/zen-kaku-gothic-new/900.css';
 import '@fontsource/outfit/600.css';
 import '@fontsource/outfit/800.css';
 import '@fontsource/zen-maru-gothic/900.css';
+import DiagnosisWizard from '../components/school/DiagnosisWizard.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -130,6 +131,34 @@ const ogImg = ogImage ?? '/img/og-default.png';
       </div>
       <p class="foot-copy">© 2026 HMCompany. 当サイトはアフィリエイトプログラムに参加しています。</p>
     </footer>
+    <!-- 無料診断ウィザード（全ページ共通・2026-07-11: どのページ/タイミングでも同じ体験） -->
+    <div class="diag-modal" id="diag-modal" hidden>
+      <div class="dm-backdrop" data-close></div>
+      <div class="dm-panel" role="dialog" aria-modal="true" aria-label="無料診断">
+        <button type="button" class="dm-close" data-close aria-label="閉じる">×</button>
+        <div class="dm-head">30秒で、あなたに合うAIスクール診断</div>
+        <DiagnosisWizard />
+      </div>
+    </div>
+    <script>
+      // 無料診断: モバイル=常にウィザードモーダル / PC=ページ内に診断があればスクロール・なければモーダル
+      (() => {
+        const modal = document.getElementById('diag-modal');
+        if (!modal) return;
+        const isMobile = () => window.matchMedia('(max-width: 760px)').matches;
+        const open = () => { modal.hidden = false; document.body.style.overflow = 'hidden'; };
+        const close = () => { modal.hidden = true; document.body.style.overflow = ''; };
+        document.addEventListener('click', (e) => {
+          const a = (e.target as HTMLElement).closest('a[href*="#shindan"]') as HTMLAnchorElement | null;
+          if (!a) return;
+          const local = document.getElementById('shindan');
+          if (isMobile() || !local) { e.preventDefault(); open(); }
+          // PCでページ内に診断がある場合は従来どおりアンカースクロール
+        });
+        modal.querySelectorAll('[data-close]').forEach((el) => el.addEventListener('click', close));
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.hidden) close(); });
+      })();
+    </script>
     <script>
       // ヘッダー自動隠し: 下スクロール中は隠して本文を全画面に、上スクロールで即復帰（UX指摘2026-07-11）
       let hhLast = 0;

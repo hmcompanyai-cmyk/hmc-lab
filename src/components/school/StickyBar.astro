@@ -26,16 +26,10 @@ const external = cta.href.startsWith('http');
         const id = (a.getAttribute('href') || '').slice(1);
         if (id && !document.getElementById(id)) a.setAttribute('href', `${base}#${id}`);
       });
-      // スクロール中は退避し、止まって350ms後に再表示（本文の視界確保・UX指摘2026-07-11）
-      let idleTimer: number | undefined;
-      const onScroll = () => {
-        this.classList.toggle('is-on', window.scrollY > 480);
-        this.classList.add('is-scrolling');
-        if (idleTimer) clearTimeout(idleTimer);
-        idleTimer = window.setTimeout(() => this.classList.remove('is-scrolling'), 350);
-      };
+      // 一度表示域(480px)を越えたら常時表示（出入りのチラつき防止・株主FB 2026-07-11）
+      const onScroll = () => this.classList.toggle('is-on', window.scrollY > 480);
       window.addEventListener('scroll', onScroll, { passive: true });
-      this.classList.toggle('is-on', window.scrollY > 480);
+      onScroll();
     }
   }
   if (!customElements.get('sticky-bar')) customElements.define('sticky-bar', StickyBar);

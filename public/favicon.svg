@@ -1,5 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect x="2" y="2" width="60" height="60" rx="14" fill="#1C6B54"/>
-  <rect x="2" y="2" width="60" height="60" rx="14" fill="none" stroke="#C9A227" stroke-width="2.5"/>
-  <text x="32" y="44" text-anchor="middle" font-family="'Outfit','Noto Sans JP',system-ui,sans-serif" font-weight="800" font-size="30" fill="#FFFFFF" letter-spacing="-1">AI</text>
+  <!-- 案1: 角丸強め+金のずらし影（2026-07-11株主確定・ロゴと同意匠） -->
+  <rect x="7" y="7" width="54" height="54" rx="16" fill="#C9A227" opacity="0.55"/>
+  <rect x="3" y="3" width="54" height="54" rx="16" fill="#1C6B54"/>
+  <text x="30" y="43" text-anchor="middle" font-family="'Outfit','Noto Sans JP',system-ui,sans-serif" font-weight="800" font-size="28" fill="#FFFFFF" letter-spacing="-1">AI</text>
 </svg>

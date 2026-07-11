@@ -207,6 +207,7 @@
 .stickybar a { font-size: .82rem; font-weight: 800; color: var(--text-dim); }
 .stickybar a:hover { color: var(--primary); text-decoration: none; }
 body:has(.stickybar.is-on) footer.site { padding-bottom: 4.5rem; }
+@media (min-width: 761px) { .stickybar { display: none; } body:has(.stickybar.is-on) footer.site { padding-bottom: 0; } }
 
 /* 個別ページ */
 .detail-bread { font-size: .78rem; color: var(--text-dim); margin-bottom: 1rem; }

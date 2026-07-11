@@ -543,7 +543,8 @@ footer.site { background: var(--paper2); }
 [id] { scroll-margin-top: 5.75rem; }
 /* サイドバーは通常フロー（stickyの切れ・二重スクロールの操作性問題を根治。
    診断は全ページ共通モーダルで常時呼べるためstickyの必然性が消えた 2026-07-11） */
-.side { display: flex; flex-direction: column; gap: 1.2rem; align-self: start; }
+.side { display: flex; flex-direction: column; gap: 1.2rem; align-self: start; margin-top: 97px; /* 見出し分下げてカード天面と揃える(実測) */ }
+@media (max-width: 980px) { .side { margin-top: 0; } }
 /* 記事内の図版（figure＋キャプション） */
 article .fig { margin: 2rem 0; }
 article .fig img { width: 100%; height: auto; border-radius: 12px; display: block; }
@@ -627,3 +628,7 @@ article .fig figcaption { font-size: .8rem; color: var(--text-dim); text-align: 
 .dw-more { display: block; text-align: center; font-weight: 700; font-size: .88rem; }
 .dw-runner { text-align: center; margin-top: 12px; font-size: .84rem; }
 .dw-runner a { color: var(--text-dim); font-weight: 700; }
+
+/* サイドバー補助表示（2026-07-11） */
+.side-link .sl-eff { float: right; color: var(--cta-d); font-weight: 800; font-size: .82rem; }
+.side-link .sl-date { color: var(--text-dim); font-weight: 700; font-size: .78rem; margin-right: .5em; }

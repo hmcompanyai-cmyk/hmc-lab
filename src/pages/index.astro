@@ -8,7 +8,7 @@ import QuickDiagnosis from '../components/school/QuickDiagnosis.astro';
 import FreshnessNote from '../components/school/FreshnessNote.astro';
 import PrLabel from '../components/school/PrLabel.astro';
 import StickyBar from '../components/school/StickyBar.astro';
-import { segmentBySlug, rankedSchools, itemListJsonLd, GENRE, SCHOOLS, ACTIVE_SCHOOLS, yen } from '../lib/schools';
+import { segmentBySlug, rankedSchools, itemListJsonLd, GENRE, SCHOOLS, ACTIVE_SCHOOLS, yen, activeChanges, schoolById } from '../lib/schools';
 import type { SchoolT } from '../lib/schools';
 import { simulate } from '../lib/subsidy';
 import { getCollection } from 'astro:content';
@@ -26,6 +26,10 @@ const priceHint = (s: SchoolT) =>
         ? `総額${yen(s.budget.total)}`
         : '';
 const jsonLd = itemListJsonLd(seg, Astro.site?.origin ?? '');
+const subsidySchools = ACTIVE_SCHOOLS
+  .filter((s) => s.subsidy.type !== 'none')
+  .map((s) => ({ s, eff: s.subsidy.baseFee ? simulate(s.subsidy.baseFee, s.subsidy.type).effective : null }));
+const recentChanges = activeChanges().slice(0, 3);
 const posts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 4);
@@ -105,6 +109,24 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
           <a class="side-link" href={`/blog/${p.id}`}>{p.data.title}</a>
         ))}
         <a class="side-link" href="/blog" style="border-bottom:none;font-weight:700;">コラム一覧へ ›</a>
+      </div>
+      <div class="side-card">
+        <b class="sc-head">給付金・補助金の対象校</b>
+        {subsidySchools.map(({ s, eff }) => (
+          <a class="side-link" href={`/ai-school/${s.id}`}>
+            {s.shortName}{eff && <span class="sl-eff">実質{yen(eff)}〜</span>}
+          </a>
+        ))}
+        <a class="side-link" href="/ai-school/kyufu" style="border-bottom:none;font-weight:700;">給付金の仕組みと注意点 ›</a>
+      </div>
+      <div class="side-card">
+        <b class="sc-head">最近の変更点</b>
+        {recentChanges.map((c) => (
+          <a class="side-link" href="#changes">
+            <span class="sl-date">{c.date.slice(5).replace('-', '/')}</span>
+            {c.schoolId ? `${schoolById(c.schoolId)?.shortName}: ` : ''}{c.text.length > 34 ? c.text.slice(0, 34) + '…' : c.text}
+          </a>
+        ))}
       </div>
       <div class="side-card shiori-card">
         <span class="face"><img src="/img/shiori.jpg" alt="編集部・栞" width="56" height="56" loading="lazy" /></span>

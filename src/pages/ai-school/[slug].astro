@@ -50,14 +50,26 @@ if (kind === 'segment') {
   altSeg = segMatch ? { slug: segMatch.slug, label: segMatch.label } : null;
   title = `${school.name}の評判・料金を徹底解説【${GENRE.updatedDate.slice(0, 7).replace('-', '年')}月】`;
   description = school.detail.lead.slice(0, 110);
-  jsonLd = breadcrumbJsonLd(
-    [
-      { name: 'AI番付', path: '/' },
-      { name: '生成AIスクール比較', path: GENRE.basePath },
-      { name: school.shortName, path: `${GENRE.basePath}/${school.id}` },
-    ],
-    site
-  );
+  const faqLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: school.detail.faq.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  };
+  jsonLd = [
+    breadcrumbJsonLd(
+      [
+        { name: 'AI番付', path: '/' },
+        { name: '生成AIスクール比較', path: GENRE.basePath },
+        { name: school.shortName, path: `${GENRE.basePath}/${school.id}` },
+      ],
+      site
+    ),
+    faqLd,
+  ];
 }
 const rel = school?.affiliate ? 'sponsored nofollow noopener' : 'noopener';
 // 個別ページの追従CTAは当該校の無料相談へ直結（CRO監査H-1）

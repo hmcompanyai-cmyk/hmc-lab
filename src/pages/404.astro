@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="ページが見つかりません" description="お探しのページは移動または削除された可能性があります。" noindex={true}>
+  <article style="text-align:center; padding: 3rem 0 4rem;">
+    <p style="font-size: 4rem; font-weight: 900; color: var(--primary); margin: 0;">404</p>
+    <h1 style="margin-top: .4em;">ページが見つかりません</h1>
+    <p style="color: var(--text-dim);">
+      お探しのページは移動または削除された可能性があります。<br />
+      番付の最新情報は以下からどうぞ。
+    </p>
+    <p style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-top: 2rem;">
+      <a class="aff-btn" href="/">トップへ戻る</a>
+      <a class="aff-btn ghost" href="/ai-school" style="background:#fff; color:var(--primary); border:2px solid var(--primary);">スクール比較を見る</a>
+      <a class="aff-btn ghost" href="/blog" style="background:#fff; color:var(--primary); border:2px solid var(--primary);">編集部コラムを読む</a>
+    </p>
+  </article>
+</Base>

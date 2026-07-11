@@ -30,7 +30,7 @@ const {
 const pageTitle = title ? `${title} | ${SITE.title}` : `${SITE.title} | ${SITE.tagline}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 // SNSシェア時に画像なしカードにならないよう、未指定ページはサイト既定のOG画像を使う（SEO監査H-4）
-const ogImg = ogImage ?? '/img/genres/ai-school/column-default.jpg';
+const ogImg = ogImage ?? '/img/og-default.png';
 ---
 
 <!doctype html>
@@ -56,6 +56,15 @@ const ogImg = ogImage ?? '/img/genres/ai-school/column-default.jpg';
     <meta property="og:image" content={new URL(ogImg, Astro.site)} />
     <meta name="twitter:image" content={new URL(ogImg, Astro.site)} />
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: 'AI番付',
+      alternateName: 'HMCompany',
+      url: Astro.site?.toString(),
+      logo: new URL('/apple-touch-icon.png', Astro.site).toString(),
+      description: SITE.description,
+    })} />
   </head>
   <body>
     <div class="utilbar">

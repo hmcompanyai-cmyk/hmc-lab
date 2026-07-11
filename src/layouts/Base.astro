@@ -113,6 +113,22 @@ const ogImg = ogImage ?? '/img/genres/ai-school/column-default.jpg';
       <p class="foot-copy">© 2026 HMCompany. 当サイトはアフィリエイトプログラムに参加しています。</p>
     </footer>
     <script>
+      // ヘッダー自動隠し: 下スクロール中は隠して本文を全画面に、上スクロールで即復帰（UX指摘2026-07-11）
+      let hhLast = 0;
+      let hhTick = false;
+      const hhBars = () => [document.querySelector('header.site'), document.querySelector('.lp-nav')].filter(Boolean);
+      window.addEventListener('scroll', () => {
+        if (hhTick) return;
+        hhTick = true;
+        requestAnimationFrame(() => {
+          const y = window.scrollY;
+          const down = y > hhLast && y > 160;
+          hhBars().forEach((el) => el && el.classList.toggle('hh-hide', down));
+          hhLast = y;
+          hhTick = false;
+        });
+      }, { passive: true });
+
       // CTAシマー: 画面に入るたびキラッ（reduced-motionはCSS側で無効化）
       const io = new IntersectionObserver((es) => {
         es.forEach((e) => {

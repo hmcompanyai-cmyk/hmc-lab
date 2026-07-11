@@ -188,6 +188,7 @@
   z-index: 90;
 }
 .stickybar.is-on { bottom: 0; }
+.stickybar.is-on.is-scrolling { bottom: -64px; }
 .stickybar a { font-size: .82rem; font-weight: 800; color: var(--text-dim); }
 .stickybar a:hover { color: var(--primary); text-decoration: none; }
 body:has(.stickybar.is-on) footer.site { padding-bottom: 4.5rem; }

@@ -433,6 +433,7 @@ article tr:nth-child(even) td { background: var(--bg-soft); }
 .sc-cta .ghost:hover { text-decoration: none; background: #eef4ff; }
 .lp-nav {
   position: sticky; top: 0; z-index: 50;
+  transition: transform .28s ease;
   background: rgba(255,255,255,.95);
   border-bottom: 1px solid var(--border);
   padding: .5em 0;
@@ -470,8 +471,10 @@ article tr:nth-child(even) td { background: var(--bg-soft); }
 .utilbar { background: var(--primary-dark); color: #fff; font-size: 11.5px; }
 .utilbar-in { max-width: var(--max-site); margin: 0 auto; padding: .5em 24px; display: flex; justify-content: space-between; gap: 1em; flex-wrap: wrap; }
 .utilbar a { color: #fff; opacity: .85; margin-left: 1.2em; }
-header.site { position: sticky; top: 0; z-index: 40; background: #fff; border-bottom: 1px solid var(--border); margin-bottom: 0; padding: 0; }
-.site-in { max-width: var(--max-site); margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; gap: 20px; }
+header.site { position: sticky; top: 0; z-index: 40; background: #fff; border-bottom: 1px solid var(--border); margin-bottom: 0; padding: 0; transition: transform .28s ease; }
+header.site.hh-hide { transform: translateY(-105%); }
+.lp-nav.hh-hide { transform: translateY(-105%); }
+.site-in { max-width: var(--max-site); margin: 0 auto; padding: 8px 24px; display: flex; align-items: center; gap: 20px; }
 /* AI番付ロゴ: 「AI」は英字を締めた緑、「番付」は和の骨太墨字＋金の落款アクセント（和モダン） */
 header.site .logo { font-family: var(--f-round); font-weight: 900; font-size: 23px; letter-spacing: .06em; color: var(--text); display: inline-flex; align-items: center; }
 header.site .logo span,

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kurabeai.com/sitemap-index.xml
+Sitemap: https://aibanzuke.com/sitemap-index.xml

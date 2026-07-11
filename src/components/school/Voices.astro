@@ -94,8 +94,8 @@ const useCarousel = voices.length >= 3;
         d.addEventListener('click', () => this.go(i));
         this.dots.appendChild(d);
       });
-      this.prev.addEventListener('click', () => this.go(this.index() - 1));
-      this.next.addEventListener('click', () => this.go(this.index() + 1));
+      this.prev.addEventListener('click', () => this.step(-1));
+      this.next.addEventListener('click', () => this.step(1));
       this.track.addEventListener('scroll', () => this.sync(), { passive: true });
       this.sync();
     }
@@ -118,11 +118,26 @@ const useCarousel = voices.length >= 3;
       const left = this.cards[n].offsetLeft - this.cards[0].offsetLeft;
       this.track.scrollTo({ left, behavior: 'smooth' });
     }
+    /** 位置ベースの一歩移動。終端で「戻り先がスクロール範囲外→1pxも動かない」バグの根治 */
+    step(dir: number) {
+      const base = this.cards[0].offsetLeft;
+      const x = this.track.scrollLeft;
+      if (dir > 0) {
+        const t = this.cards.find((c) => (c.offsetLeft - base) > x + 4);
+        if (t) this.track.scrollTo({ left: t.offsetLeft - base, behavior: 'smooth' });
+      } else {
+        const prevs = this.cards.filter((c) => (c.offsetLeft - base) < x - 4);
+        const t = prevs[prevs.length - 1];
+        this.track.scrollTo({ left: t ? t.offsetLeft - base : 0, behavior: 'smooth' });
+      }
+    }
     sync() {
       const i = this.index();
       [...this.dots.children].forEach((d, j) => d.classList.toggle('on', j === i));
-      this.prev.disabled = i <= 0;
-      this.next.disabled = i >= this.cards.length - 1;
+      // 有効/無効も位置ベースで判定（端に届いているかだけを見る）
+      const maxX = this.track.scrollWidth - this.track.clientWidth;
+      this.prev.disabled = this.track.scrollLeft <= 4;
+      this.next.disabled = this.track.scrollLeft >= maxX - 4;
     }
   }
   if (!customElements.get('voice-carousel')) customElements.define('voice-carousel', VoiceCarousel);

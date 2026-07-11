@@ -1,0 +1,148 @@
+---
+/** ウィザード型診断（モバイルモーダル用・1問1画面×3→豪華リザルト）。
+ *  2026-07-11株主UX指摘。M-1準拠: enumのみ・DOM生成はcreateElement/textContentのみ。 */
+import { SCHOOLS, SEGMENTS, editorialScore, GENRE } from '../../lib/schools';
+const def = SEGMENTS.find((s) => s.slug === 'default')!;
+const data = SCHOOLS.filter((s) => s.enrollable).map((s) => ({
+  id: s.id, name: s.shortName, type: s.type,
+  purpose: s.tags.purpose, format: s.tags.format,
+  monthly: s.budget.monthly, total: s.budget.total,
+  subsidy: s.subsidy.type, score: editorialScore(s, def),
+  cta: s.cta.url, ctaLabel: s.cta.primary,
+  rel: s.affiliate ? 'sponsored nofollow noopener' : 'noopener',
+  path: `${GENRE.basePath}/${s.id}`,
+}));
+---
+<diag-wizard class="dwiz" data-schools={JSON.stringify(data)}>
+  <div class="dw-progress"><i class="on"></i><i></i><i></i></div>
+  <div class="dw-viewport">
+    <div class="dw-track">
+      <section class="dw-step">
+        <div class="dw-q">Q1. 目的は？</div>
+        <div class="dw-opts" data-axis="p">
+          <button type="button" class="dw-opt" data-v="tenshoku">AI転職をめざす</button>
+          <button type="button" class="dw-opt" data-v="fukugyo">仕事・副業で使う</button>
+          <button type="button" class="dw-opt" data-v="reskilling">学び直し・教養</button>
+        </div>
+      </section>
+      <section class="dw-step">
+        <div class="dw-q">Q2. 予算は？</div>
+        <div class="dw-opts" data-axis="b">
+          <button type="button" class="dw-opt" data-v="m2">月1〜2万円台</button>
+          <button type="button" class="dw-opt" data-v="t5">総額5万円まで</button>
+          <button type="button" class="dw-opt" data-v="sub">給付金を使いたい</button>
+        </div>
+      </section>
+      <section class="dw-step">
+        <div class="dw-q">Q3. 学び方は？</div>
+        <div class="dw-opts" data-axis="f">
+          <button type="button" class="dw-opt" data-v="subscription">動画で自分のペース</button>
+          <button type="button" class="dw-opt" data-v="banso">講師の伴走つき</button>
+          <button type="button" class="dw-opt" data-v="taimen">教室で対面</button>
+        </div>
+      </section>
+      <section class="dw-step dw-resultwrap" aria-live="polite"></section>
+    </div>
+  </div>
+  <button type="button" class="dw-back" hidden>‹ もどる</button>
+</diag-wizard>
+
+<script>
+  const AXES = ['p', 'b', 'f'] as const;
+  const OK: Record<string, string[]> = {
+    p: ['tenshoku', 'fukugyo', 'reskilling'],
+    b: ['m2', 't5', 'sub'],
+    f: ['subscription', 'banso', 'taimen'],
+  };
+  class DiagWizard extends HTMLElement {
+    st: Record<string, string> = {};
+    step = 0;
+    schools: any[] = [];
+    connectedCallback() {
+      try { this.schools = JSON.parse(this.dataset.schools || '[]'); } catch { this.schools = []; }
+      this.querySelectorAll<HTMLElement>('.dw-opts').forEach((g) => {
+        const axis = g.dataset.axis!;
+        g.querySelectorAll<HTMLButtonElement>('.dw-opt').forEach((b) => {
+          b.addEventListener('click', () => {
+            const v = b.dataset.v!;
+            if (!OK[axis]?.includes(v)) return;
+            this.st[axis] = v;
+            g.querySelectorAll('.dw-opt').forEach((x) => x.classList.toggle('picked', x === b));
+            window.setTimeout(() => this.go(this.step + 1), 240);
+          });
+        });
+      });
+      this.querySelector('.dw-back')!.addEventListener('click', () => this.go(this.step - 1));
+    }
+    go(n: number) {
+      this.step = Math.max(0, Math.min(3, n));
+      if (this.step === 3) this.buildResult();
+      (this.querySelector('.dw-track') as HTMLElement).style.transform = `translateX(-${this.step * 25}%)`;
+      this.querySelectorAll('.dw-progress i').forEach((d, i) => d.classList.toggle('on', i <= Math.min(this.step, 2)));
+      const back = this.querySelector('.dw-back') as HTMLElement;
+      back.hidden = this.step === 0;
+      back.textContent = this.step === 3 ? '‹ 条件を変える' : '‹ もどる';
+    }
+    match() {
+      const { p, b, f } = this.st;
+      const cond = (s: any) => {
+        const c: boolean[] = [];
+        if (p) c.push(s.purpose.includes(p));
+        if (f) c.push(s.format.includes(f));
+        if (b === 'm2') c.push(s.monthly != null && s.monthly <= 29999);
+        if (b === 't5') c.push(s.total != null && s.total <= 50000);
+        if (b === 'sub') c.push(s.subsidy !== 'none');
+        return { total: c.length, ok: c.filter(Boolean).length };
+      };
+      return this.schools.map((s) => ({ s, ...cond(s) })).sort((a, c) => c.ok - a.ok || c.s.score - a.s.score);
+    }
+    buildResult() {
+      const box = this.querySelector('.dw-resultwrap')!;
+      box.textContent = '';
+      const scored = this.match();
+      if (!scored.length || scored[0].ok === 0) {
+        const p = document.createElement('p');
+        p.textContent = '条件に合うスクールが見つかりませんでした。「‹ 条件を変える」からやり直せます。';
+        box.append(p);
+        return;
+      }
+      const top = scored[0];
+      const runner = scored[1];
+      const el = (tag: string, cls?: string, text?: string) => {
+        const e = document.createElement(tag);
+        if (cls) e.className = cls;
+        if (text != null) e.textContent = text;
+        return e;
+      };
+      const card = el('div', 'dw-hit');
+      const crown = el('div', 'dw-crown');
+      crown.append(el('span', 'rank-badge r1', '1'), el('span', 'dw-crown-t', top.ok === top.total ? 'あなたにピッタリ' : 'いちばん近いのは'));
+      const name = el('div', 'dw-name', top.s.name);
+      const type = el('div', 'dw-type', top.s.type);
+      const stars = el('span', 'ht-stars', '★★★★★');
+      stars.setAttribute('style', `--pct:${Math.round((top.s.score / 5) * 100)}%`);
+      const srow = el('div', 'dw-stars');
+      srow.append(stars, el('b', '', top.s.score.toFixed(1)));
+      const note = el('div', 'dw-note', top.ok === top.total
+        ? `選んだ${top.total}条件すべてに合致しています`
+        : `${top.ok}/${top.total}条件に合致（全条件一致の学校はありませんでした）`);
+      const price = el('div', 'dw-price',
+        top.s.monthly != null ? `月額 ${top.s.monthly.toLocaleString()}円〜` :
+        top.s.total != null ? `総額 ${top.s.total.toLocaleString()}円〜` : '');
+      const cta = el('a', 'aff-btn dw-cta', top.s.ctaLabel) as HTMLAnchorElement;
+      cta.href = top.s.cta; cta.rel = top.s.rel; cta.target = '_blank';
+      const more = el('a', 'dw-more', `${top.s.name}の詳細レビューをみる ›`) as HTMLAnchorElement;
+      more.href = top.s.path;
+      card.append(crown, name, type, srow, note, price, cta, more);
+      box.append(card);
+      if (runner && runner.ok > 0) {
+        const ru = el('div', 'dw-runner');
+        const ra = el('a', '', `次点: ${runner.s.name}（${runner.s.score.toFixed(1)}） ›`) as HTMLAnchorElement;
+        ra.href = runner.s.path;
+        ru.append(ra);
+        box.append(ru);
+      }
+    }
+  }
+  if (!customElements.get('diag-wizard')) customElements.define('diag-wizard', DiagWizard);
+</script>

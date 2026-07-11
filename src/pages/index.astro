@@ -5,6 +5,7 @@ import Base from '../layouts/Base.astro';
 import SchoolCard from '../components/school/SchoolCard.astro';
 import CompareTable from '../components/school/CompareTable.astro';
 import QuickDiagnosis from '../components/school/QuickDiagnosis.astro';
+import DiagnosisWizard from '../components/school/DiagnosisWizard.astro';
 import FreshnessNote from '../components/school/FreshnessNote.astro';
 import PrLabel from '../components/school/PrLabel.astro';
 import StickyBar from '../components/school/StickyBar.astro';
@@ -123,7 +124,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
     <div class="dm-panel" role="dialog" aria-modal="true" aria-label="無料診断">
       <button type="button" class="dm-close" data-close aria-label="閉じる">×</button>
       <div class="dm-head">30秒で、あなたに合うAIスクール診断</div>
-      <QuickDiagnosis />
+      <DiagnosisWizard />
     </div>
   </div>
   <script>

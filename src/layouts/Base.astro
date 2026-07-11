@@ -57,6 +57,14 @@ const ogImg = ogImage ?? '/img/og-default.png';
     <meta property="og:image" content={new URL(ogImg, Astro.site)} />
     <meta name="twitter:image" content={new URL(ogImg, Astro.site)} />
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+    <!-- Google Analytics 4（外部送信の詳細は /info#privacy に明記） -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KN25EL67PY"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-KN25EL67PY');
+    </script>
     <script type="application/ld+json" set:html={JSON.stringify({
       '@context': 'https://schema.org',
       '@type': 'Organization',

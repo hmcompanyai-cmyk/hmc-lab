@@ -76,9 +76,9 @@ const { lock = {} } = Astro.props;
     connectedCallback() {
       this.form = this.querySelector('form')!;
       this.result = this.querySelector('.diag-result')!;
-      this.form.addEventListener('submit', (e) => { e.preventDefault(); this.apply(true); });
-      this.form.addEventListener('change', () => this.apply(false));
-      this.form.addEventListener('reset', () => setTimeout(() => this.apply(false), 0));
+      this.form.addEventListener('submit', (e) => { e.preventDefault(); this.apply('go'); });
+      this.form.addEventListener('change', () => this.apply('preview'));
+      this.form.addEventListener('reset', () => setTimeout(() => this.apply('preview'), 0));
       this.restore();
     }
 
@@ -94,7 +94,7 @@ const { lock = {} } = Astro.props;
           any = true;
         }
       }
-      if (any) this.apply(false);
+      if (any) this.apply('restore'); // URL共有からの流入は即絞り込み（スクロールなし）
     }
 
     state(): Record<string, string> {
@@ -132,7 +132,15 @@ const { lock = {} } = Astro.props;
       return { ok: c.filter(Boolean).length, total: c.length };
     }
 
-    apply(push: boolean) {
+    /** 見出しの校数表示を状態に同期 */
+    syncHeading(text: string | null) {
+      const el = document.querySelector('#ranking .rank-count') as HTMLElement | null;
+      if (!el) return;
+      el.textContent = text ?? `（${el.dataset.base}校）`;
+    }
+
+    apply(mode: 'preview' | 'go' | 'restore') {
+      const push = mode === 'go';
       const st = this.state();
       const cards = Array.from(document.querySelectorAll<HTMLElement>('.school-card'));
       const infos = cards.map((c) => ({ c, ...this.matchInfo(c, st), score: parseFloat(c.dataset.score || '0') }));
@@ -143,12 +151,25 @@ const { lock = {} } = Astro.props;
       if (!active) {
         cards.forEach((c) => c.classList.remove('is-hidden'));
         this.result.textContent = '';
+        this.syncHeading(null);
+      } else if (mode === 'preview') {
+        // 押下前はカードを動かさず、押したら何が起きるかを正直に予告する
+        if (full.length > 0) {
+          this.result.textContent = `この条件では${full.length}校が該当します。「この条件でしぼり込む」を押すと結果まで移動します`;
+        } else {
+          const maxOk = Math.max(0, ...infos.map((x) => x.ok));
+          const near = infos.filter((x) => x.ok === maxOk && maxOk > 0);
+          this.result.textContent = near.length > 0
+            ? `全条件に一致する学校はありません。いちばん近い${near.length}校（${maxOk}/${near[0].total}条件一致）を「この条件でしぼり込む」で表示できます`
+            : 'この条件に近いスクールがありません。条件を1つ減らしてみてください。';
+        }
       } else if (full.length > 0) {
         infos.forEach((x) => x.c.classList.toggle('is-hidden', !(x.ok === x.total)));
         const best = full.slice().sort((a, b) => b.score - a.score)[0].c;
         best.classList.add('is-reco');
         const name = best.querySelector('.sc-name')?.textContent?.trim() ?? '';
         this.result.textContent = `${full.length}校が該当。編集部評価がもっとも高いのは「${name}」です（下に絞り込み表示中）`;
+        this.syncHeading(`（${full.length}校を表示中・全${cards.length}校）`);
         // 「しぼり込む」押下時は結果の先頭カードまで必ず運ぶ
         if (push) best.scrollIntoView({ behavior: 'smooth', block: 'start' });
       } else {
@@ -161,6 +182,7 @@ const { lock = {} } = Astro.props;
           near[0].c.classList.add('is-reco');
           const name = near[0].c.querySelector('.sc-name')?.textContent?.trim() ?? '';
           this.result.textContent = `全条件に一致する学校はありませんでした。いちばん近い${near.length}校（${maxOk}/${near[0].total}条件一致）を表示中。編集部評価が高いのは「${name}」です`;
+          this.syncHeading(`（近い順に${near.length}校を表示中・全${cards.length}校）`);
           if (push) near[0].c.scrollIntoView({ behavior: 'smooth', block: 'start' });
         } else {
           cards.forEach((c) => c.classList.add('is-hidden'));
@@ -178,12 +200,14 @@ const { lock = {} } = Astro.props;
           this.result.append(document.createElement('br'), a);
         }
       }
-      // URL同期（M-1: 値はENUM通過済みのみ）
-      const q = new URLSearchParams();
-      for (const [k, v] of Object.entries(st)) q.set(k, v);
-      const url = q.toString() ? `${location.pathname}?${q}` : location.pathname;
-      if (push) history.pushState(null, '', url);
-      else history.replaceState(null, '', url);
+      // URL同期（M-1: 値はENUM通過済みのみ・プレビュー中は書き換えない）
+      if (mode !== 'preview') {
+        const q = new URLSearchParams();
+        for (const [k, v] of Object.entries(st)) q.set(k, v);
+        const url = q.toString() ? `${location.pathname}?${q}` : location.pathname;
+        if (push) history.pushState(null, '', url);
+        else history.replaceState(null, '', url);
+      }
     }
   }
   if (!customElements.get('school-filter')) customElements.define('school-filter', SchoolFilter);

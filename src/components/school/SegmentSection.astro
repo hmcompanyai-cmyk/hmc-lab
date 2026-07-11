@@ -66,7 +66,7 @@ const segHero = fs.existsSync(`public/img/genres/ai-school/seg-${segment.slug}.j
 </section>
 
 <section id="ranking">
-  <h2>{segment.label}ランキング（{ranked.length}校）</h2>
+  <h2>{segment.label}ランキング<span class="rank-count" data-base={ranked.length}>（{ranked.length}校）</span></h2>
   {ranked.map((e) => (
     <SchoolCard school={e.school} rank={e.rank} score={e.score} segment={segment} />
   ))}

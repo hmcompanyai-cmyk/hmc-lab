@@ -115,42 +115,57 @@ const { lock = {} } = Astro.props;
       return st;
     }
 
-    matches(card: HTMLElement, st: Record<string, string>): boolean {
-      if (st.p && !(card.dataset.purpose || '').split(' ').includes(st.p)) return false;
-      if (st.f && !(card.dataset.format || '').split(' ').includes(st.f)) return false;
-      if (st.k && !(card.dataset.kodawari || '').split(' ').includes(st.k)) return false;
+    /** 一致した条件数を返す（0件時の近似マッチ表示に使う） */
+    matchInfo(card: HTMLElement, st: Record<string, string>): { ok: number; total: number } {
+      const c: boolean[] = [];
+      if (st.p) c.push((card.dataset.purpose || '').split(' ').includes(st.p));
+      if (st.f) c.push((card.dataset.format || '').split(' ').includes(st.f));
+      if (st.k) c.push((card.dataset.kodawari || '').split(' ').includes(st.k));
       if (st.b) {
         const monthly = parseInt(card.dataset.monthly || '', 10);
         const total = parseInt(card.dataset.total || '', 10);
         const subsidy = card.dataset.subsidy || 'none';
-        if (st.b === 'm2' && !(Number.isFinite(monthly) && monthly <= 29999)) return false;
-        if (st.b === 't5' && !(Number.isFinite(total) && total <= 50000)) return false;
-        if (st.b === 'sub' && subsidy === 'none') return false;
+        if (st.b === 'm2') c.push(Number.isFinite(monthly) && monthly <= 29999);
+        if (st.b === 't5') c.push(Number.isFinite(total) && total <= 50000);
+        if (st.b === 'sub') c.push(subsidy !== 'none');
       }
-      return true;
+      return { ok: c.filter(Boolean).length, total: c.length };
     }
 
     apply(push: boolean) {
       const st = this.state();
-      const cards = document.querySelectorAll<HTMLElement>('.school-card');
-      let shown = 0;
-      let best: HTMLElement | null = null;
-      let bestScore = -1;
-      cards.forEach((c) => {
-        const ok = this.matches(c, st);
-        c.classList.toggle('is-hidden', !ok);
-        c.classList.remove('is-reco');
-        if (ok) {
-          shown++;
-          const sc = parseFloat(c.dataset.score || '0');
-          if (sc > bestScore) { bestScore = sc; best = c; }
-        }
-      });
+      const cards = Array.from(document.querySelectorAll<HTMLElement>('.school-card'));
+      const infos = cards.map((c) => ({ c, ...this.matchInfo(c, st), score: parseFloat(c.dataset.score || '0') }));
+      const full = infos.filter((x) => x.total > 0 && x.ok === x.total);
       const active = Object.keys(st).length > 0;
+      cards.forEach((c) => c.classList.remove('is-reco'));
+
       if (!active) {
+        cards.forEach((c) => c.classList.remove('is-hidden'));
         this.result.textContent = '';
-      } else if (shown === 0) {
-        this.result.textContent = '条件に合うスクールがありませんでした。条件を1つ減らしてみてください。';
+      } else if (full.length > 0) {
+        infos.forEach((x) => x.c.classList.toggle('is-hidden', !(x.ok === x.total)));
+        const best = full.slice().sort((a, b) => b.score - a.score)[0].c;
+        best.classList.add('is-reco');
+        const name = best.querySelector('.sc-name')?.textContent?.trim() ?? '';
+        this.result.textContent = `${full.length}校が該当。編集部評価がもっとも高いのは「${name}」です（下に絞り込み表示中）`;
+        // 「しぼり込む」押下時は結果の先頭カードまで必ず運ぶ
+        if (push) best.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        // 全条件一致ゼロでも行き止まりにしない: 最も条件に近い学校を必ず表示（誠実に一致数を明示）
+        const maxOk = Math.max(...infos.map((x) => x.ok));
+        const near = infos.filter((x) => x.ok === maxOk && maxOk > 0)
+          .sort((a, b) => b.score - a.score);
+        if (near.length > 0) {
+          infos.forEach((x) => x.c.classList.toggle('is-hidden', !(x.ok === maxOk)));
+          near[0].c.classList.add('is-reco');
+          const name = near[0].c.querySelector('.sc-name')?.textContent?.trim() ?? '';
+          this.result.textContent = `全条件に一致する学校はありませんでした。いちばん近い${near.length}校（${maxOk}/${near[0].total}条件一致）を表示中。編集部評価が高いのは「${name}」です`;
+          if (push) near[0].c.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          cards.forEach((c) => c.classList.add('is-hidden'));
+          this.result.textContent = '条件に合うスクールがありませんでした。条件を1つ減らしてみてください。';
+        }
         // 一部カードしか載っていないページ（広告LP等）では、同じ条件のまま全校一覧へ逃がす
         const all = this.dataset.all || '';
         if (all && location.pathname.replace(/\/$/, '') !== all) {
@@ -162,12 +177,6 @@ const { lock = {} } = Astro.props;
           a.style.fontWeight = '700';
           this.result.append(document.createElement('br'), a);
         }
-      } else {
-        if (best) (best as HTMLElement).classList.add('is-reco');
-        const name = best?.querySelector('.sc-name')?.textContent?.trim() ?? '';
-        this.result.textContent = `${shown}校が該当。編集部評価がもっとも高いのは「${name}」です（下に絞り込み表示中）`;
-        // 明示的な「しぼり込む」押下時は結果の先頭カードまで運ぶ（結果が視界外になる離脱ポイント対策）
-        if (push && best) (best as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
       // URL同期（M-1: 値はENUM通過済みのみ）
       const q = new URLSearchParams();

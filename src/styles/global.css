@@ -599,7 +599,8 @@ article .fig figcaption { font-size: .8rem; color: var(--text-dim); text-align: 
 .dw-opt { text-align: left; font-size: 1rem; font-weight: 700; color: var(--text); background: #fff; border: 2px solid var(--border); border-radius: 14px; padding: .9em 1.1em; cursor: pointer; transition: border-color .15s, background .15s, transform .15s; }
 .dw-opt:active { transform: scale(.98); }
 .dw-opt.picked { border-color: var(--primary); background: var(--primary-soft); }
-.dw-back { border: none; background: none; color: var(--text-dim); font-weight: 700; font-size: .88rem; margin-top: 12px; cursor: pointer; padding: .4em; }
+.dw-back { border: none; background: none; color: var(--text-dim); font-weight: 700; font-size: .88rem; margin-top: 12px; cursor: pointer; padding: .4em; visibility: hidden; }
+.dw-back.on { visibility: visible; }
 /* リザルト（豪華カード: 金縁+せり上がり） */
 .dw-hit { position: relative; border-radius: 16px; padding: 20px 18px; background: linear-gradient(#fffdf7, #fffdf7) padding-box, linear-gradient(135deg, var(--gold), #e8d48a 40%, var(--gold)) border-box; border: 2.5px solid transparent; box-shadow: 0 10px 30px rgba(28,107,84,.14); animation: dw-pop .55s cubic-bezier(.22,1.2,.36,1); }
 @keyframes dw-pop { from { opacity: 0; transform: translateY(18px) scale(.96); } to { opacity: 1; transform: none; } }

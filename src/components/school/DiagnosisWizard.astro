@@ -44,7 +44,7 @@ const data = SCHOOLS.filter((s) => s.enrollable).map((s) => ({
       <section class="dw-step dw-resultwrap" aria-live="polite"></section>
     </div>
   </div>
-  <button type="button" class="dw-back" hidden>‹ もどる</button>
+  <button type="button" class="dw-back">‹ もどる</button>
 </diag-wizard>
 
 <script>
@@ -80,7 +80,7 @@ const data = SCHOOLS.filter((s) => s.enrollable).map((s) => ({
       (this.querySelector('.dw-track') as HTMLElement).style.transform = `translateX(-${this.step * 25}%)`;
       this.querySelectorAll('.dw-progress i').forEach((d, i) => d.classList.toggle('on', i <= Math.min(this.step, 2)));
       const back = this.querySelector('.dw-back') as HTMLElement;
-      back.hidden = this.step === 0;
+      back.classList.toggle('on', this.step !== 0); // visibilityで切替=スペース常時確保（ガタつき防止）
       back.textContent = this.step === 3 ? '‹ 条件を変える' : '‹ もどる';
     }
     match() {

@@ -538,7 +538,12 @@ footer.site { background: var(--paper2); }
 .top2a > * { min-width: 0; }
 /* sticky header(約75px)にアンカー先が隠れないための全ID共通マージン */
 [id] { scroll-margin-top: 5.75rem; }
-.side { position: sticky; top: 80px; display: flex; flex-direction: column; gap: 1.2rem; }
+.side {
+  position: sticky; top: 80px; display: flex; flex-direction: column; gap: 1.2rem;
+  /* サイドバーが画面より高い時に下が切れて読めなくなる問題: 内部スクロール化（2026-07-11） */
+  max-height: calc(100vh - 96px); overflow-y: auto; overscroll-behavior: contain;
+  scrollbar-width: thin; padding-right: 2px;
+}
 /* 記事内の図版（figure＋キャプション） */
 article .fig { margin: 2rem 0; }
 article .fig img { width: 100%; height: auto; border-radius: 12px; display: block; }

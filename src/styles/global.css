@@ -522,7 +522,11 @@ footer.site { background: var(--paper2); }
 .hero-top3 .rank-badge { flex: 0 0 30px; width: 30px; height: 30px; font-size: .85rem; }
 .hero-top3 .ht-name { font-weight: 800; font-size: .92rem; }
 .hero-top3 .ht-type { font-size: .72rem; color: var(--text-dim); }
-.hero-top3 .ht-score { margin-left: auto; font-family: var(--f-num); font-weight: 800; color: var(--primary-dark); }
+.hero-top3 .ht-score { margin-left: auto; display: flex; flex-direction: column; align-items: flex-end; gap: 1px; }
+.hero-top3 .ht-score b { font-family: var(--f-num); font-weight: 800; font-size: 1.15rem; color: var(--primary-dark); line-height: 1; }
+/* 星: グラデーションで小数点も正確に表現（--pct=score/5%） */
+.ht-stars { position: relative; display: inline-block; font-size: .82rem; letter-spacing: .06em; color: #e0dccf; line-height: 1; }
+.ht-stars::before { content: "★★★★★"; position: absolute; left: 0; top: 0; width: var(--pct); overflow: hidden; color: #f3a93c; white-space: nowrap; }
 .hero-top3 .ht-all { display: block; text-align: right; font-size: .85rem; font-weight: 700; margin-top: .6em; }
 .purpose-strip { background: #fff; border-bottom: 1px solid var(--border); margin: 0 -1.2rem; }
 .purpose-strip-in { max-width: var(--max-site); margin: 0 auto; padding: 12px 24px; display: flex; align-items: center; gap: .6em; flex-wrap: wrap; font-size: .85rem; }
@@ -571,3 +575,13 @@ article .fig figcaption { font-size: .8rem; color: var(--text-dim); text-align: 
 .qdiag .qd-result { margin-top: .9em; min-height: 3.2em; font-size: .9rem; }
 .qdiag .qd-result .qd-hit { background: #fff; border: 2px solid var(--cta); border-radius: 10px; padding: .6em .9em; }
 .qdiag .qd-result .qd-hit b { font-size: 1.02rem; }
+
+/* モバイル診断モーダル（2026-07-11 UX） */
+.diag-modal { position: fixed; inset: 0; z-index: 200; display: flex; align-items: flex-end; }
+.diag-modal[hidden] { display: none; }
+.dm-backdrop { position: absolute; inset: 0; background: rgba(20,26,24,.55); }
+.dm-panel { position: relative; width: 100%; max-height: 90vh; overflow-y: auto; background: var(--paper, #fff); border-radius: 20px 20px 0 0; padding: 22px 18px calc(22px + env(safe-area-inset-bottom)); box-shadow: 0 -10px 40px rgba(0,0,0,.3); animation: dm-up .28s ease; }
+@keyframes dm-up { from { transform: translateY(100%); } to { transform: translateY(0); } }
+.dm-close { position: absolute; top: 12px; right: 14px; width: 34px; height: 34px; border: none; background: var(--bg-soft, #eef2f0); border-radius: 50%; font-size: 1.3rem; line-height: 1; color: var(--text); cursor: pointer; }
+.dm-head { font-family: var(--f-head); font-weight: 800; font-size: 1.05rem; margin: 2px 40px 14px 4px; }
+@media (min-width: 761px) { .diag-modal { display: none !important; } }

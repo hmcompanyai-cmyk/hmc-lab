@@ -62,7 +62,10 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
               <span class="ht-type">{e.school.type}</span><br />
               <span class="ht-price">{priceHint(e.school)}</span>
             </span>
-            <span class="ht-score">{e.score.toFixed(1)}</span>
+            <span class="ht-score">
+              <span class="ht-stars" style={`--pct:${Math.round((e.score / 5) * 100)}%`} aria-label={`編集部評価 ${e.score.toFixed(1)}（5点満点）`}>★★★★★</span>
+              <b>{e.score.toFixed(1)}</b>
+            </span>
           </a>
         ))}
         <a class="ht-all" href="/ai-school">全{ACTIVE_SCHOOLS.length}校のランキングをみる ›</a>
@@ -113,4 +116,33 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
     </aside>
   </div>
   <StickyBar />
+
+  <!-- モバイル用: 無料診断をポップアップ表示（スクロール不要・株主UX指摘2026-07-11） -->
+  <div class="diag-modal" id="diag-modal" hidden>
+    <div class="dm-backdrop" data-close></div>
+    <div class="dm-panel" role="dialog" aria-modal="true" aria-label="無料診断">
+      <button type="button" class="dm-close" data-close aria-label="閉じる">×</button>
+      <div class="dm-head">30秒で、あなたに合うAIスクール診断</div>
+      <QuickDiagnosis />
+    </div>
+  </div>
+  <script>
+    (() => {
+      const modal = document.getElementById('diag-modal');
+      if (!modal) return;
+      const isMobile = () => window.matchMedia('(max-width: 760px)').matches;
+      const open = () => { modal.hidden = false; document.body.style.overflow = 'hidden'; };
+      const close = () => { modal.hidden = true; document.body.style.overflow = ''; };
+      // #shindan を指すリンク（ヘッダー/ヒーロー/追従バー）をモバイルではモーダル化
+      document.querySelectorAll('a[href$="#shindan"]').forEach((a) => {
+        a.addEventListener('click', (e) => {
+          if (!isMobile()) return; // PCは従来どおりスクロール
+          e.preventDefault();
+          open();
+        });
+      });
+      modal.querySelectorAll('[data-close]').forEach((el) => el.addEventListener('click', close));
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.hidden) close(); });
+    })();
+  </script>
 </Base>

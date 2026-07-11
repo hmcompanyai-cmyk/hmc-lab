@@ -473,7 +473,7 @@ article tr:nth-child(even) td { background: var(--bg-soft); }
 header.site { position: sticky; top: 0; z-index: 40; background: #fff; border-bottom: 1px solid var(--border); margin-bottom: 0; padding: 0; }
 .site-in { max-width: var(--max-site); margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; gap: 20px; }
 /* AI番付ロゴ: 「AI」は英字を締めた緑、「番付」は和の骨太墨字＋金の落款アクセント（和モダン） */
-header.site .logo { font-family: var(--f-round); font-weight: 900; font-size: 23px; letter-spacing: .06em; color: var(--text); display: inline-flex; align-items: center; }
+header.site .logo { font-family: 'Reggae One', var(--f-round); font-weight: 400; font-size: 25px; letter-spacing: .04em; color: var(--text); display: inline-flex; align-items: center; }
 header.site .logo span {
   font-family: var(--f-num); font-weight: 800; color: #fff; letter-spacing: 0;
   background: var(--primary); border-radius: 6px;
@@ -487,6 +487,8 @@ main.wrap { padding-top: 2rem; }
 .wrap.wide { max-width: var(--max-site); }
 footer.site { background: var(--paper2); }
 .foot-in { max-width: var(--max-site); margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 28px; }
+footer.site .logo { font-family: 'Reggae One', var(--f-round); font-weight: 400; font-size: 21px; color: var(--text); display: inline-flex; align-items: center; }
+footer.site .logo span { font-family: var(--f-num); font-weight: 800; color: #fff; letter-spacing: 0; background: var(--primary); border-radius: 6px; padding: 1px 7px; margin-right: 4px; box-shadow: 0 1px 0 var(--gold); }
 .foot-in b { display: block; margin-bottom: .5em; color: var(--text); }
 .foot-in a { display: block; color: var(--text-dim); font-size: .85rem; padding: .18em 0; }
 .foot-in p { font-size: .82rem; line-height: 1.8; }

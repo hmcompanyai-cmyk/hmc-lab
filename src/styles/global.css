@@ -119,7 +119,8 @@ mark, .marker {
 .big { font-size: 1.18em; font-weight: 800; }
 .red { color: var(--danger); font-weight: 700; }
 .blue { color: var(--primary); font-weight: 700; }
-u { text-decoration: underline; text-decoration-color: var(--primary); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+u { text-decoration: underline; text-decoration-color: var(--kaki, #D96C3D); text-decoration-thickness: 2.5px; text-underline-offset: 4px; }
+article p b, article p strong { font-weight: 800; color: var(--text); }
 
 /* 表 */
 article table { border-collapse: collapse; width: 100%; display: block; overflow-x: auto; font-size: .95rem; }

@@ -6,6 +6,30 @@
   "changes": [
     {
       "date": "2026-07-12",
+      "schoolId": "techacademy",
+      "kind": "note",
+      "text": "プロンプトエンジニアリング講座が3プラン制へ改定（ゼロイチ297,000円〜）。旧4週間149,600円は終了",
+      "source": "https://techacademy.jp/course/first-prompt-engineering",
+      "expiresAt": "2026-10-12"
+    },
+    {
+      "date": "2026-07-12",
+      "schoolId": "skillupai",
+      "kind": "note",
+      "text": "E資格対応の基礎講座が50,000円へ値下げ（公式告知）",
+      "source": "https://www.skillupai.com/blog/dl-revision-news/",
+      "expiresAt": "2026-10-12"
+    },
+    {
+      "date": "2026-07-12",
+      "schoolId": "human-academy",
+      "kind": "note",
+      "text": "新コース「AI×Webデザイナー講座」開講",
+      "source": "https://www.athuman.com/news/2026/25648/",
+      "expiresAt": "2026-10-12"
+    },
+    {
+      "date": "2026-07-12",
       "schoolId": null,
       "kind": "note",
       "text": "掲載7校の料金・提供状況を再確認しました（変更なし）",

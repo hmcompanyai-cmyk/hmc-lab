@@ -187,6 +187,17 @@ const ogImg = ogImage ?? '/img/og-default.png';
         });
       }, { threshold: 0.6 });
       document.querySelectorAll('.aff-btn').forEach((b) => io.observe(b));
+
+      // CTAクリック計測（GA4キーイベントの元データ。外部=cta_out / 内部=cta_in）
+      document.addEventListener('click', (ev) => {
+        const a = (ev.target as HTMLElement).closest('a.aff-btn, a.dw-cta') as HTMLAnchorElement | null;
+        if (!a || typeof (window as any).gtag !== 'function') return;
+        const external = a.host !== location.host;
+        (window as any).gtag('event', external ? 'cta_out' : 'cta_in', {
+          cta_label: (a.textContent || '').trim().slice(0, 40),
+          cta_url: a.href.slice(0, 100),
+        });
+      });
     </script>
   </body>
 </html>

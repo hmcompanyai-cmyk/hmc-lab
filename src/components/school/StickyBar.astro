@@ -7,7 +7,7 @@ import { GENRE } from '../../lib/schools';
 interface Props {
   cta?: { href: string; label: string; rel?: string };
 }
-const { cta = { href: '#shindan', label: '無料診断' } } = Astro.props;
+const { cta = { href: '#shindan', label: '30秒スクール診断' } } = Astro.props;
 const external = cta.href.startsWith('http');
 ---
 <sticky-bar class="stickybar" data-base={GENRE.basePath} aria-label="ページ内ナビゲーション">

@@ -16,7 +16,7 @@ export default defineConfig({
       filter: (page) => {
         if (!genre.indexable) return false;
         const p = new URL(page).pathname.replace(/\/$/, '') || '/';
-        if (p === '/ai-school/lp' || p === '/about' || p === '/privacy') return false;
+        if (p === '/ai-school/lp' || p === '/about' || p === '/privacy' || p === '/links') return false;
         return true;
       },
     }),

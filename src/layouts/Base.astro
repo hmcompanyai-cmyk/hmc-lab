@@ -19,6 +19,7 @@ interface Props {
   ogImage?: string | null;
   noindex?: boolean;
   wide?: boolean;
+  bare?: boolean;
 }
 const {
   title, description = SITE.description, ogType = 'website',
@@ -27,6 +28,9 @@ const {
   // 公開時は genre.json の indexable を true にするだけで全ページ・sitemapが一斉に追従する
   // （blog/about/privacy だけ index可能になる部分漏れが起きていた技術SEO監査B-1の修正）
   noindex = !GENRE.indexable, wide = false,
+  // bare: サイトクローム（utilbar/ヘッダー/フッター/診断ウィザード）を出さない素のページ。
+  // SNS bio着地の /links 用（番付の看板が突然出ると文脈違いになる・2026-07-18株主指摘）
+  bare = false,
 } = Astro.props;
 const pageTitle = title ? `${title} | ${SITE.title}` : `${SITE.title} | ${SITE.tagline}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -77,15 +81,15 @@ const ogImg = ogImage ?? '/img/og-default.png';
     })} />
   </head>
   <body>
-    <div class="utilbar">
+    {!bare && <div class="utilbar">
       <div class="utilbar-in">
         <span>生成AIスクールとAIツールを、同じ物差しで比較する編集部メディア</span>
         <span class="utilbar-links">
           <a href="/info#company">運営者情報</a><a href="/info#ranking-basis">評価方法</a><a href="/info#company">お問い合わせ</a>
         </span>
       </div>
-    </div>
-    <header class="site">
+    </div>}
+    {!bare && <header class="site">
       <div class="site-in">
         <a href="/" class="logo"><span>AI</span>番付</a>
         <nav>
@@ -97,11 +101,11 @@ const ogImg = ogImage ?? '/img/og-default.png';
         </nav>
         <a href="/#shindan" class="aff-btn head-cta">30秒スクール診断</a>
       </div>
-    </header>
+    </header>}
     <main class={wide ? 'wrap wide' : 'wrap'}>
       <slot />
     </main>
-    <footer class="site">
+    {!bare && <footer class="site">
       <div class="foot-in">
         <div>
           <div class="logo"><span>AI</span>番付</div>
@@ -130,16 +134,16 @@ const ogImg = ogImage ?? '/img/og-default.png';
         </div>
       </div>
       <p class="foot-copy">© 2026 HMCompany. 当サイトはアフィリエイトプログラムに参加しています。</p>
-    </footer>
-    <!-- 無料診断ウィザード（全ページ共通・2026-07-11: どのページ/タイミングでも同じ体験） -->
-    <div class="diag-modal" id="diag-modal" hidden>
+    </footer>}
+    <!-- 無料診断ウィザード（全ページ共通・2026-07-11: どのページ/タイミングでも同じ体験。bareページには出さない） -->
+    {!bare && <div class="diag-modal" id="diag-modal" hidden>
       <div class="dm-backdrop" data-close></div>
       <div class="dm-panel" role="dialog" aria-modal="true" aria-label="無料診断">
         <button type="button" class="dm-close" data-close aria-label="閉じる">×</button>
         <div class="dm-head">30秒で、あなたに合うAIスクール診断</div>
         <DiagnosisWizard />
       </div>
-    </div>
+    </div>}
     <script>
       // 無料診断: モバイル=常にウィザードモーダル / PC=ページ内に診断があればスクロール・なければモーダル
       (() => {

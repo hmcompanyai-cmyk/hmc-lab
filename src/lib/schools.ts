@@ -67,6 +67,7 @@ const School = z.object({
   detail: z.object({
     lead: z.string(),
     curriculum: z.array(z.string()),
+    toolsAndModels: z.array(z.string()).optional(),
     pros: z.array(z.string()),
     cons: z.array(z.string()),
     faq: z.array(z.object({ q: z.string(), a: z.string() })),
@@ -89,7 +90,7 @@ const Segment = z.object({
   intro: z.string(),
   weights: ScoreAxes, // 重みも1..5でなく0..1だが範囲検証は下で
   requireSubsidy: z.boolean().optional(),
-  notes: z.record(z.string()),
+  notes: z.record(z.string(), z.string()),
 }).extend({
   weights: z.object({
     price: z.number().min(0).max(1),

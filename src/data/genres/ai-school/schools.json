@@ -1,8 +1,8 @@
 {
   "_meta": {
-    "checkedDate": "2026-07-06",
+    "checkedDate": "2026-07-18",
     "scoring": "scores各軸1〜5。編集部評価=セグメント別weightsとの加重平均（lib/schools.tsがビルド時算出・手打ち順位なし）。軸の定義は/infoとARCHITECTURE.md参照",
-    "sources": "~/Desktop/research/2026-07-06-ai-school-data/01-school-facts.md（料金・給付金の出典つき一次調査）"
+    "sources": "~/Desktop/research/2026-07-06-ai-school-data/01-school-facts.md（料金・給付金の出典つき一次調査）＋2026-07-13公式再検証（DMM公式/TechAcademy公式）＋2026-07-18使用ツール・対応モデル追記（GPT-5.6/Sol/Terra/Luna・Grok 4.5はスクール公式の個別対応明記がない限り提供状況依存として注記）"
   },
   "schools": [
     {
@@ -145,8 +145,12 @@
           {
             "label": "公式サイト（料金・コース）",
             "url": "https://genai.dmm.com/",
-            "checkedAt": "2026-07-11"
+            "checkedAt": "2026-07-18"
           }
+        ],
+        "toolsAndModels": [
+          "公式掲載の主な対象: ChatGPT / Gemini / Copilot / Claude / Dify / NotebookLM / Claude Code など",
+          "GPT-5.6（Sol/Terra/Luna）やGrok 4.5は、スクール固有の保証ではなく各AIツール側の提供プラン・地域・時期に依存。受講前に最新の利用可否を公式で要確認"
         ]
       }
     },
@@ -158,7 +162,7 @@
       "type": "メンター伴走",
       "affiliate": false,
       "verified": false,
-      "verifyNote": "2026-07-08時点で公式サイトが新規申込を停止しています（再開時期未定・公式ページで確認済み）。掲載中の料金・内容は停止前の情報です",
+      "verifyNote": "2026-07-13時点で公式サイトが新規申込を停止しています（再開時期未定・公式AIコースページで確認済み）。掲載中の料金・内容は停止前の情報です",
       "scores": {
         "price": 3,
         "hours": 4,
@@ -194,7 +198,7 @@
         "conditionNote": "AIコースが対象。支給は修了・転職等の条件達成後（キャッシュバック方式）。適用条件は無料相談で要確認"
       },
       "badges": [
-        "新規受付停止中（2026-07-08確認）",
+        "新規受付停止中（2026-07-13確認）",
         "週2回メンタリング",
         "AIコースは補助金対象"
       ],
@@ -204,7 +208,7 @@
         "プロンプト入門からAI開発コースまで段階が揃う",
         "受講者の一次発信が多く、実態を調べやすい"
       ],
-      "caution": "【重要】2026年7月8日時点で公式サイトが新規申込を停止しています（「お申し込みを停止しております。再開の際には改めてご案内いたします」と表示）。再開まで受講できません。",
+      "caution": "【重要】2026年7月13日時点で公式サイトが新規申込を停止しています（「お申し込みを停止しております。再開の際には改めてご案内いたします」と表示）。再開まで受講できません。",
       "reason": "メンターの伴走力は受講者の一次発信で評価が高い。「独学だと続かない」人が完走するための仕組みが比較9校で最も厚い。",
       "editorNote": "サポートの手厚さは魅力ですが、AIコースの難易度に関する受講者の声は正直です。入門者はコース選びを慎重に。",
       "voices": [
@@ -245,9 +249,9 @@
         }
       ],
       "cta": {
-        "url": "https://techacademy.jp/course/first-prompt-engineering",
+        "url": "https://techacademy.jp/course/ai",
         "primary": "公式サイトで再開状況を確認する",
-        "note": "現在は新規申込停止中。再開时期は公式の案内をご確認ください"
+        "note": "現在は新規申込停止中。再開時期は公式の案内をご確認ください"
       },
       "detail": {
         "lead": "テックアカデミーは、現役エンジニアのメンタリングを軸にした伴走型スクールです。生成AI入門のプロンプトコースから、補助金対象のAIコースまで段階的に選べます。",
@@ -275,13 +279,22 @@
           {
             "label": "プロンプトエンジニアリングコース公式",
             "url": "https://techacademy.jp/course/first-prompt-engineering",
-            "checkedAt": "2026-07-07"
+            "checkedAt": "2026-07-18"
           },
           {
             "label": "AIコース公式",
             "url": "https://techacademy.jp/course/ai",
-            "checkedAt": "2026-07-07"
+            "checkedAt": "2026-07-18"
+          },
+          {
+            "label": "コース一覧公式（新規申込停止表示）",
+            "url": "https://techacademy.jp/course",
+            "checkedAt": "2026-07-18"
           }
+        ],
+        "toolsAndModels": [
+          "公式掲載の主な対象: プロンプトエンジニアリング、AIコース（停止前情報）。個別モデル名の最新対応は公式案内で要確認",
+          "GPT-5.6（Sol/Terra/Luna）やGrok 4.5の個別対応は、2026-07-18時点の比較記事では「公式再開・最新シラバス確認待ち」として扱う"
         ]
       },
       "enrollable": false,
@@ -427,8 +440,12 @@
           {
             "label": "生成AIコース公式",
             "url": "https://generative-ai.sejuku.net/",
-            "checkedAt": "2026-07-06"
+            "checkedAt": "2026-07-18"
           }
+        ],
+        "toolsAndModels": [
+          "公式掲載の主な対象: 生成AI基礎 / 業務改善AI活用 / AIアプリ / Claude Code など",
+          "GPT-5.6（Sol/Terra/Luna）やGrok 4.5は、個別対応を断定せず、受講時点の講師・カリキュラム・利用ツールで要確認"
         ]
       }
     },
@@ -672,8 +689,12 @@
           {
             "label": "生成AI講座公式",
             "url": "https://www.winschool.jp/guidance/dx/generative_ai.html",
-            "checkedAt": "2026-07-06"
+            "checkedAt": "2026-07-18"
           }
+        ],
+        "toolsAndModels": [
+          "公式掲載の主な対象: ChatGPT / Copilot の基礎と業務活用",
+          "GPT-5.6（Sol/Terra/Luna）やGrok 4.5まで扱う講座とは断定しない。短期講座のため、最新モデル目的なら事前確認が必要"
         ]
       }
     },
@@ -1119,18 +1140,22 @@
           {
             "label": "デジハク生成AI 公式サイト",
             "url": "https://ai.digital-hacks.jp/",
-            "checkedAt": "2026-07-07"
+            "checkedAt": "2026-07-18"
           },
           {
             "label": "料金・コース比較（AIスクール比較Labo）",
             "url": "https://f-next.co.jp/ai/106/",
-            "checkedAt": "2026-07-07"
+            "checkedAt": "2026-07-18"
           },
           {
             "label": "無料説明会の体験記（note・本人発信）",
             "url": "https://note.com/witty_ixora1236/n/n5537b9e6f3b9",
             "checkedAt": "2026-07-07"
           }
+        ],
+        "toolsAndModels": [
+          "公式掲載の主な対象: ChatGPT / Claude / Gemini、Dify等の自動化・軽いAIアプリ開発",
+          "GPT-5.6（Sol/Terra/Luna）やGrok 4.5は、最新モデルの利用可否・教材反映状況を無料相談時に確認する前提"
         ]
       }
     },
@@ -1234,18 +1259,22 @@
           {
             "label": "生成AI・ノーコード講座 公式",
             "url": "https://haa.athuman.com/ai/course/generative_ai/",
-            "checkedAt": "2026-07-07"
+            "checkedAt": "2026-07-18"
           },
           {
             "label": "補助金・給付金について（公式）",
             "url": "https://haa.athuman.com/ai/course/generative_ai/grant.html",
-            "checkedAt": "2026-07-07"
+            "checkedAt": "2026-07-18"
           },
           {
             "label": "評判・カリキュラム解説（デジマ部）",
             "url": "https://www.seedinc.jp/column/ai/human-ai-reviews/",
             "checkedAt": "2026-07-07"
           }
+        ],
+        "toolsAndModels": [
+          "公式掲載の主な対象: ChatGPT / Gemini / Claude、Dify、Midjourney、Sora等",
+          "GPT-5.6（Sol/Terra/Luna）やGrok 4.5は、対応を保証せず、開講時期・教材更新・利用アカウント条件を公式で要確認"
         ]
       },
       "checkedAt": "2026-07-12"

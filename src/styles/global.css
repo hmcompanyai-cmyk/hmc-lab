@@ -406,6 +406,16 @@ article tr:nth-child(even) td { background: var(--bg-soft); }
 .sc-points { list-style: none; padding: 0; margin: .4em 0 1em; }
 .sc-points li { padding-left: 1.5em; text-indent: -1.5em; margin: .25em 0; }
 .sc-points li::before { content: "✓ "; color: var(--ok); font-weight: 800; }
+.sc-models {
+  background: #f7fbff;
+  border: 1px solid #cfe3ff;
+  border-radius: 10px;
+  padding: .75em 1em;
+  margin: .8em 0 1em;
+  font-size: .92rem;
+}
+.sc-models b { color: var(--primary-dark); }
+.sc-models ul { margin: .35em 0 0; padding-left: 1.2em; }
 .sc-price {
   background: var(--bg-soft);
   border-radius: 8px;

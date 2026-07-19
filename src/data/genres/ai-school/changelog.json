@@ -5,6 +5,22 @@
   },
   "changes": [
     {
+      "date": "2026-07-18",
+      "schoolId": null,
+      "kind": "note",
+      "text": "使用ツール・対応モデル欄を追加し、GPT-5.6（Sol/Terra/Luna）・Grok 4.5は各ツール側の提供状況依存として注記しました",
+      "source": null,
+      "expiresAt": "2026-10-16"
+    },
+    {
+      "date": "2026-07-13",
+      "schoolId": "techacademy",
+      "kind": "ended",
+      "text": "公式AIコースページで新規申込停止表示を再確認しました（再開時期未定）。料金・内容は停止前情報として掲載継続します",
+      "source": "https://techacademy.jp/course/ai",
+      "expiresAt": "2026-10-11"
+    },
+    {
       "date": "2026-07-12",
       "schoolId": "techacademy",
       "kind": "note",

@@ -127,6 +127,13 @@ const eyecatch =
       <h2>学べること</h2>
       <ul>{school.detail.curriculum.map((c) => <li>{c}</li>)}</ul>
 
+      {school.detail.toolsAndModels && (
+        <>
+          <h2>使用ツール・対応モデル</h2>
+          <ul>{school.detail.toolsAndModels.map((m) => <li>{m}</li>)}</ul>
+        </>
+      )}
+
       <h2>良い点・気になる点</h2>
       <ul class="merit">{school.detail.pros.map((p) => <li>{p}</li>)}</ul>
       <ul class="demerit">{school.detail.cons.map((c) => <li>{c}</li>)}</ul>

@@ -49,6 +49,12 @@ const eyecatch = fs.existsSync(`public/img/genres/ai-school/${s.id}.jpg`)
     <ul class="sc-points">
       {s.points.map((p) => <li>{p}</li>)}
     </ul>
+    {s.detail.toolsAndModels && (
+      <div class="sc-models">
+        <b>使用ツール・対応モデル</b>
+        <ul>{s.detail.toolsAndModels.map((m) => <li>{m}</li>)}</ul>
+      </div>
+    )}
     <PriceTable school={s} />
     <div class="sc-reason"><b>編集部の評価</b>: {s.reason}</div>
     <div class="box-warn"><div class="box-title">申し込む前の注意</div>{s.caution}</div>

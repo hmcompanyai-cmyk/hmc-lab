@@ -5,7 +5,7 @@ pubDate: 2026-07-18
 tags: ["生成AIスクール", "料金比較", "DMM生成AI CAMP"]
 affiliate: false
 heroImage: "/img/blog/hero-dmm-genai-camp-ryokin.png"
-targetKeyword: "DMM 生成AI CAMP 料金 比較"
+targetKeyword: "DMM 生成AI CAMP 料金"
 cluster: ai-school
 relatedGenre: ai-school
 sources:

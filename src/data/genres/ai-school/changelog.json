@@ -5,6 +5,14 @@
   },
   "changes": [
     {
+      "date": "2026-07-19",
+      "schoolId": "bytech",
+      "kind": "new",
+      "text": "バイテック生成AI（AI活用特化・買い切り型）を比較対象に追加。LITE178,000円/PRO298,000円・カリキュラム無期限視聴",
+      "source": "https://bytech.jp/plan",
+      "expiresAt": "2026-10-17"
+    },
+    {
       "date": "2026-07-18",
       "schoolId": null,
       "kind": "note",

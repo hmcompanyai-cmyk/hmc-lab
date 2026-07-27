@@ -1,8 +1,8 @@
 {
   "_meta": {
-    "checkedDate": "2026-07-18",
+    "checkedDate": "2026-07-25",
     "scoring": "scores各軸1〜5。編集部評価=セグメント別weightsとの加重平均（lib/schools.tsがビルド時算出・手打ち順位なし）。軸の定義は/infoとARCHITECTURE.md参照",
-    "sources": "~/Desktop/research/2026-07-06-ai-school-data/01-school-facts.md（料金・給付金の出典つき一次調査）＋2026-07-13公式再検証（DMM公式/TechAcademy公式）＋2026-07-18使用ツール・対応モデル追記（GPT-5.6/Sol/Terra/Luna・Grok 4.5はスクール公式の個別対応明記がない限り提供状況依存として注記）"
+    "sources": "~/Desktop/research/2026-07-06-ai-school-data/01-school-facts.md（料金・給付金の出典つき一次調査）＋2026-07-13公式再検証（DMM公式/TechAcademy公式）＋2026-07-18使用ツール・対応モデル追記（GPT-5.6/Sol/Terra/Luna・Grok 4.5はスクール公式の個別対応明記がない限り提供状況依存として注記）＋2026-07-25株主承認済み変化反映（DMM一括プラン旧掲載削除、ヒューマンアカデミーAI×動画クリエイター講座の検知を注記）"
   },
   "schools": [
     {
@@ -35,8 +35,8 @@
       "budget": {
         "monthly": 16280,
         "total": null,
-        "period": "月額プランは縛りなし（6ヶ月/12ヶ月一括プランあり）",
-        "note": "月額16,280円（税込）。6ヶ月一括90,530円（税込）・12ヶ月一括162,800円（税込）もあり"
+        "period": "月額プランは縛りなし",
+        "note": "月額16,280円（税込）。2026年3月リニューアル後の現行掲載は月額サブスク型として扱い、旧掲載の6ヶ月一括90,530円・12ヶ月一括162,800円は削除（2026-07-25株主承認済み検知反映）"
       },
       "subsidy": {
         "type": "none",
@@ -145,7 +145,7 @@
           {
             "label": "公式サイト（料金・コース）",
             "url": "https://genai.dmm.com/",
-            "checkedAt": "2026-07-18"
+            "checkedAt": "2026-07-25"
           }
         ],
         "toolsAndModels": [
@@ -1194,7 +1194,7 @@
         "monthly": null,
         "total": 390940,
         "period": "4〜6ヶ月",
-        "note": "受講料330,000円＋入学金55,000円＋システム利用料5,940円（税込・公式確認済み）。公式表示では補助金の条件をすべて達成した場合、実質140,000円＋システム利用料。2026年に新コース「AI×Webデザイナー講座」開講（公式ニュース）"
+        "note": "受講料330,000円＋入学金55,000円＋システム利用料5,940円（税込・公式確認済み）。公式表示では補助金の条件をすべて達成した場合、実質140,000円＋システム利用料。2026年に新コース「AI×Webデザイナー講座」と「AI×動画クリエイター講座」の開講を確認（公式ニュース/PRTimes）"
       },
       "subsidy": {
         "type": "reskilling",
@@ -1270,6 +1270,11 @@
             "label": "評判・カリキュラム解説（デジマ部）",
             "url": "https://www.seedinc.jp/column/ai/human-ai-reviews/",
             "checkedAt": "2026-07-07"
+          },
+          {
+            "label": "AI×動画クリエイター講座 開講プレスリリース（PRTimes）",
+            "url": "https://prtimes.jp/main/html/rd/p/000001997.000005089.html",
+            "checkedAt": "2026-07-25"
           }
         ],
         "toolsAndModels": [

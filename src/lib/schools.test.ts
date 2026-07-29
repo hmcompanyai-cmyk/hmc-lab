@@ -17,6 +17,13 @@ describe('データ検証（zodはimport時に通過済み）', () => {
   it('全校がconditionNoteを持つ（H-2）', () => {
     for (const s of SCHOOLS) expect(s.subsidy.conditionNote.length).toBeGreaterThan(10);
   });
+  it('DMM公式再確認済みの3料金プランを保持する（2026-07-28）', () => {
+    const dmm = schoolById('dmm')!;
+    expect(dmm.budget.monthly).toBe(16280);
+    expect(dmm.budget.total).toBe(90530);
+    expect(dmm.budget.note).toContain('12ヶ月162,800円');
+    expect(dmm.subsidy.conditionNote).toContain('要確認');
+  });
 });
 
 describe('editorialScore / rankedSchools（H-3/H-4）', () => {

@@ -5,6 +5,14 @@
   },
   "changes": [
     {
+      "date": "2026-08-02",
+      "schoolId": "techacademy",
+      "kind": "ended",
+      "text": "2026年1月以降、全コースの新規申込み一時停止が続き、2026年7月時点でも再開なしとの第三者確認を反映。TechAcademyは新規受付停止中として掲載を更新しました",
+      "source": "https://hrtech-guide.co.jp/techacademy-hyoban/ / https://www.excite.co.jp/news/article/Bizjournal_company_post_392977/",
+      "expiresAt": "2026-10-31"
+    },
+    {
       "date": "2026-08-01",
       "schoolId": null,
       "kind": "note",

@@ -5,6 +5,14 @@
   },
   "changes": [
     {
+      "date": "2026-08-18",
+      "schoolId": null,
+      "kind": "note",
+      "text": "掲載7校の料金・提供状況を再確認しました（変更なし）",
+      "source": null,
+      "expiresAt": "2026-11-16"
+    },
+    {
       "date": "2026-08-02",
       "schoolId": "techacademy",
       "kind": "ended",

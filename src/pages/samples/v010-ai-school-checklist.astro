@@ -1,0 +1,98 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const title = '生成AIスクール比較 無料サンプルチェックリスト';
+const description = '生成AIスクールを比較するときに、料金・給付金・学習目的・無料AIとの差分を見落とさないための無料サンプルチェックリストです。申込や契約ではなく、閲覧・保存用の資料です。';
+---
+<Base title={title} description={description} noindex={true} wide={false}>
+  <article class="sample-page">
+    <p class="eyebrow">無料サンプル / 閲覧・保存用</p>
+    <h1>生成AIスクール比較チェックリスト</h1>
+    <p class="lead">
+      生成AIスクールを選ぶ前に、料金表だけでは見落としやすい確認点を1枚にまとめた無料サンプルです。
+      このページは資料の閲覧・保存用であり、申込・契約・個別相談の受付ではありません。
+    </p>
+
+    <section class="notice" aria-label="利用範囲">
+      <h2>このサンプルでできること</h2>
+      <ul>
+        <li>比較前に確認すべき観点を整理する</li>
+        <li>スクール公式ページを見るときのメモ欄として使う</li>
+        <li>ブラウザの印刷・PDF保存、またはMarkdown版の保存で手元に残す</li>
+      </ul>
+      <p>個人情報・連絡先・学習履歴の入力欄はありません。回答送信や自動診断も行いません。</p>
+    </section>
+
+    <p class="download-row">
+      <a class="download-button" href="/samples/v010-ai-school-checklist.md" download>Markdown版を保存する</a>
+      <span>または、このページをブラウザから印刷/PDF保存してください。</span>
+    </p>
+
+    <section>
+      <h2>1. 目的を1つに絞る</h2>
+      <div class="checklist">
+        <label><input type="checkbox" /> 仕事で使う資料作成・業務改善が主目的</label>
+        <label><input type="checkbox" /> 副業・制作案件への応用が主目的</label>
+        <label><input type="checkbox" /> 転職・職種変更の準備が主目的</label>
+        <label><input type="checkbox" /> AIの基礎理解や資格・教養が主目的</label>
+      </div>
+      <p class="memo">メモ: 目的が複数ある場合は、最初の1か月で使う場面を1つだけ書く。</p>
+    </section>
+
+    <section>
+      <h2>2. 料金で見る場所</h2>
+      <ul class="points">
+        <li>総額、月額、分割払い、入会金、教材費を分けて確認する。</li>
+        <li>給付金・補助金の対象条件は、公式ページの最新情報と自分の勤務状況で確認する。</li>
+        <li>「安い」だけでなく、添削・質問対応・メンタリングの有無を同じ列で比べる。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>3. 無料AIでは足りない理由を確認する</h2>
+      <ul class="points">
+        <li>独学で詰まりやすい箇所が、質問・添削・課題レビューで補えるか。</li>
+        <li>自分の業務や制作物に近い演習があるか。</li>
+        <li>講座終了後に、自分だけで再現できる手順として残るか。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>4. 比較メモ欄</h2>
+      <div class="note-grid">
+        <div><strong>候補A</strong><br />料金:<br />よい点:<br />不安点:</div>
+        <div><strong>候補B</strong><br />料金:<br />よい点:<br />不安点:</div>
+        <div><strong>候補C</strong><br />料金:<br />よい点:<br />不安点:</div>
+      </div>
+    </section>
+
+    <section class="notice muted">
+      <h2>注意書き</h2>
+      <p>
+        本資料は比較観点の整理を助ける無料サンプルです。特定スクールの申込、契約、成果、給付金受給、収益化を保証するものではありません。
+        最新の料金・条件は各公式ページで確認してください。
+      </p>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .sample-page { max-width: 860px; margin: 0 auto; padding: 2rem 0 4rem; color: #182033; }
+  .eyebrow { display: inline-block; margin: 0 0 .8rem; padding: .35rem .7rem; border-radius: 999px; background: #eef4ff; color: #2450a6; font-weight: 700; font-size: .9rem; }
+  h1 { font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1.15; margin: 0 0 1rem; letter-spacing: -.04em; }
+  h2 { margin-top: 2.2rem; font-size: 1.35rem; }
+  .lead { font-size: 1.08rem; line-height: 1.9; color: #48546a; }
+  .notice { border: 1px solid #d9e4ff; background: #f8fbff; border-radius: 22px; padding: 1.2rem 1.4rem; margin: 1.6rem 0; }
+  .notice h2 { margin-top: 0; }
+  .muted { background: #fafafa; border-color: #e6e6e6; color: #4b5563; }
+  .download-row { display: flex; flex-wrap: wrap; gap: .8rem 1rem; align-items: center; margin: 1.4rem 0; }
+  .download-button { display: inline-block; border-radius: 999px; padding: .85rem 1.2rem; background: #1e40af; color: white; font-weight: 800; text-decoration: none; }
+  .checklist { display: grid; gap: .75rem; margin: 1rem 0; }
+  .checklist label { display: block; padding: .9rem 1rem; border: 1px solid #e5e7eb; border-radius: 16px; background: white; }
+  .checklist input { margin-right: .6rem; transform: scale(1.15); }
+  .points { line-height: 1.9; padding-left: 1.3rem; }
+  .memo { border-left: 4px solid #93c5fd; padding-left: .9rem; color: #475569; }
+  .note-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+  .note-grid div { min-height: 150px; border: 1px dashed #cbd5e1; border-radius: 18px; padding: 1rem; background: #fff; line-height: 1.9; }
+  @media (max-width: 760px) { .note-grid { grid-template-columns: 1fr; } .download-row { align-items: flex-start; flex-direction: column; } }
+</style>
